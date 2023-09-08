@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZSTD_PROG5_BDC_TXT</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZSTD_PROG5_BDC_TXT</h2>
+<h3> Description: BDC Basic with TXT File</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZSTD_PROG5_BDC_TXT.<br />
+<br />
+   </div>
+   <div class="codeComment">
+**DATA:&nbsp;v_path&nbsp;TYPE&nbsp;string&nbsp;VALUE&nbsp;'\\192.168.1.55\c\s4abap90\student.txt',<br />
+*DATA:&nbsp;v_txt(2000)&nbsp;TYPE&nbsp;c&nbsp;VALUE&nbsp;'C:\Users\s4abap68\Desktop\Stud.txt',<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_path&nbsp;TYPE&nbsp;string&nbsp;VALUE&nbsp;'C:\Users\s4abap68\Desktop\Stud.txt',<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_path&nbsp;LIKE&nbsp;v_txt.&nbsp;"VALUE&nbsp;'\\192.168.1.55\c\s4abap90\student.txt',<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_msg&nbsp;TYPE&nbsp;string.<br />
+<br />
+   </div>
+   <div class="code">
+DATA: v_path TYPE string VALUE 'C:\s4abap90\student.txt',<br />
+   </div>
+   <div class="codeComment">
+*DATA:&nbsp;v_path&nbsp;TYPE&nbsp;RLGRAP-FILENAME&nbsp;VALUE&nbsp;'C:\s4abap90\student.txt',<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_msg&nbsp;TYPE&nbsp;string.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;Open&nbsp;the&nbsp;file&nbsp;i/p&nbsp;mode&nbsp;-&nbsp;for&nbsp;reading<br />
+<br />
+   </div>
+   <div class="code">
+TYPES: BEGIN OF ty_legacy,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;TYPE&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_legacy.<br />
+<br />
+&nbsp;DATA:&nbsp;lt_legacy&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;ty_legacy,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_legacy&nbsp;TYPE&nbsp;ty_legacy.<br />
+<br />
+&nbsp;DATA:&nbsp;lt_bdc&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;bdcdata,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc&nbsp;TYPE&nbsp;bdcdata.<br />
+<br />
+OPEN DATASET v_path FOR INPUT IN TEXT MODE ENCODING DEFAULT MESSAGE v_msg.<br />
+IF sy-subrc eq 0.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;Transfer&nbsp;data&nbsp;from&nbsp;aplliaction&nbsp;server&nbsp;to&nbsp;temp&nbsp;internal&nbsp;table<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;DO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;wa_legacy.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;DATASET&nbsp;v_path&nbsp;INTO&nbsp;wa_legacy-str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;EQ&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_legacy&nbsp;to&nbsp;lt_legacy.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLOSE&nbsp;DATASET&nbsp;v_path.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXIT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;ENDDO.<br />
+ELSE.<br />
+&nbsp;&nbsp;WRITE:/&nbsp;v_msg.<br />
+ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*<br />
+*TYPES:&nbsp;BEGIN&nbsp;OF&nbsp;ty_final,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_id&nbsp;TYPE&nbsp;n,&nbsp;"zstd_course-stud_id,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_name&nbsp;TYPE&nbsp;zstd_course-stud_name,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_batch&nbsp;TYPE&nbsp;zstd_course-stud_batch,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_course&nbsp;TYPE&nbsp;zstd_course-stud_course,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_final.<br />
+*<br />
+*&nbsp;DATA:&nbsp;lt_final&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;ty_final,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final&nbsp;TYPE&nbsp;ty_final.<br />
+*<br />
+*&nbsp;IF&nbsp;lt_legacy&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+**&nbsp;&nbsp;&nbsp;transfer&nbsp;data&nbsp;from&nbsp;temp&nbsp;internal&nbsp;table&nbsp;to&nbsp;final&nbsp;table<br />
+*&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_legacy&nbsp;into&nbsp;wa_legacy.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;wa_final.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SPLIT&nbsp;wa_legacy-str&nbsp;AT&nbsp;','&nbsp;INTO<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final-stud_id<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final-stud_name<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final-stud_batch&nbsp;wa_final-stud_course.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_final&nbsp;TO&nbsp;lt_final.<br />
+*&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+*&nbsp;ENDIF.<br />
+*<br />
+*IF&nbsp;lt_final&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+*&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'BDC_OPEN_GROUP'<br />
+*&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;CLIENT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;SY-MANDT<br />
+*&nbsp;&nbsp;&nbsp;GROUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'S1'<br />
+*&nbsp;&nbsp;&nbsp;HOLDDATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'20220909'<br />
+**&nbsp;&nbsp;&nbsp;KEEP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'X'&nbsp;"Session&nbsp;oject&nbsp;is&nbsp;available&nbsp;even&nbsp;after&nbsp;process<br />
+*&nbsp;&nbsp;&nbsp;USER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;sy-ucomm.<br />
+*<br />
+*LOOP&nbsp;AT&nbsp;lt_final&nbsp;INTO&nbsp;wa_final.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_info&nbsp;USING&nbsp;'ZSTD_PROG3CALL_BDC_TXT_TOP'&nbsp;'100'.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_field&nbsp;USING&nbsp;'ZSTD_COURSE-STUD_ID'&nbsp;wa_final-stud_id.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_field&nbsp;USING&nbsp;'ZSTD_COURSE-STUD_NAME'&nbsp;wa_final-stud_name.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_field&nbsp;USING&nbsp;'ZSTD_COURSE-STUD_BATCH'&nbsp;wa_final-stud_batch.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_field&nbsp;USING&nbsp;'ZSTD_COURSE-STUD_COURSE'&nbsp;wa_final-stud_course.<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZSTD_BDC_CALL'&nbsp;USING&nbsp;lt_bdc<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mapping&nbsp;the&nbsp;bdc&nbsp;internal&nbsp;table&nbsp;to&nbsp;Session&nbsp;object<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'BDC_INSERT'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'ZSTD_BDC_CALL'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TABLES<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dynprotab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_bdc.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Close&nbsp;the&nbsp;Seesion&nbsp;Object<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'BDC_CLOSE_GROUP'.<br />
+*&nbsp;&nbsp;ENDIF.<br />
+*<br />
+*FORM&nbsp;map_info&nbsp;USING&nbsp;progname&nbsp;screenno.<br />
+*&nbsp;&nbsp;REFRESH&nbsp;lt_bdc.<br />
+*&nbsp;&nbsp;CLEAR&nbsp;wa_bdc.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-program&nbsp;=&nbsp;progname.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-dynpro&nbsp;=&nbsp;screenno.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-dynbegin&nbsp;=&nbsp;'X'.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_bdc&nbsp;TO&nbsp;lt_bdc.<br />
+*ENDFORM.<br />
+*<br />
+*FORM&nbsp;map_field&nbsp;USING&nbsp;fname&nbsp;fvalue.<br />
+*&nbsp;&nbsp;CLEAR&nbsp;wa_bdc.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-fnam&nbsp;=&nbsp;fname.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-fval&nbsp;=&nbsp;fvalue.<br />
+*&nbsp;&nbsp;APPEND&nbsp;wa_bdc&nbsp;to&nbsp;lt_bdc.<br />
+*ENDFORM.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

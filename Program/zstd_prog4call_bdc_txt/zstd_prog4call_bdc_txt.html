@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZSTD_PROG4CALL_BDC_TXT</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZSTD_PROG4CALL_BDC_TXT</h2>
+<h3> Description: Data Manipulation using call transaction</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZSTD_PROG4CALL_BDC_TXT.<br />
+<br />
+TYPES: BEGIN OF ty_std,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_id&nbsp;TYPE&nbsp;zstd_course-stud_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_name&nbsp;TYPE&nbsp;zstd_course-stud_name,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_batch&nbsp;TYPE&nbsp;zstd_course-stud_batch,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_course&nbsp;TYPE&nbsp;zstd_course-stud_course,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_std.<br />
+<br />
+&nbsp;DATA:&nbsp;lt_std&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;ty_std,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_std&nbsp;TYPE&nbsp;ty_std.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'GUI_UPLOAD'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'C:\Users\s4abap68\Desktop\Stud1.txt'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HAS_FIELD_SEPARATOR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;tables<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_tab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_std.<br />
+<br />
+&nbsp;&nbsp;IF&nbsp;lt_std&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;Map&nbsp;the&nbsp;final&nbsp;data&nbsp;to&nbsp;BDCDATA&nbsp;internal&nbsp;Table<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;lt_bdc&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;bdcdata,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc&nbsp;TYPE&nbsp;bdcdata.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_std&nbsp;INTO&nbsp;wa_std.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_info&nbsp;USING&nbsp;'ZSTD_PROG3CALL_BDC_TXT'&nbsp;'100'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_field&nbsp;USING&nbsp;'ZSTD_COURSE-STUD_ID'&nbsp;wa_std-stud_id.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_field&nbsp;USING&nbsp;'ZSTD_COURSE-STUD_NAME'&nbsp;wa_std-stud_name.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_field&nbsp;USING&nbsp;'ZSTD_COURSE-STUD_BATCH'&nbsp;wa_std-stud_batch.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;map_field&nbsp;USING&nbsp;'ZSTD_COURSE-STUD_COURSE'&nbsp;wa_std-stud_course.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZSTD_BDC_CALL'&nbsp;USING&nbsp;lt_bdc.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:/'END'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+FORM map_info USING progname screenno.<br />
+&nbsp;&nbsp;REFRESH&nbsp;lt_bdc.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_bdc.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-program&nbsp;=&nbsp;progname.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-dynpro&nbsp;=&nbsp;screenno.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-dynbegin&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_bdc&nbsp;TO&nbsp;lt_bdc.<br />
+ENDFORM.<br />
+<br />
+FORM map_field USING fname fvalue.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_bdc.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-fnam&nbsp;=&nbsp;fname.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_bdc-fval&nbsp;=&nbsp;fvalue.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_bdc&nbsp;to&nbsp;lt_bdc.<br />
+ENDFORM.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>
