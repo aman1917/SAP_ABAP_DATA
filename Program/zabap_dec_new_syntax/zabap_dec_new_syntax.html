@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZABAP_DEC_NEW_SYNTAX</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZABAP_DEC_NEW_SYNTAX</h2>
+<h3> Description: new Syntax</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT zabap_dec_new_syntax.<br />
+<br />
+types: BEGIN OF ty_simple,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;type&nbsp;i,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;type&nbsp;c,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_simple.<br />
+data: itab TYPE TABLE OF ty_simple.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa&nbsp;type&nbsp;ty_simple.<br />
+   </div>
+   <div class="code">
+data: lv_string type string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_country&nbsp;type&nbsp;string&nbsp;VALUE&nbsp;'India'.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*CONCATENATE&nbsp;'i&nbsp;love&nbsp;'&nbsp;''''&nbsp;'india'&nbsp;''''&nbsp;into&nbsp;lv_string&nbsp;RESPECTING&nbsp;BLANKS.<br />
+   </div>
+   <div class="code">
+lv_string = |i love '{ lv_country }'|.<br />
+WRITE : / lv_string.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*wa-a&nbsp;=&nbsp;10.<br />
+*wa-b&nbsp;=&nbsp;'X'.<br />
+*append&nbsp;wa&nbsp;to&nbsp;itab.<br />
+*wa-a&nbsp;=&nbsp;20.<br />
+*wa-b&nbsp;=&nbsp;'Y'.<br />
+*append&nbsp;wa&nbsp;to&nbsp;itab.<br />
+*wa-a&nbsp;=&nbsp;30.<br />
+*wa-b&nbsp;=&nbsp;'Z'.<br />
+*append&nbsp;wa&nbsp;to&nbsp;itab.<br />
+   </div>
+   <div class="code">
+append value #( a = 10 b = 'X' ) to itab.<br />
+append value #( a = 20 b = 'Y' ) to itab.<br />
+append value #( a = 30 b = 'Z' ) to itab.<br />
+itab = value #( ( a = 40 b = 'D' )  ( a = 50 b = 'O' ) ).<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*READ&nbsp;table&nbsp;itab&nbsp;into&nbsp;data(wa)&nbsp;with&nbsp;key&nbsp;b&nbsp;=&nbsp;'O'.<br />
+*data(wa)&nbsp;=&nbsp;itab[&nbsp;b&nbsp;=&nbsp;'O'].<br />
+*WRITE&nbsp;:&nbsp;/&nbsp;wa-a,&nbsp;wa-b.<br />
+<br />
+*LOOP&nbsp;AT&nbsp;itab&nbsp;into&nbsp;data(wa).<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;WRITE&nbsp;:&nbsp;/&nbsp;wa-a,&nbsp;wa-b.<br />
+*ENDLOOP.<br />
+<br />
+*data&nbsp;:&nbsp;bp_id&nbsp;type&nbsp;table&nbsp;of&nbsp;snwd_bpa,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa&nbsp;type&nbsp;snwd_bpa.<br />
+*1.&nbsp;Comma&nbsp;seperated&nbsp;column&nbsp;list&nbsp;is&nbsp;now&nbsp;possible<br />
+*2.&nbsp;When&nbsp;we&nbsp;use&nbsp;new&nbsp;SQL&nbsp;syntax&nbsp;we&nbsp;must&nbsp;use&nbsp;escaping&nbsp;of&nbsp;host&nbsp;variables&nbsp;@<br />
+   </div>
+   <div class="code">
+select bp_id, company_name from snwd_bpa into table @data(lt_bp).<br />
+   </div>
+   <div class="codeComment">
+*3.&nbsp;Inline&nbsp;Data&nbsp;Declaration<br />
+*loop&nbsp;at&nbsp;lt_bp&nbsp;into&nbsp;data(wa).<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;write&nbsp;:&nbsp;/&nbsp;wa-bp_id,&nbsp;wa-company_name.<br />
+*ENDLOOP.<br />
+*<br />
+*loop&nbsp;at&nbsp;lt_bp&nbsp;ASSIGNING&nbsp;FIELD-SYMBOL(&lt;fs&gt;).<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;WRITE&nbsp;:&nbsp;/&nbsp;&lt;fs&gt;-company_name.<br />
+*ENDLOOP.<br />
+<br />
+*Object&nbsp;traversal<br />
+*loop&nbsp;at&nbsp;lt_bp&nbsp;REFERENCE&nbsp;INTO&nbsp;data(lo_bp).<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;WRITE&nbsp;:&nbsp;/&nbsp;lo_bp-&gt;bp_id,&nbsp;lo_bp-&gt;company_name.<br />
+*ENDLOOP.<br />
+<br />
+*Working&nbsp;with&nbsp;objects&nbsp;in&nbsp;past<br />
+   </div>
+   <div class="code">
+data: lo_plane type ref to zcl_dec_airplane,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_color&nbsp;type&nbsp;char16.<br />
+<br />
+&nbsp;&nbsp;create&nbsp;object&nbsp;lo_plane.<br />
+&nbsp;&nbsp;lo_plane-&gt;set_color(&nbsp;'Red'&nbsp;).<br />
+&nbsp;&nbsp;lv_color&nbsp;=&nbsp;lo_plane-&gt;get_color(&nbsp;&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;WRITE&nbsp;:&nbsp;/&nbsp;lv_color.<br />
+<br />
+&nbsp;&nbsp;data(lo_plane2)&nbsp;=&nbsp;new&nbsp;zcl_dec_airplane(&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;lo_plane2-&gt;set_color(&nbsp;'Blue'&nbsp;).<br />
+&nbsp;&nbsp;WRITE&nbsp;:&nbsp;/&nbsp;lo_plane2-&gt;get_color(&nbsp;&nbsp;).<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

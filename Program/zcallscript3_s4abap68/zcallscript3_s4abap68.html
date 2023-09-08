@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZCALLSCRIPT3_S4ABAP68</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZCALLSCRIPT3_S4ABAP68</h2>
+<h3> Description: Call Script program</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZCALLSCRIPT3_S4ABAP68.<br />
+<br />
+PARAMETERS p_kunnr TYPE kna1-kunnr.<br />
+<br />
+TYPES: BEGIN OF ty_kna1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kunnr&nbsp;TYPE&nbsp;kna1-kunnr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name1&nbsp;TYPE&nbsp;kna1-name1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ort01&nbsp;TYPE&nbsp;kna1-ort01,<br />
+&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_kna1.<br />
+<br />
+&nbsp;&nbsp;DATA&nbsp;wa_kna1&nbsp;TYPE&nbsp;ty_kna1.<br />
+<br />
+&nbsp;TYPES&nbsp;:BEGIN&nbsp;OF&nbsp;ty_vbak,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vbeln&nbsp;TYPE&nbsp;vbak-vbeln,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;erdat&nbsp;TYPE&nbsp;vbak-erdat,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ernam&nbsp;TYPE&nbsp;vbak-ernam,<br />
+&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_vbak.<br />
+<br />
+&nbsp;&nbsp;&nbsp;DATA:&nbsp;lt_vbak&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;ty_vbak,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_vbak&nbsp;TYPE&nbsp;ty_vbak.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;get&nbsp;Cutomer&nbsp;data<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;kunnr&nbsp;name1&nbsp;ort01<br />
+&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;kna1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;wa_kna1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;kunnr&nbsp;=&nbsp;p_kunnr.<br />
+<br />
+&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;EQ&nbsp;0.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;get&nbsp;sales&nbsp;order&nbsp;of&nbsp;cutomer<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;vbeln&nbsp;erdat&nbsp;ernam<br />
+&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;vbak<br />
+&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;lt_vbak<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;kunnr&nbsp;=&nbsp;p_kunnr.<br />
+<br />
+&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Data&nbsp;FOund'&nbsp;TYPE&nbsp;'I'.<br />
+   </div>
+   <div class="codeComment">
+*<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;wa_print&nbsp;TYPE&nbsp;ITCPO.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;wa_print-tdpreview&nbsp;=&nbsp;'X'.<br />
+*<br />
+**&nbsp;Open&nbsp;the&nbsp;function&nbsp;module<br />
+*CALL&nbsp;FUNCTION&nbsp;'OPEN_FORM'<br />
+*&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;DIALOG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'&nbsp;'<br />
+*&nbsp;&nbsp;&nbsp;FORM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'ZSCRIPT3_ABAP68'<br />
+*&nbsp;&nbsp;&nbsp;LANGUAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;SY-LANGU<br />
+*&nbsp;&nbsp;&nbsp;OPTIONS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;wa_print.<br />
+*<br />
+**invoke&nbsp;window&nbsp;is&nbsp;to&nbsp;for&nbsp;customer<br />
+*<br />
+*CALL&nbsp;FUNCTION&nbsp;'WRITE_FORM'<br />
+*&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;ELEMENT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'E1'<br />
+*&nbsp;&nbsp;&nbsp;WINDOW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'WINDOW1'.<br />
+*<br />
+**invoke&nbsp;window&nbsp;is&nbsp;to&nbsp;logo<br />
+*<br />
+*CALL&nbsp;FUNCTION&nbsp;'WRITE_FORM'<br />
+*&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;ELEMENT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'E1'<br />
+*&nbsp;&nbsp;&nbsp;WINDOW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'WINDOW2'.<br />
+*<br />
+*&nbsp;LOOP&nbsp;AT&nbsp;lt_vbak&nbsp;INTO&nbsp;gs_vbak.<br />
+**&nbsp;&nbsp;invoke&nbsp;the&nbsp;window&nbsp;displaying&nbsp;sales&nbsp;data<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'WRITE_FORM'<br />
+*&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;ELEMENT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'E1'<br />
+*&nbsp;&nbsp;&nbsp;WINDOW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'MAIN'.<br />
+*<br />
+*&nbsp;ENDLOOP.<br />
+*<br />
+*<br />
+**close&nbsp;form<br />
+*<br />
+*&nbsp;CALL&nbsp;FUNCTION&nbsp;'CLOSE_FORM'.<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'No&nbsp;Sale&nbsp;Order'&nbsp;TYPE&nbsp;'E'.<br />
+&nbsp;ENDIF.<br />
+<br />
+ELSE.<br />
+&nbsp;&nbsp;MESSAGE&nbsp;'No&nbsp;data&nbsp;Found'&nbsp;TYPE&nbsp;'E'.<br />
+ENDIF.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;Data&nbsp;FOund<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

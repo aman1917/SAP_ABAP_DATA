@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZMAKE_PROGRAM20</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZMAKE_PROGRAM20</h2>
+<h3> Description: Creating Dropdown list</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+&nbsp;&nbsp;REPORT&nbsp;ZMAKE_PROGRAM20.<br />
+<br />
+data gv_abc(15) type c.<br />
+<br />
+parameters p_abc like gv_abc as listbox visible length 15 user-command fc1.<br />
+<br />
+data : t_values type table of vrm_value,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_values&nbsp;type&nbsp;vrm_value.<br />
+<br />
+&nbsp;&nbsp;selection-screen&nbsp;begin&nbsp;of&nbsp;block&nbsp;bk1&nbsp;with&nbsp;frame&nbsp;title&nbsp;t1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:&nbsp;p_c1&nbsp;as&nbsp;checkbox&nbsp;modif&nbsp;id&nbsp;id1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_c2&nbsp;as&nbsp;checkbox&nbsp;modif&nbsp;id&nbsp;id1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_c3&nbsp;as&nbsp;checkbox&nbsp;modif&nbsp;id&nbsp;id1.<br />
+&nbsp;&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk1.<br />
+<br />
+&nbsp;&nbsp;&nbsp;selection-screen&nbsp;begin&nbsp;of&nbsp;block&nbsp;bk2&nbsp;with&nbsp;frame&nbsp;title&nbsp;t2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:&nbsp;p_r1&nbsp;radiobutton&nbsp;group&nbsp;grp1&nbsp;modif&nbsp;id&nbsp;id2,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_r2&nbsp;radiobutton&nbsp;group&nbsp;grp1&nbsp;modif&nbsp;id&nbsp;id2,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_r3&nbsp;radiobutton&nbsp;group&nbsp;grp1&nbsp;modif&nbsp;id&nbsp;id2.<br />
+&nbsp;&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk2.<br />
+<br />
+&nbsp;&nbsp;selection-screen&nbsp;begin&nbsp;of&nbsp;block&nbsp;bk3&nbsp;with&nbsp;frame&nbsp;title&nbsp;t3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;selection-screen&nbsp;comment&nbsp;6(15)&nbsp;lb1&nbsp;modif&nbsp;id&nbsp;id3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;selection-screen&nbsp;comment&nbsp;/6(15)&nbsp;lb2&nbsp;modif&nbsp;id&nbsp;id3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selection-screen&nbsp;comment&nbsp;/6(15)&nbsp;lb3&nbsp;modif&nbsp;id&nbsp;id3.<br />
+&nbsp;&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk3.<br />
+<br />
+data gv_flag type i.<br />
+<br />
+initialization.<br />
+<br />
+&nbsp;&nbsp;t1&nbsp;=&nbsp;'Course'.<br />
+&nbsp;&nbsp;t2&nbsp;=&nbsp;'Study'.<br />
+&nbsp;&nbsp;t3&nbsp;=&nbsp;'Place'.<br />
+<br />
+&nbsp;&nbsp;lb1&nbsp;=&nbsp;'Mumbai'.<br />
+&nbsp;&nbsp;lb2&nbsp;=&nbsp;'Pune'.<br />
+&nbsp;&nbsp;lb3&nbsp;=&nbsp;'Raigad'.<br />
+<br />
+&nbsp;&nbsp;perform&nbsp;preparedropdown.<br />
+&nbsp;&nbsp;perform&nbsp;invisibleblocks.<br />
+<br />
+at selection-screen.<br />
+&nbsp;&nbsp;case&nbsp;sy-ucomm.<br />
+&nbsp;&nbsp;when&nbsp;'FC1'.<br />
+&nbsp;&nbsp;if&nbsp;p_abc&nbsp;=&nbsp;'K1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;gv_flag&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;elseif&nbsp;p_abc&nbsp;=&nbsp;'K2'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;gv_flag&nbsp;=&nbsp;2.<br />
+&nbsp;&nbsp;elseif&nbsp;p_abc&nbsp;=&nbsp;'K3'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;gv_flag&nbsp;=&nbsp;3.<br />
+&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;endcase.<br />
+<br />
+at selection-screen output.<br />
+&nbsp;&nbsp;if&nbsp;gv_flag&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;perform&nbsp;visibleblock1.<br />
+&nbsp;&nbsp;elseif&nbsp;gv_flag&nbsp;=&nbsp;2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;perform&nbsp;visibleblock2.<br />
+&nbsp;&nbsp;elseif&nbsp;gv_flag&nbsp;=&nbsp;3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;perform&nbsp;visibleblock3.<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+at selection-screen on help-request for p_abc.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;message&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;DROPDOWN'&nbsp;type&nbsp;'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'POPUP_TO_INFORM'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;titel&nbsp;=&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;DROPDOWN'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txt1&nbsp;=&nbsp;'Select&nbsp;a&nbsp;value&nbsp;from&nbsp;dropdown'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txt2&nbsp;=&nbsp;'On&nbsp;selecting&nbsp;display&nbsp;appropriate&nbsp;block'.<br />
+<br />
+<br />
+at selection-screen on help-request for p_c1.<br />
+&nbsp;&nbsp;message&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;CHECKBOX'&nbsp;type&nbsp;'I'.<br />
+<br />
+at selection-screen on help-request for p_r1.<br />
+&nbsp;&nbsp;message&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;FIRST&nbsp;RADIOBUTTON'&nbsp;type&nbsp;'I'.<br />
+<br />
+at selection-screen on help-request for p_r2.<br />
+&nbsp;&nbsp;message&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;SECOND&nbsp;RADIOBUTTON'&nbsp;type&nbsp;'I'.<br />
+<br />
+FORM preparedropdown .<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;wa_values.<br />
+&nbsp;&nbsp;wa_values-key&nbsp;=&nbsp;'K1'.<br />
+&nbsp;&nbsp;wa_values-text&nbsp;=&nbsp;'Core&nbsp;ABAP'.<br />
+&nbsp;&nbsp;append&nbsp;wa_values&nbsp;to&nbsp;t_values.<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;wa_values.<br />
+&nbsp;&nbsp;wa_values-key&nbsp;=&nbsp;'K2'.<br />
+&nbsp;&nbsp;wa_values-text&nbsp;=&nbsp;'OOPS&nbsp;ABAP'.<br />
+&nbsp;&nbsp;append&nbsp;wa_values&nbsp;to&nbsp;t_values.<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;wa_values.<br />
+&nbsp;&nbsp;wa_values-key&nbsp;=&nbsp;'K3'.<br />
+&nbsp;&nbsp;wa_values-text&nbsp;=&nbsp;'Cross&nbsp;ABAP'.<br />
+&nbsp;&nbsp;append&nbsp;wa_values&nbsp;to&nbsp;t_values.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'VRM_SET_VALUES'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'p_abc'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;t_values<br />
+&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID_ILLEGAL_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OTHERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;'Illegal&nbsp;Dropdown&nbsp;list&nbsp;box&nbsp;name'&nbsp;type&nbsp;'i'.<br />
+&nbsp;&nbsp;ELSEIF&nbsp;sy-subrc&nbsp;eq&nbsp;2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;'Unknown&nbsp;error'&nbsp;type&nbsp;'i'.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+ENDFORM.<br />
+<br />
+<br />
+FORM invisibleblocks .<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;screen.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;screen-group1&nbsp;=&nbsp;'ID1'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-group1&nbsp;=&nbsp;'ID2'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-group1&nbsp;=&nbsp;'ID3'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+FORM visibleblock1.<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;screen.<br />
+&nbsp;&nbsp;if&nbsp;screen-group1&nbsp;=&nbsp;'ID1'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BK1'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'T1'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'P_ABC'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+FORM visibleblock2.<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;screen.<br />
+&nbsp;&nbsp;if&nbsp;screen-group1&nbsp;=&nbsp;'ID2'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BK2'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'T2'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'P_ABC'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+FORM visibleblock3.<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;screen.<br />
+&nbsp;&nbsp;if&nbsp;screen-group1&nbsp;=&nbsp;'ID3'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BK3'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'T3'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'P_ABC'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Selection&nbsp;texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;P_ABC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select&nbsp;Option<br />
+*&nbsp;P_C1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ABAP<br />
+*&nbsp;P_C2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HANA<br />
+*&nbsp;P_C3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UI5<br />
+*&nbsp;P_R1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CORE&nbsp;ABAP<br />
+*&nbsp;P_R2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OOPS&nbsp;ABAP<br />
+*&nbsp;P_R3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CROSS<br />
+<br />
+<br />
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;F1&nbsp;HELP&nbsp;FOR&nbsp;CHECKBOX<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

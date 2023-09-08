@@ -1,0 +1,567 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZALV_REPORT_CLASS_PRO1_S4_68</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZALV_REPORT_CLASS_PRO1_S4_68</h2>
+<h3> Description: Alv reporting using classes</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT zalv_report_class_pro1_s4_68.<br />
+DATA v_kunnr TYPE kna1-kunnr.<br />
+SELECT-OPTIONS so_kunnr FOR v_kunnr DEFAULT '1000' to '2200'.<br />
+<br />
+DATA: kna1_cont TYPE REF TO cl_gui_custom_container,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kna1_grid&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_alv_grid,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vbak_cont&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_custom_container,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vbak_grid&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_alv_grid,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vbap_cont&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_custom_container,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vbap_grid&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_alv_grid.<br />
+<br />
+TYPES :BEGIN OF ty_kna1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;structure&nbsp;<a&nbsp;href&nbsp;="zckna1/dictionary-zckna1.html">zckna1</a>.<br />
+TYPES END OF ty_kna1.<br />
+<br />
+DATA: lt_kna1 TYPE STANDARD TABLE OF ty_kna1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_kna1&nbsp;TYPE&nbsp;ty_kna1.<br />
+<br />
+TYPES: BEGIN OF ty_vbak.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;structure&nbsp;<a&nbsp;href&nbsp;="zcvbak/dictionary-zcvbak.html">zcvbak</a>.<br />
+TYPES: netwr TYPE vbak-netwr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_vbak.<br />
+<br />
+DATA: lt_vbak TYPE TABLE OF ty_vbak,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_vbak&nbsp;TYPE&nbsp;ty_vbak.<br />
+<br />
+&nbsp;TYPES:&nbsp;BEGIN&nbsp;OF&nbsp;ty_final_vbak.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;structure&nbsp;<a&nbsp;href&nbsp;="zcvbak/dictionary-zcvbak.html">zcvbak</a>.<br />
+TYPES: netwr TYPE vbak-netwr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cellstyle&nbsp;TYPE&nbsp;lvc_t_styl,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_final_vbak.<br />
+<br />
+DATA: lt_final_vbak TYPE TABLE OF ty_final_vbak,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final_vbak&nbsp;TYPE&nbsp;ty_final_vbak.<br />
+<br />
+TYPES BEGIN OF ty_vbap.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include&nbsp;structure&nbsp;<a&nbsp;href&nbsp;="zcvbap/dictionary-zcvbap.html">zcvbap</a>.<br />
+TYPES: rowcolor TYPE c,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_vbap.<br />
+<br />
+DATA: lt_vbap TYPE TABLE OF ty_vbap,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_vbap&nbsp;TYPE&nbsp;ty_vbap.<br />
+<br />
+FIELD-SYMBOLS &lt;fwa&gt; LIKE LINE OF lt_vbap.<br />
+<br />
+DATA: lt_fcat TYPE lvc_t_fcat,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat&nbsp;TYPE&nbsp;lvc_s_fcat.<br />
+<br />
+DATA  wa_styl TYPE lvc_s_styl.<br />
+<br />
+DATA wa_layo TYPE lvc_s_layo.<br />
+<br />
+DATA: lt_function TYPE ui_functions,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_function&nbsp;TYPE&nbsp;ui_func.<br />
+<br />
+<br />
+CLASS lcl_eventreceiver DEFINITION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;PUBLIC&nbsp;SECTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;METHODS&nbsp;handle_double_click&nbsp;FOR&nbsp;EVENT&nbsp;double_click<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OF&nbsp;cl_gui_alv_grid&nbsp;IMPORTING&nbsp;e_row&nbsp;e_column.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;METHODS&nbsp;handle_button_click&nbsp;FOR&nbsp;EVENT&nbsp;button_click<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OF&nbsp;cl_gui_alv_grid&nbsp;IMPORTING&nbsp;es_col_id&nbsp;es_row_no.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;METHODS&nbsp;handle_hotspot_click&nbsp;FOR&nbsp;EVENT&nbsp;hotspot_click<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OF&nbsp;cl_gui_alv_grid&nbsp;IMPORTING&nbsp;e_row_id.<br />
+ENDCLASS.<br />
+<br />
+<br />
+CLASS lcl_eventreceiver IMPLEMENTATION.<br />
+&nbsp;&nbsp;METHOD&nbsp;handle_double_click.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CASE&nbsp;e_column-fieldname.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'KUNNR'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Double&nbsp;clicked&nbsp;on&nbsp;customer'&nbsp;TYPE&nbsp;'I'.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extract&nbsp;interacted&nbsp;customer<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;wa_kna1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;lt_kna1&nbsp;INTO&nbsp;wa_kna1&nbsp;INDEX&nbsp;e_row-index&nbsp;TRANSPORTING&nbsp;kunnr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;getvbak.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lt_vbak&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;SCREEN&nbsp;200.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'No&nbsp;sales&nbsp;order&nbsp;for&nbsp;selected&nbsp;customer'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;OTHERS.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Please&nbsp;Double&nbsp;clicked&nbsp;on&nbsp;customer'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDCASE.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Double&nbsp;click'&nbsp;TYPE&nbsp;'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;ENDMETHOD.<br />
+&nbsp;&nbsp;METHOD&nbsp;handle_button_click.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CASE&nbsp;es_col_id-fieldname.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'VBELN'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Button&nbsp;CLick'&nbsp;TYPE&nbsp;'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;wa_final_vbak.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;lt_final_vbak&nbsp;INTO&nbsp;wa_final_vbak&nbsp;INDEX&nbsp;es_row_no-row_id&nbsp;TRANSPORTING&nbsp;vbeln.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get&nbsp;selected&nbsp;sales&nbsp;items<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;getvbap.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;SCREEN&nbsp;300.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;OTHERS.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Please&nbsp;click&nbsp;for&nbsp;a&nbsp;button'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDCASE.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+&nbsp;&nbsp;METHOD&nbsp;handle_hotspot_click.<br />
+&nbsp;&nbsp;CLEAR&nbsp;wa_vbap.<br />
+&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;lt_vbap&nbsp;INTO&nbsp;wa_vbap&nbsp;INDEX&nbsp;e_row_id-index&nbsp;TRANSPORTING&nbsp;matnr.<br />
+&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;PARAMETER&nbsp;ID&nbsp;'MAT'&nbsp;FIELD&nbsp;wa_vbap-matnr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'MM03'.<br />
+&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+ENDCLASS.<br />
+<br />
+DATA ob TYPE REF TO lcl_eventreceiver.<br />
+<br />
+START-OF-SELECTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;SCREEN&nbsp;100.<br />
+<br />
+MODULE status_0100 OUTPUT.<br />
+&nbsp;&nbsp;IF&nbsp;kna1_cont&nbsp;IS&nbsp;NOT&nbsp;BOUND."is&nbsp;initial<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;PF-STATUS&nbsp;'STATUS100'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;custom&nbsp;container&nbsp;with&nbsp;custom&nbsp;control<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;kna1_cont<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'CUST_CTRL1'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;alv&nbsp;grid&nbsp;with&nbsp;customer&nbsp;container<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;kna1_grid<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_parent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;kna1_cont.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;retrieve&nbsp;customer&nbsp;data.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;getkna1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;lt_kna1&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;register&nbsp;the&nbsp;handler&nbsp;for&nbsp;customer&nbsp;grid<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;register_handler.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;data<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;displaykna1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;ENDIF.<br />
+ENDMODULE.<br />
+<br />
+MODULE user_command_0100 INPUT.<br />
+&nbsp;&nbsp;CASE&nbsp;sy-ucomm.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'BACK'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LEAVE&nbsp;PROGRAM.<br />
+&nbsp;&nbsp;ENDCASE.<br />
+ENDMODULE.<br />
+<br />
+FORM getkna1 .<br />
+&nbsp;&nbsp;SELECT&nbsp;kunnr&nbsp;land1&nbsp;name1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;kna1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;lt_kna1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;kunnr&nbsp;IN&nbsp;so_kunnr.<br />
+ENDFORM.<br />
+<br />
+FORM displaykna1 .<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;kna1_grid-&gt;set_table_for_first_display<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_structure_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'ZCKNA1'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CHANGING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_outtab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_kna1.<br />
+ENDFORM.<br />
+<br />
+FORM register_handler .<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;ob.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;HANDLER&nbsp;ob-&gt;handle_double_click&nbsp;FOR&nbsp;kna1_grid.<br />
+ENDFORM.<br />
+<br />
+FORM getvbak.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;REFRESH&nbsp;lt_vbak.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;vbeln&nbsp;erdat&nbsp;erzet&nbsp;ernam&nbsp;netwr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;vbak<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;lt_vbak<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;kunnr&nbsp;eq&nbsp;wa_kna1-kunnr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;REFRESH&nbsp;lt_final_vbak.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;transfer&nbsp;vbak&nbsp;table&nbsp;data&nbsp;to&nbsp;final<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_vbak&nbsp;INTO&nbsp;wa_vbak.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final_vbak-vbeln&nbsp;=&nbsp;wa_vbak-vbeln.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final_vbak-erdat&nbsp;=&nbsp;wa_vbak-erdat.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final_vbak-erzet&nbsp;=&nbsp;wa_vbak-erzet.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final_vbak-ernam&nbsp;=&nbsp;wa_vbak-ernam.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_final_vbak-netwr&nbsp;=&nbsp;wa_vbak-netwr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_final_vbak&nbsp;to&nbsp;lt_final_vbak.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+ENDFORM.<br />
+<br />
+MODULE status_0200 OUTPUT.<br />
+&nbsp;IF&nbsp;vbak_cont&nbsp;IS&nbsp;NOT&nbsp;BOUND."is&nbsp;initial<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;PF-STATUS&nbsp;'STATUS0200'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;custom&nbsp;container&nbsp;with&nbsp;custom&nbsp;control<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;vbak_cont<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'CUST_CTRL2'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;alv&nbsp;grid&nbsp;with&nbsp;customer&nbsp;container<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;vbak_grid<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_parent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;vbak_cont.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;retrieve&nbsp;data&nbsp;using&nbsp;field&nbsp;catalog<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;getfieldvbak.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;get&nbsp;cellstyle<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;cellstyling.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;layout<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;layout.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;retrieve&nbsp;customer&nbsp;data.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;handler<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;handle_reg.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;data<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;displayvbak.<br />
+&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;PERFORM&nbsp;layout.<br />
+&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;vbak_grid-&gt;refresh_table_display.<br />
+&nbsp;ENDIF.<br />
+ENDMODULE.<br />
+<br />
+MODULE user_command_0200 INPUT.<br />
+&nbsp;&nbsp;CASE&nbsp;sy-ucomm.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'BACK'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LEAVE&nbsp;TO&nbsp;SCREEN&nbsp;100.<br />
+&nbsp;&nbsp;ENDCASE.<br />
+ENDMODULE.<br />
+<br />
+FORM displayvbak.<br />
+CALL METHOD vbak_grid-&gt;set_table_for_first_display<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;is_layout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;wa_layo<br />
+&nbsp;&nbsp;CHANGING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;it_outtab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_final_vbak<br />
+&nbsp;&nbsp;&nbsp;&nbsp;it_fieldcatalog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_fcat.<br />
+ENDFORM.<br />
+<br />
+FORM getfieldvbak.<br />
+CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'<br />
+&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;I_STRUCTURE_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'ZCVBAK'<br />
+&nbsp;&nbsp;CHANGING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ct_fieldcat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_fcat.<br />
+<br />
+&nbsp;&nbsp;IF&nbsp;lt_fcat&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'NETWR'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;&nbsp;&nbsp;=&nbsp;5.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-coltext&nbsp;&nbsp;&nbsp;=&nbsp;'Net&nbsp;Value'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-outputlen&nbsp;=&nbsp;20.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;lt_fcat.<br />
+<br />
+&nbsp;&nbsp;ENDIF.<br />
+ENDFORM.<br />
+<br />
+FORM cellstyling.<br />
+&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_final_vbak&nbsp;INTO&nbsp;wa_final_vbak.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;wa_final_vbak-netwr&nbsp;&gt;=&nbsp;50000.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;wa_styl.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_styl-fieldname&nbsp;=&nbsp;'VBELN'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_styl-style&nbsp;=&nbsp;cl_gui_alv_grid=&gt;mc_style_button.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_styl&nbsp;to&nbsp;wa_final_vbak-cellstyle.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT&nbsp;wa_styl&nbsp;into&nbsp;TABLE&nbsp;wa_final_vbak-cellstyle.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODIFY&nbsp;lt_final_vbak&nbsp;FROM&nbsp;wa_final_vbak&nbsp;TRANSPORTING&nbsp;cellstyle.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+ENDFORM.<br />
+<br />
+FORM layout.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;wa_layo.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_layo-stylefname&nbsp;=&nbsp;'CELLSTYLE'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_layo-no_toolbar&nbsp;=&nbsp;'X'.<br />
+ENDFORM.<br />
+<br />
+FORM handle_reg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;ob.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;HANDLER&nbsp;ob-&gt;handle_button_click&nbsp;FOR&nbsp;vbak_grid.<br />
+ENDFORM.<br />
+<br />
+FORM getvbap.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;mandt&nbsp;vbeln&nbsp;posnr&nbsp;matnr&nbsp;netwr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;vbap<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;lt_vbap<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;vbeln&nbsp;=&nbsp;wa_final_vbak-vbeln.<br />
+ENDFORM.<br />
+<br />
+MODULE status_0300 OUTPUT.<br />
+IF vbap_cont IS NOT BOUND.<br />
+&nbsp;SET&nbsp;PF-STATUS&nbsp;'STATUS300'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;custom&nbsp;container&nbsp;with&nbsp;custom&nbsp;control<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;vbap_cont<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'CUST_CTRL3'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;alv&nbsp;grid&nbsp;with&nbsp;customer&nbsp;container<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;vbap_grid<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_parent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;vbap_cont.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;generate&nbsp;field&nbsp;catalog&nbsp;for&nbsp;a&nbsp;field<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;fldcatvbap.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;register&nbsp;the&nbsp;handler&nbsp;event<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;handler_reg.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;rowcoloring<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;rowcoloring.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;layout&nbsp;for&nbsp;sales&nbsp;item<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;layoutvbap.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;excluding&nbsp;tool&nbsp;bar&nbsp;standred&nbsp;button<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;excludebutton.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;displayvbap<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;displayvbap.<br />
+ELSE.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;vbap_grid-&gt;refresh_table_display.<br />
+ENDIF.<br />
+ENDMODULE.<br />
+<br />
+MODULE user_command_0300 INPUT.<br />
+CASE sy-ucomm.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'BACK'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LEAVE&nbsp;TO&nbsp;SCREEN&nbsp;200.<br />
+&nbsp;&nbsp;ENDCASE.<br />
+ENDMODULE.<br />
+<br />
+FORM fldcatvbap.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;REFRESH&nbsp;lt_fcat.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;wa_fcat.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'VBELN'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-coltext&nbsp;=&nbsp;'Sales&nbsp;Documention'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-outputlen&nbsp;=&nbsp;15.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;lt_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'POSNR'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-coltext&nbsp;=&nbsp;'Item&nbsp;No'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-outputlen&nbsp;=&nbsp;15.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;lt_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'MATNR'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-coltext&nbsp;=&nbsp;'Material&nbsp;No.'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-outputlen&nbsp;=&nbsp;25.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-hotspot&nbsp;&nbsp;&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;lt_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'NETWE'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-coltext&nbsp;=&nbsp;'Net&nbsp;Values'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-outputlen&nbsp;=&nbsp;15.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;lt_fcat.<br />
+<br />
+ENDFORM.<br />
+<br />
+FORM displayvbap.<br />
+CALL METHOD vbap_grid-&gt;set_table_for_first_display<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;is_layout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;wa_layo<br />
+&nbsp;&nbsp;&nbsp;&nbsp;it_toolbar_excluding&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_function<br />
+&nbsp;&nbsp;CHANGING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;it_outtab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_vbap<br />
+&nbsp;&nbsp;&nbsp;&nbsp;it_fieldcatalog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_fcat.<br />
+ENDFORM.<br />
+<br />
+FORM handler_reg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;ob.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;HANDLER&nbsp;ob-&gt;handle_hotspot_click&nbsp;FOR&nbsp;vbap_grid.<br />
+ENDFORM.<br />
+<br />
+FORM rowcoloring.<br />
+&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_vbap&nbsp;ASSIGNING&nbsp;&lt;fwa&gt;.<br />
+&nbsp;&nbsp;IF&nbsp;&lt;fwa&gt;-netwr&nbsp;&lt;&nbsp;10000.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;fwa&gt;-rowcolor&nbsp;=&nbsp;'C610'.<br />
+&nbsp;&nbsp;ELSEIF&nbsp;&lt;fwa&gt;-netwr&nbsp;&gt;&nbsp;10000&nbsp;AND&nbsp;&lt;fwa&gt;-netwr&nbsp;&lt;&nbsp;30000.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;fwa&gt;-rowcolor&nbsp;=&nbsp;'C210'.<br />
+&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;fwa&gt;-rowcolor&nbsp;=&nbsp;'C310'.<br />
+&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;ENDLOOP.<br />
+ENDFORM.<br />
+<br />
+FORM layoutvbap.<br />
+CLEAR wa_layo.<br />
+wa_layo-info_fname = 'ROWCOLOR'.<br />
+ENDFORM.<br />
+<br />
+FORM excludebutton.<br />
+CLEAR v_function.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;v_function&nbsp;=&nbsp;cl_gui_alv_grid=&gt;mc_fc_find.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;v_function&nbsp;TO&nbsp;lt_function.<br />
+CLEAR v_function.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;v_function&nbsp;=&nbsp;cl_gui_alv_grid=&gt;mc_fc_print.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;v_function&nbsp;TO&nbsp;lt_function.<br />
+<br />
+ENDFORM.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;No&nbsp;sales&nbsp;order&nbsp;for&nbsp;selected&nbsp;customer<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

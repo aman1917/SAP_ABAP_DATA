@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZASSIGNMENT004_SUBDEF</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZASSIGNMENT004_SUBDEF</h2>
+<h3> Description: Include ZASSIGNMENT004_SUBDEF</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+FORM fetch .<br />
+&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;*&nbsp;FROM&nbsp;zstd_cour&nbsp;WHERE&nbsp;std_id&nbsp;=&nbsp;@p_stdid<br />
+&nbsp;&nbsp;&nbsp;INTO&nbsp;@wa_cor.<br />
+ENDFORM.<br />
+<br />
+FORM setdata .<br />
+&nbsp;&nbsp;p_stdid&nbsp;=&nbsp;wa_cor-std_id.<br />
+&nbsp;&nbsp;p_stdnm&nbsp;=&nbsp;wa_cor-std_name.<br />
+&nbsp;&nbsp;p_batch&nbsp;=&nbsp;wa_cor-std_batch.<br />
+&nbsp;&nbsp;p_course&nbsp;=&nbsp;wa_cor-std_course.<br />
+ENDFORM.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM insert_op .<br />
+&nbsp;&nbsp;&nbsp;clear&nbsp;wa_cor.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;wa_cor-mandt&nbsp;=&nbsp;sy-mandt.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;wa_cor-std_id&nbsp;=&nbsp;p_stdid.<br />
+&nbsp;&nbsp;wa_cor-std_name&nbsp;=&nbsp;p_stdnm.<br />
+&nbsp;&nbsp;wa_cor-std_batch&nbsp;=&nbsp;p_batch.<br />
+&nbsp;&nbsp;wa_cor-std_course&nbsp;=&nbsp;p_course.<br />
+&nbsp;&nbsp;INSERT&nbsp;zstd_cour&nbsp;FROM&nbsp;wa_cor.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;If&nbsp;it&nbsp;contain&nbsp;values&nbsp;then&nbsp;its&nbsp;ok&nbsp;to&nbsp;us<br />
+*&nbsp;&nbsp;INSERT&nbsp;INTO&nbsp;cor&nbsp;VALUES&nbsp;@(&nbsp;VALUE&nbsp;#(<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;std_id&nbsp;=&nbsp;p_stdid&nbsp;std_name&nbsp;=&nbsp;p_stdnm&nbsp;std_batch&nbsp;=&nbsp;p_batch&nbsp;std_course&nbsp;=&nbsp;p_course&nbsp;)&nbsp;).<br />
+   </div>
+   <div class="code">
+ENDFORM.<br />
+<br />
+FORM update_op .<br />
+&nbsp;&nbsp;UPDATE&nbsp;zstd_cour<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;std_name&nbsp;=&nbsp;p_stdnm&nbsp;std_batch&nbsp;=&nbsp;p_batch&nbsp;std_course&nbsp;=&nbsp;p_course<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;std_id&nbsp;=&nbsp;p_stdid.<br />
+ENDFORM.<br />
+<br />
+FORM modify_op .<br />
+&nbsp;&nbsp;MODIFY&nbsp;zstd_cour&nbsp;FROM&nbsp;@(&nbsp;VALUE&nbsp;#(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;std_id&nbsp;=&nbsp;p_stdid&nbsp;std_name&nbsp;=&nbsp;p_stdnm&nbsp;std_batch&nbsp;=&nbsp;p_batch&nbsp;std_course&nbsp;=&nbsp;p_course&nbsp;)&nbsp;).<br />
+ENDFORM.<br />
+<br />
+FORM delete_op .<br />
+&nbsp;&nbsp;&nbsp;DELETE&nbsp;FROM&nbsp;zstd_cour&nbsp;WHERE&nbsp;std_id&nbsp;=&nbsp;@p_stdid.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;DELETE&nbsp;zstd_cour&nbsp;FROM&nbsp;@(&nbsp;VALUE&nbsp;#(&nbsp;std_id&nbsp;=&nbsp;p_stdid&nbsp;)&nbsp;).<br />
+   </div>
+   <div class="code">
+ENDFORM.<br />
+<br />
+FORM display .<br />
+&nbsp;&nbsp;SELECT&nbsp;*&nbsp;FROM&nbsp;zstd_cour&nbsp;INTO&nbsp;TABLE&nbsp;lt_cor.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;lt_cor&nbsp;by&nbsp;std_id.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_cor&nbsp;INTO&nbsp;wa_cor.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;wa_cor-std_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_cor-std_name,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_cor-std_batch,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_cor-std_course.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+<br />
+ENDFORM.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

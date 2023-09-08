@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZBAPI_COURSE</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for function ZBAPI_COURSE</h2>
+<h3> Description: Course Data</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+FUNCTION ZBAPI_COURSE.<br />
+   </div>
+   <div class="codeComment">
+*"----------------------------------------------------------------------<br />
+*"*"Local Interface:<br />
+*"  IMPORTING<br />
+*"     VALUE(V_STUD_ID) TYPE  ZST_COUR-STUD_ID<br />
+*"     VALUE(V_STUD_NAME) TYPE  ZST_COUR-STUD_NAME<br />
+*"     VALUE(V_STUD_BATCH) TYPE  ZST_COUR-STUD_BATCH<br />
+*"     VALUE(V_STUD_COURSE) TYPE  ZST_COUR-STUD_COURSE<br />
+*"  EXPORTING<br />
+*"     REFERENCE(RETURN) LIKE  BAPIRET2 STRUCTURE  BAPIRET2<br />
+*"  TABLES<br />
+*"      LT_COURSE STRUCTURE  ZST_COUR<br />
+*"----------------------------------------------------------------------<br />
+
+<div class="codeComment">*       <a href ="global-zbapi_course.html">Global data declarations</a></div><br />
+   </div>
+   <div class="code">
+&nbsp;DATA:&nbsp;wa_course&nbsp;TYPE&nbsp;zstd_course.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_course-stud_id&nbsp;=&nbsp;&nbsp;v_stud_id&nbsp;&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_course-stud_name&nbsp;=&nbsp;v_stud_name.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_course-stud_batch&nbsp;=&nbsp;v_stud_batch.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_course-stud_course&nbsp;=&nbsp;v_stud_course.<br />
+<br />
+&nbsp;&nbsp;MODIFY&nbsp;zstd_course&nbsp;FROM&nbsp;wa_course.<br />
+&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+   </div>
+   <div class="codeComment">
+*    MESSAGE 'Record Modify Successfully' TYPE 'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;stud_id&nbsp;stud_name&nbsp;stud_batch&nbsp;stud_course<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;zstd_course<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;LT_COURSE.<br />
+   </div>
+   <div class="codeComment">
+*      WHERE stud_id = V_STUD_ID.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+<br />
+ENDFUNCTION.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

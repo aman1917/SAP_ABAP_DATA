@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZABAP_NEW_SQL</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZABAP_NEW_SQL</h2>
+<h3> Description: new SQL syntax</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT zabap_new_sql.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*data&nbsp;:&nbsp;lv_multiply&nbsp;type&nbsp;p&nbsp;DECIMALS&nbsp;2.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_multiply&nbsp;=&nbsp;'0.90'.<br />
+*select&nbsp;so_id,&nbsp;ceil(&nbsp;gross_amount&nbsp;*&nbsp;@lv_multiply&nbsp;)&nbsp;as&nbsp;gross_amount&nbsp;from&nbsp;snwd_so&nbsp;into&nbsp;table&nbsp;@data(itab).<br />
+*loop&nbsp;at&nbsp;itab&nbsp;into&nbsp;data(wa).<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;WRITE&nbsp;:&nbsp;/&nbsp;wa-so_id,&nbsp;wa-gross_amount.<br />
+*endloop.<br />
+*yes<br />
+*select&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;so_id,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;when&nbsp;gross_amount&nbsp;&gt;&nbsp;10000<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then&nbsp;'High&nbsp;Value'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;'Low&nbsp;Value'&nbsp;end&nbsp;as&nbsp;valued<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;snwd_so&nbsp;into&nbsp;table&nbsp;@data(itab).<br />
+<br />
+   </div>
+   <div class="code">
+SELECT '0000' && category as category, avg( price ) as price, currency_code from snwd_pd<br />
+group by  category, currency_code having sum( price ) &gt; 5000<br />
+into table @data(itab).<br />
+<br />
+loop at itab into data(wa).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write&nbsp;:&nbsp;/&nbsp;wa-category,&nbsp;wa-price.<br />
+ENDLOOP.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*select&nbsp;bp_id,&nbsp;company_name,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;bp_role<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;'01'&nbsp;then&nbsp;'Customer'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;'02'&nbsp;then&nbsp;'Supplier'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;as&nbsp;bp_role<br />
+*&nbsp;into&nbsp;table&nbsp;@data(itab)<br />
+*from&nbsp;snwd_bpa.<br />
+*<br />
+*loop&nbsp;at&nbsp;itab&nbsp;into&nbsp;data(wa).<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;WRITE&nbsp;:&nbsp;/&nbsp;wa-bp_id,&nbsp;wa-company_name,&nbsp;wa-bp_role.<br />
+*ENDLOOP.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

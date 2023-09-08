@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZMAKE_PROGRAM27</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZMAKE_PROGRAM27</h2>
+<h3> Description: Selection Option</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZMAKE_PROGRAM27.<br />
+<br />
+data v_vbeln type vbak-vbeln.<br />
+select-options so_vbeln for v_vbeln default '10' to '100' no-extension.<br />
+<br />
+types: begin of ty_salesheader,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vbeln&nbsp;type&nbsp;vbak-vbeln,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;erdat&nbsp;type&nbsp;vbak-erdat,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;erzet&nbsp;type&nbsp;vbak-erzet,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ernam&nbsp;type&nbsp;vbak-ernam,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ty_salesheader.<br />
+<br />
+data: lt_salesheader type table of ty_salesheader,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesheader&nbsp;type&nbsp;ty_salesheader.<br />
+<br />
+types: begin of ty_salesitem,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vbeln&nbsp;type&nbsp;vbap-vbeln,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posnr&nbsp;type&nbsp;vbap-posnr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matnr&nbsp;type&nbsp;vbap-matnr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;netwr&nbsp;type&nbsp;vbap-netwr,<br />
+&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ty_salesitem.<br />
+<br />
+data: lt_salesitem type table of ty_salesitem,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesitem&nbsp;type&nbsp;ty_salesitem.<br />
+<br />
+start-of-selection.<br />
+&nbsp;&nbsp;perform&nbsp;getsalesheaderdata.<br />
+&nbsp;&nbsp;if&nbsp;lt_salesheader&nbsp;is&nbsp;not&nbsp;initial.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;perform&nbsp;getsalesitem.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;lt_salesitem&nbsp;is&nbsp;not&nbsp;initial.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perform&nbsp;displaysalesdata.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+FORM getsalesheaderdata .<br />
+&nbsp;&nbsp;select&nbsp;vbeln&nbsp;erdat&nbsp;erzet&nbsp;ernam<br />
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;vbak<br />
+&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;table&nbsp;lt_salesheader<br />
+&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;vbeln&nbsp;in&nbsp;so_vbeln.<br />
+ENDFORM.<br />
+<br />
+FORM getsalesitem .<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;loop&nbsp;at&nbsp;lt_salesheader&nbsp;into&nbsp;wa_salesheader.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;vbeln&nbsp;posnr&nbsp;matnr&nbsp;netwr<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;vbap<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;appending&nbsp;table&nbsp;lt_salesitem<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;vbeln&nbsp;=&nbsp;wa_salesheader-vbeln.<br />
+*&nbsp;&nbsp;endloop.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;loop&nbsp;at&nbsp;lt_salesheader&nbsp;into&nbsp;wa_salesheader.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;vbeln&nbsp;posnr&nbsp;matnr&nbsp;netwr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;vbap<br />
+&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;table&nbsp;lt_salesitem<br />
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;all&nbsp;entries&nbsp;in&nbsp;lt_salesheader<br />
+&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;vbeln&nbsp;=&nbsp;lt_salesheader-vbeln.<br />
+&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+FORM displaysalesdata.<br />
+&nbsp;&nbsp;sort&nbsp;lt_salesheader&nbsp;by&nbsp;vbeln.<br />
+&nbsp;&nbsp;sort&nbsp;lt_salesitem&nbsp;by&nbsp;vbeln&nbsp;posnr.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;loop&nbsp;at&nbsp;lt_salesheader&nbsp;into&nbsp;wa_salesheader.<br />
+*&nbsp;&nbsp;&nbsp;format&nbsp;color&nbsp;3.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;wa_salesheader-vbeln,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesheader-erdat,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesheader-erzet,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesheader-ernam.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;at&nbsp;lt_salesitem&nbsp;into&nbsp;wa_salesitem&nbsp;where&nbsp;vbeln&nbsp;=&nbsp;wa_salesheader-vbeln.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;color&nbsp;7.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:/(5)&nbsp;wa_salesitem-vbeln,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesitem-posnr,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesitem-matnr,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesitem-netwr.<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+*&nbsp;&nbsp;endloop.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;loop&nbsp;at&nbsp;lt_salesitem&nbsp;into&nbsp;wa_salesitem.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;change&nbsp;of&nbsp;wa_salesitem-vbeln.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;wa_salesheader.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;lt_salesheader&nbsp;into&nbsp;wa_salesheader<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;key&nbsp;vbeln&nbsp;=&nbsp;wa_salesitem-vbeln.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;color&nbsp;3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;wa_salesheader-vbeln,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesheader-erdat,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesheader-erzet,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesheader-ernam.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endon.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;color&nbsp;7.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:/(5)&nbsp;wa_salesitem-vbeln,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesitem-posnr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesitem-matnr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_salesitem-netwr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;color&nbsp;off.<br />
+&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

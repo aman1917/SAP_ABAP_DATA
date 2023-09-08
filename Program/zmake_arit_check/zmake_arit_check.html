@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZMAKE_ARIT_CHECK</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZMAKE_ARIT_CHECK</h2>
+<h3> Description: Arithmatic Program</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Report&nbsp;ZMAKE_ARITHMATIC<br />
+*&---------------------------------------------------------------------*<br />
+*&<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+REPORT ZMAKE_ARIT_CHECK.<br />
+<br />
+data :v_z type i,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_z&nbsp;type&nbsp;f.<br />
+<br />
+data: lv_str1 type string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str2&nbsp;type&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_msg&nbsp;type&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_temp&nbsp;type&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_len&nbsp;type&nbsp;string,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_pos&nbsp;type&nbsp;string.<br />
+<br />
+selection-screen begin of block bk1 with frame title t1.<br />
+<br />
+&nbsp;&nbsp;selection-screen&nbsp;begin&nbsp;of&nbsp;line.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;selection-screen&nbsp;comment&nbsp;8(20)&nbsp;lb1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;parameters&nbsp;p_x&nbsp;type&nbsp;i&nbsp;obligatory.<br />
+&nbsp;&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;line.<br />
+<br />
+&nbsp;&nbsp;selection-screen&nbsp;begin&nbsp;of&nbsp;line.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;selection-screen&nbsp;comment&nbsp;8(20)&nbsp;lb2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;parameters&nbsp;p_y&nbsp;type&nbsp;i&nbsp;obligatory.<br />
+&nbsp;&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;line.<br />
+<br />
+&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk1.<br />
+<br />
+&nbsp;selection-screen&nbsp;begin&nbsp;of&nbsp;block&nbsp;bk2&nbsp;with&nbsp;frame&nbsp;title&nbsp;t2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:&nbsp;p_add&nbsp;as&nbsp;checkbox&nbsp;user-command&nbsp;FC1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_sub&nbsp;as&nbsp;checkbox&nbsp;user-command&nbsp;FC2,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_mul&nbsp;as&nbsp;checkbox&nbsp;user-command&nbsp;FC3,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_div&nbsp;as&nbsp;checkbox&nbsp;user-command&nbsp;FC4.<br />
+<br />
+&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk2.<br />
+<br />
+&nbsp;initialization.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lb1&nbsp;=&nbsp;'Enter&nbsp;First&nbsp;Number'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lb2&nbsp;=&nbsp;'Enter&nbsp;second&nbsp;Number'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t1&nbsp;=&nbsp;'Enter&nbsp;The&nbsp;Values'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t2&nbsp;=&nbsp;'Arithmatic&nbsp;Opeartion'.<br />
+<br />
+at selection-screen.<br />
+&nbsp;&nbsp;case&nbsp;sy-ucomm.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;'FC1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p_add&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_z&nbsp;=&nbsp;p_x&nbsp;+&nbsp;p_y.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str1&nbsp;=&nbsp;'Sum&nbsp;of&nbsp;Two&nbsp;Numbers&nbsp;is'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str2&nbsp;=&nbsp;v_z.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;concatenate&nbsp;lv_str1&nbsp;lv_str2&nbsp;into&nbsp;lv_msg&nbsp;separated&nbsp;by&nbsp;space.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;lv_msg&nbsp;type&nbsp;'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;/&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;'FC2'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p_sub&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_z&nbsp;=&nbsp;p_x&nbsp;-&nbsp;p_y.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;v_z&nbsp;&gt;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str1&nbsp;=&nbsp;'Difference&nbsp;of&nbsp;Two&nbsp;Numbers&nbsp;is'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str2&nbsp;=&nbsp;v_z.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;concatenate&nbsp;lv_str1&nbsp;lv_str2&nbsp;into&nbsp;lv_msg&nbsp;separated&nbsp;by&nbsp;space.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;lv_msg&nbsp;type&nbsp;'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;/&nbsp;lv_msg.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str1&nbsp;=&nbsp;'Difference&nbsp;of&nbsp;Two&nbsp;Numbers&nbsp;is&nbsp;-'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str2&nbsp;=&nbsp;v_z.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;lv_temp.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;concatenate&nbsp;lv_str1&nbsp;lv_str2&nbsp;into&nbsp;lv_temp&nbsp;separated&nbsp;by&nbsp;space.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_len&nbsp;=&nbsp;strlen(&nbsp;lv_temp&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_pos&nbsp;=&nbsp;lv_len&nbsp;-&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_msg&nbsp;=&nbsp;lv_temp+0(lv_pos).<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;lv_msg&nbsp;type&nbsp;'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;/&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;'FC3'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p_mul&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_z&nbsp;=&nbsp;p_x&nbsp;*&nbsp;p_y.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str1&nbsp;=&nbsp;'Sum&nbsp;of&nbsp;Two&nbsp;Numbers&nbsp;is'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str2&nbsp;=&nbsp;v_z.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;concatenate&nbsp;lv_str1&nbsp;lv_str2&nbsp;into&nbsp;lv_msg&nbsp;separated&nbsp;by&nbsp;space.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;lv_msg&nbsp;type&nbsp;'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;/&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;'FC4'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p_div&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p_y&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;'Divisible&nbsp;By&nbsp;ZERO!!!'&nbsp;type&nbsp;'I'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_z&nbsp;=&nbsp;p_x&nbsp;/&nbsp;p_y.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str1&nbsp;=&nbsp;'Division&nbsp;of&nbsp;Two&nbsp;Numbers&nbsp;is'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_str2&nbsp;=&nbsp;lv_z.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;concatenate&nbsp;lv_str1&nbsp;lv_str2&nbsp;into&nbsp;lv_msg&nbsp;separated&nbsp;by&nbsp;space.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;lv_msg&nbsp;type&nbsp;'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;/&nbsp;lv_msg.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;others.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;'Please&nbsp;select&nbsp;At&nbsp;least&nbsp;one&nbsp;checkBox!!!'&nbsp;type&nbsp;'I'.<br />
+endcase.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Selection&nbsp;texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;P_ADD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Addition<br />
+*&nbsp;P_DIV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Division<br />
+*&nbsp;P_MUL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multilplication<br />
+*&nbsp;P_NONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br />
+*&nbsp;P_SUB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subtraction<br />
+*&nbsp;P_X&nbsp;<br />
+*&nbsp;P_Y&nbsp;<br />
+<br />
+<br />
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;Divisible&nbsp;By&nbsp;ZERO!!!<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

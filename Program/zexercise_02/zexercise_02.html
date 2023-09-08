@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZEXERCISE_02</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZEXERCISE_02</h2>
+<h3> Description: Activity 2</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZEXERCISE_02 NO STANDARD PAGE HEADING LINE-COUNT 50(3).<br />
+<br />
+data gv_drop(15) type c.<br />
+<br />
+parameters p_drop like gv_drop as listbox visible length 20 user-command fc1.<br />
+   </div>
+   <div class="codeComment">
+*PARAMETERS&nbsp;p_der&nbsp;.<br />
+<br />
+   </div>
+   <div class="code">
+data : t_values type table of vrm_value,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_values&nbsp;type&nbsp;vrm_value.<br />
+<br />
+<br />
+&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;BLOCK&nbsp;bk4&nbsp;WITH&nbsp;FRAME&nbsp;title&nbsp;t4.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parameters:&nbsp;p_a&nbsp;type&nbsp;i&nbsp;modif&nbsp;id&nbsp;id4,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_b&nbsp;type&nbsp;i&nbsp;modif&nbsp;id&nbsp;id4.<br />
+&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk4.<br />
+<br />
+&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;BLOCK&nbsp;bk5&nbsp;WITH&nbsp;FRAME&nbsp;title&nbsp;t5.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parameters:&nbsp;p_x&nbsp;type&nbsp;x&nbsp;modif&nbsp;id&nbsp;id5,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_y&nbsp;type&nbsp;x&nbsp;modif&nbsp;id&nbsp;id5.<br />
+&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk5.<br />
+<br />
+&nbsp;&nbsp;selection-screen&nbsp;begin&nbsp;of&nbsp;block&nbsp;bk1&nbsp;with&nbsp;frame&nbsp;title&nbsp;t1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:&nbsp;p_c1&nbsp;as&nbsp;checkbox&nbsp;modif&nbsp;id&nbsp;id1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_c2&nbsp;as&nbsp;checkbox&nbsp;modif&nbsp;id&nbsp;id1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_c3&nbsp;as&nbsp;checkbox&nbsp;modif&nbsp;id&nbsp;id1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_c4&nbsp;as&nbsp;checkbox&nbsp;modif&nbsp;id&nbsp;id1.<br />
+&nbsp;&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk1.<br />
+<br />
+&nbsp;&nbsp;&nbsp;selection-screen&nbsp;begin&nbsp;of&nbsp;block&nbsp;bk2&nbsp;with&nbsp;frame&nbsp;title&nbsp;t2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;parameters:&nbsp;p_r1&nbsp;radiobutton&nbsp;group&nbsp;grp1&nbsp;modif&nbsp;id&nbsp;id2,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_r2&nbsp;radiobutton&nbsp;group&nbsp;grp1&nbsp;modif&nbsp;id&nbsp;id2,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_r3&nbsp;radiobutton&nbsp;group&nbsp;grp1&nbsp;modif&nbsp;id&nbsp;id2,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_r4&nbsp;radiobutton&nbsp;group&nbsp;grp1&nbsp;modif&nbsp;id&nbsp;id2&nbsp;DEFAULT&nbsp;'X'.<br />
+&nbsp;&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk2.<br />
+<br />
+&nbsp;&nbsp;selection-screen&nbsp;begin&nbsp;of&nbsp;block&nbsp;bk3&nbsp;with&nbsp;frame&nbsp;title&nbsp;t3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;selection-screen&nbsp;comment&nbsp;6(15)&nbsp;lb1&nbsp;modif&nbsp;id&nbsp;id3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;selection-screen&nbsp;comment&nbsp;/6(15)&nbsp;lb2&nbsp;modif&nbsp;id&nbsp;id3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;selection-screen&nbsp;comment&nbsp;/6(15)&nbsp;lb3&nbsp;modif&nbsp;id&nbsp;id3.<br />
+&nbsp;&nbsp;selection-screen&nbsp;end&nbsp;of&nbsp;block&nbsp;bk3.<br />
+<br />
+<br />
+data : gv_flag type i,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_arith&nbsp;type&nbsp;i,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_res&nbsp;TYPE&nbsp;x.<br />
+<br />
+initialization.<br />
+<br />
+&nbsp;&nbsp;t1&nbsp;=&nbsp;'Arithmatic&nbsp;on&nbsp;Check&nbsp;Box'.<br />
+&nbsp;&nbsp;t2&nbsp;=&nbsp;'Bitwise&nbsp;Opration'.<br />
+&nbsp;&nbsp;t3&nbsp;=&nbsp;'SAP&nbsp;ABAP'.<br />
+&nbsp;&nbsp;t4&nbsp;=&nbsp;'Arithmatic&nbsp;Opration'.<br />
+&nbsp;&nbsp;t5&nbsp;=&nbsp;'Bitwsie&nbsp;Opration'.<br />
+<br />
+&nbsp;&nbsp;lb1&nbsp;=&nbsp;'SAP&nbsp;ABAP'.<br />
+&nbsp;&nbsp;lb2&nbsp;=&nbsp;'SAP&nbsp;HANA'.<br />
+&nbsp;&nbsp;lb3&nbsp;=&nbsp;'SAP&nbsp;CROSS'.<br />
+<br />
+&nbsp;&nbsp;perform&nbsp;preparedropdown.<br />
+&nbsp;&nbsp;perform&nbsp;invisibleblocks.<br />
+<br />
+at selection-screen.<br />
+&nbsp;&nbsp;case&nbsp;sy-ucomm.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;'FC1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;p_drop&nbsp;=&nbsp;'K1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gv_flag&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;p_drop&nbsp;=&nbsp;'K2'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gv_flag&nbsp;=&nbsp;2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elseif&nbsp;p_drop&nbsp;=&nbsp;'K3'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gv_flag&nbsp;=&nbsp;3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endcase.<br />
+<br />
+at selection-screen output.<br />
+&nbsp;&nbsp;if&nbsp;gv_flag&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;perform&nbsp;visibleblock1.<br />
+&nbsp;&nbsp;elseif&nbsp;gv_flag&nbsp;=&nbsp;2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;perform&nbsp;visibleblock2.<br />
+&nbsp;&nbsp;elseif&nbsp;gv_flag&nbsp;=&nbsp;3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;perform&nbsp;visibleblock3.<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+at selection-screen on help-request for p_drop.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;message&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;DROPDOWN'&nbsp;type&nbsp;'I'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'POPUP_TO_INFORM'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;titel&nbsp;=&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;DROPDOWN'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txt1&nbsp;=&nbsp;'Select&nbsp;a&nbsp;value&nbsp;from&nbsp;dropdown'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;txt2&nbsp;=&nbsp;'On&nbsp;selecting&nbsp;display&nbsp;appropriate&nbsp;block'.<br />
+<br />
+<br />
+at selection-screen on help-request for p_c1.<br />
+&nbsp;&nbsp;message&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;CHECKBOX'&nbsp;type&nbsp;'I'.<br />
+<br />
+at selection-screen on help-request for p_r1.<br />
+&nbsp;&nbsp;message&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;FIRST&nbsp;RADIOBUTTON'&nbsp;type&nbsp;'I'.<br />
+<br />
+at selection-screen on help-request for p_r2.<br />
+&nbsp;&nbsp;message&nbsp;'F1&nbsp;HELP&nbsp;FOR&nbsp;SECOND&nbsp;RADIOBUTTON'&nbsp;type&nbsp;'I'.<br />
+<br />
+at SELECTION-SCREEN on p_drop.<br />
+&nbsp;&nbsp;IF&nbsp;p_drop&nbsp;IS&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Please&nbsp;Select&nbsp;from&nbsp;dropdown&nbsp;list'&nbsp;type&nbsp;'E'.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*at&nbsp;SELECTION-SCREEN&nbsp;on&nbsp;VALUE-REQUEST&nbsp;FOR&nbsp;p_drop.<br />
+*&nbsp;&nbsp;MESSAGE&nbsp;'Customer&nbsp;F4&nbsp;Help'&nbsp;TYPE&nbsp;'E'.<br />
+<br />
+   </div>
+   <div class="code">
+START-OF-SELECTION.<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;lv_arith.<br />
+&nbsp;&nbsp;if&nbsp;p_c1&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_arith&nbsp;=&nbsp;p_a&nbsp;+&nbsp;p_b.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;'Addition&nbsp;of&nbsp;two&nbsp;No&nbsp;is',lv_arith.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;lv_arith.<br />
+&nbsp;&nbsp;if&nbsp;p_c2&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_arith&nbsp;=&nbsp;p_a&nbsp;-&nbsp;p_b.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;'Subtraction&nbsp;of&nbsp;two&nbsp;No&nbsp;is',lv_arith.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;lv_arith.<br />
+&nbsp;&nbsp;if&nbsp;p_c3&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_arith&nbsp;=&nbsp;p_a&nbsp;*&nbsp;p_b.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;'Multiplication&nbsp;of&nbsp;two&nbsp;No&nbsp;is',lv_arith.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;lv_arith.<br />
+&nbsp;&nbsp;if&nbsp;p_c4&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_arith&nbsp;=&nbsp;p_a&nbsp;/&nbsp;p_b.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;'Division&nbsp;of&nbsp;two&nbsp;No&nbsp;is',lv_arith.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;lv_res.<br />
+&nbsp;&nbsp;IF&nbsp;p_r1&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_res&nbsp;=&nbsp;p_x&nbsp;BIT-AND&nbsp;p_y.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;'A&nbsp;BIT-AND&nbsp;B&nbsp;=&nbsp;',lv_res.<br />
+&nbsp;&nbsp;ELSEIF&nbsp;p_r2&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_res&nbsp;=&nbsp;p_x&nbsp;BIT-XOR&nbsp;p_y.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;'A&nbsp;BIT-XOR&nbsp;B&nbsp;=&nbsp;',lv_res.<br />
+&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;p_r3&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_res&nbsp;=&nbsp;p_x&nbsp;BIT-OR&nbsp;p_y.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;'A&nbsp;BIT-OR&nbsp;B&nbsp;=&nbsp;',lv_res.<br />
+&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+<br />
+<br />
+END-OF-SELECTION.<br />
+<br />
+TOP-OF-PAGE.<br />
+&nbsp;&nbsp;write:/(20)&nbsp;'Data&nbsp;to&nbsp;selected'&nbsp;color&nbsp;1.<br />
+<br />
+END-OF-PAGE.<br />
+&nbsp;FORMAT&nbsp;COLOR&nbsp;2.<br />
+&nbsp;ULINE.<br />
+&nbsp;&nbsp;WRITE:/&nbsp;'SAP&nbsp;TRAINING',<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;'Gupta&nbsp;Empires'.<br />
+&nbsp;FORMAT&nbsp;COLOR&nbsp;OFF.<br />
+<br />
+<br />
+FORM preparedropdown .<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;wa_values.<br />
+&nbsp;&nbsp;wa_values-key&nbsp;=&nbsp;'K1'.<br />
+&nbsp;&nbsp;wa_values-text&nbsp;=&nbsp;'Arithmatic&nbsp;Opration&nbsp;on&nbsp;Check&nbsp;Box'.<br />
+&nbsp;&nbsp;append&nbsp;wa_values&nbsp;to&nbsp;t_values.<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;wa_values.<br />
+&nbsp;&nbsp;wa_values-key&nbsp;=&nbsp;'K2'.<br />
+&nbsp;&nbsp;wa_values-text&nbsp;=&nbsp;'Bitwise&nbsp;Opration&nbsp;on&nbsp;Radiobutton'.<br />
+&nbsp;&nbsp;append&nbsp;wa_values&nbsp;to&nbsp;t_values.<br />
+<br />
+&nbsp;&nbsp;clear&nbsp;wa_values.<br />
+&nbsp;&nbsp;wa_values-key&nbsp;=&nbsp;'K3'.<br />
+&nbsp;&nbsp;wa_values-text&nbsp;=&nbsp;'SAP&nbsp;ABAP'.<br />
+&nbsp;&nbsp;append&nbsp;wa_values&nbsp;to&nbsp;t_values.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'VRM_SET_VALUES'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'P_DROP'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;t_values<br />
+&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID_ILLEGAL_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OTHERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.<br />
+<br />
+&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;'Illegal&nbsp;Dropdown&nbsp;list&nbsp;box&nbsp;name'&nbsp;type&nbsp;'i'.<br />
+&nbsp;&nbsp;ELSEIF&nbsp;sy-subrc&nbsp;eq&nbsp;2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;message&nbsp;'Unknown&nbsp;error'&nbsp;type&nbsp;'i'.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+ENDFORM.<br />
+<br />
+<br />
+FORM invisibleblocks .<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;screen.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;screen-group1&nbsp;=&nbsp;'ID1'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-group1&nbsp;=&nbsp;'ID2'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-group1&nbsp;=&nbsp;'ID3'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-group1&nbsp;=&nbsp;'ID4'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-group1&nbsp;=&nbsp;'ID5'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-input&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+FORM visibleblock1.<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;screen.<br />
+&nbsp;&nbsp;if&nbsp;screen-group1&nbsp;=&nbsp;'ID1'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-group1&nbsp;=&nbsp;'ID4'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BK4'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BK1'&nbsp;or<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'T1'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'T4'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'P_DROP'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-input&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+FORM visibleblock2.<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;screen.<br />
+&nbsp;&nbsp;if&nbsp;screen-group1&nbsp;=&nbsp;'ID2'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-group1&nbsp;=&nbsp;'ID5'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BK5'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BK2'&nbsp;or<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'T2'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'T5'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'P_DROP'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-input&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+FORM visibleblock3.<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;screen.<br />
+&nbsp;&nbsp;if&nbsp;screen-group1&nbsp;=&nbsp;'ID3'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BK3'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'T3'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'P_DROP'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-input&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Selection&nbsp;texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;P_A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter&nbsp;First&nbsp;Number<br />
+*&nbsp;P_B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter&nbsp;Second&nbsp;Number<br />
+*&nbsp;P_C1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Addition<br />
+*&nbsp;P_C2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subtraction<br />
+*&nbsp;P_C3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Multilplication<br />
+*&nbsp;P_C4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Division<br />
+*&nbsp;P_DROP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select&nbsp;Option<br />
+*&nbsp;P_R1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIT-AND<br />
+*&nbsp;P_R2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIT-XOR<br />
+*&nbsp;P_R3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BIT_OR<br />
+*&nbsp;P_R4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None&nbsp;Selected<br />
+*&nbsp;P_X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter&nbsp;First&nbsp;Number<br />
+*&nbsp;P_Y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter&nbsp;Second&nbsp;Number<br />
+<br />
+<br />
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;F1&nbsp;HELP&nbsp;FOR&nbsp;CHECKBOX<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>
