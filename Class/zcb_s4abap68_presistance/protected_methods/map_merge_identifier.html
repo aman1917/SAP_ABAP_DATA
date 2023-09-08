@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>MAP_MERGE_IDENTIFIER</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: MAP_MERGE_IDENTIFIER</h2>
+<h3> Description: Adds BKey to DB Data</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;MAP_MERGE_IDENTIFIER.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;093901<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;importing&nbsp;I_BUSINESS_KEY_TAB&nbsp;type&nbsp;TYP_BUSINESS_KEY_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;changing&nbsp;C_DB_DATA_TAB&nbsp;type&nbsp;TYP_DB_DATA_TAB<br />
+   </div>
+   <div class="codeComment">
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Merge&nbsp;Table&nbsp;I_BUSINESS_KEY_TAB&nbsp;to&nbsp;C_DB_DATA_TAB.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;result&nbsp;is&nbsp;a&nbsp;complete&nbsp;DB_DATA&nbsp;table&nbsp;to&nbsp;be&nbsp;stored<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;DB.<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;C_DB_DATA&nbsp;is&nbsp;a&nbsp;Table&nbsp;filled&nbsp;with&nbsp;object&nbsp;data<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_BUSINESS_KEY_TAB&nbsp;is&nbsp;a&nbsp;table&nbsp;of&nbsp;the&nbsp;same&nbsp;size&nbsp;with<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;entries.<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;C_DB_DATA_TAB&nbsp;is&nbsp;complete<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;--<br />
+*<br />
+*&nbsp;Implementation&nbsp;:<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;2000-03-06&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Initial&nbsp;Version<br />
+************************************************************************<br />
+*&nbsp;Generated!&nbsp;Do&nbsp;not&nbsp;modify!<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;BUSINESS_KEY&nbsp;type&nbsp;TYP_BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;field-symbols&nbsp;&lt;FS_OBJECT_DATA&gt;&nbsp;type&nbsp;TYP_DB_DATA.<br />
+<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;C_DB_DATA_TAB&nbsp;assigning&nbsp;&lt;FS_OBJECT_DATA&gt;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;I_BUSINESS_KEY_TAB&nbsp;into&nbsp;BUSINESS_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;SY-TABIX.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;FS_OBJECT_DATA&gt;-STUD_ID&nbsp;=&nbsp;BUSINESS_KEY-STUD_ID.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;endloop."&nbsp;at&nbsp;C_DB_DATA_TAB<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"MAP_MERGE_IDENTIFIER<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

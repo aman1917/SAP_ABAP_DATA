@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZCL_S4ABAP68_PRESISTANCE</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for class: ZCL_S4ABAP68_PRESISTANCE</h2>
+<h3> Description: Presistance Class</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Class attributes.                                                    *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+Message class: <br />
+State: Implemented<br />
+Final Indicator: X<br />
+R/3 Release: 754<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Public section of class.                                             *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+class ZCL_S4ABAP68_PRESISTANCE definition<br />
+&nbsp;&nbsp;public<br />
+&nbsp;&nbsp;final<br />
+&nbsp;&nbsp;create&nbsp;protected<br />
+<br />
+&nbsp;&nbsp;global&nbsp;friends&nbsp;ZCB_S4ABAP68_PRESISTANCE&nbsp;.<br />
+<br />
+public section.<br />
+<br />
+&nbsp;&nbsp;interfaces&nbsp;IF_OS_STATE&nbsp;.<br />
+<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/get_stud_batch.html">GET_STUD_BATCH</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;ZSTUD_DE_BATCH<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/get_stud_course.html">GET_STUD_COURSE</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;ZSTUD_DE_COURSE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/get_stud_id.html">GET_STUD_ID</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;ZSTUD_DE_ID<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/get_stud_name.html">GET_STUD_NAME</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;ZSTUD_DE_NAME<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/set_stud_batch.html">SET_STUD_BATCH</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_STUD_BATCH&nbsp;type&nbsp;ZSTUD_DE_BATCH<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/set_stud_course.html">SET_STUD_COURSE</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_STUD_COURSE&nbsp;type&nbsp;ZSTUD_DE_COURSE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/set_stud_name.html">SET_STUD_NAME</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_STUD_NAME&nbsp;type&nbsp;ZSTUD_DE_NAME<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Private section of class.                                            *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+private section.<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Protected section of class.                                          *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+protected section.<br />
+<br />
+&nbsp;&nbsp;data&nbsp;STUD_ID&nbsp;type&nbsp;ZSTUD_DE_ID&nbsp;.<br />
+&nbsp;&nbsp;data&nbsp;STUD_NAME&nbsp;type&nbsp;ZSTUD_DE_NAME&nbsp;.<br />
+&nbsp;&nbsp;data&nbsp;STUD_BATCH&nbsp;type&nbsp;ZSTUD_DE_BATCH&nbsp;.<br />
+&nbsp;&nbsp;data&nbsp;STUD_COURSE&nbsp;type&nbsp;ZSTUD_DE_COURSE&nbsp;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Types section of class.                                              *<br />
+**************************************************************************<br />
+*"* dummy include to reduce generation dependencies between<br />
+*"* class ZCL_S4ABAP68_PRESISTANCE and it's users.<br />
+*"* touched if any type reference has been changed<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

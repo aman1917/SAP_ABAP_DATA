@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>MAP_INVALIDATE</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: MAP_INVALIDATE</h2>
+<h3> Description: Redefined: Subclass: Invalidates Object State</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;MAP_INVALIDATE.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;093901<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;importing&nbsp;I_OBJECT_IREF_TAB&nbsp;type&nbsp;TYP_OBJECT_TAB<br />
+   </div>
+   <div class="codeComment">
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Invalidate&nbsp;state&nbsp;of&nbsp;all&nbsp;objects&nbsp;in&nbsp;I_OBJECT_IREF_TAB<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;Objects&nbsp;in&nbsp;I_OBJECT_IREF_TAB&nbsp;exist<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;Their&nbsp;state&nbsp;in&nbsp;cleared<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;-<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;-&nbsp;call&nbsp;method&nbsp;IF_OS_STATE~INVALIDATE<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;clear&nbsp;object's&nbsp;(persistent)&nbsp;attributes<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;2000-04-17&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Initial&nbsp;Version<br />
+*&nbsp;-&nbsp;2000-08-02&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;OO&nbsp;Exceptions<br />
+*&nbsp;-&nbsp;2002-01-17&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;private&nbsp;attributes&nbsp;in&nbsp;super&nbsp;classes<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;OBJECT_IREF&nbsp;type&nbsp;TYP_OBJECT_IREF,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;THE_OBJECT&nbsp;&nbsp;type&nbsp;ref&nbsp;TO&nbsp;ZCL_S4ABAP68_PRESISTANCE.<br />
+<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;I_OBJECT_IREF_TAB&nbsp;into&nbsp;OBJECT_IREF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;not&nbsp;OBJECT_IREF&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OBJECT_IREF-&gt;INVALIDATE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;THE_OBJECT&nbsp;?=&nbsp;OBJECT_IREF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;&nbsp;&nbsp;&nbsp;Generated&nbsp;from&nbsp;Mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear:&nbsp;THE_OBJECT-&gt;STUD_ID,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;THE_OBJECT-&gt;STUD_NAME,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;THE_OBJECT-&gt;STUD_BATCH,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;THE_OBJECT-&gt;STUD_COURSE.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;endif.&nbsp;"(&nbsp;not&nbsp;initial&nbsp;)<br />
+<br />
+&nbsp;&nbsp;endloop.&nbsp;"at&nbsp;I_OBJECT_IREF_TAB<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"MAP_INVALIDATE<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

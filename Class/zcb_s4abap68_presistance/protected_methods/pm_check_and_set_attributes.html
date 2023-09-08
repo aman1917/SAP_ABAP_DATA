@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>PM_CHECK_AND_SET_ATTRIBUTES</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: PM_CHECK_AND_SET_ATTRIBUTES</h2>
+<h3> Description: Checks and Sets Persistent Attributes</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;PM_CHECK_AND_SET_ATTRIBUTES.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;090501<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;importing&nbsp;I_OBJECT_DATA&nbsp;&nbsp;type&nbsp;TYP_DB_DATA<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;importing&nbsp;I_BUSINESS_KEY&nbsp;type&nbsp;TYP_BUSINESS_KEY&nbsp;optional<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_ID_PROVIDED&nbsp;type&nbsp;TYP_ID_STATUS&nbsp;default&nbsp;ID_STATUS_NONE<br />
+   </div>
+   <div class="codeComment">
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;check&nbsp;loaded&nbsp;object&nbsp;data&nbsp;of&nbsp;a&nbsp;persistent&nbsp;object&nbsp;and<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;object's&nbsp;attributes<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;CURRENT&nbsp;is&nbsp;clear,&nbsp;create&nbsp;new&nbsp;representant,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;CURRENT&nbsp;is&nbsp;set,&nbsp;use&nbsp;this&nbsp;object&nbsp;to&nbsp;set&nbsp;the&nbsp;loaded<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;I_ID_PROVIDED&nbsp;is&nbsp;set&nbsp;to&nbsp;ID_STATUS_NONE,&nbsp;Look&nbsp;for<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;entry&nbsp;in&nbsp;SPECIAL_OBJECT_INFO&nbsp;with&nbsp;the&nbsp;given<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Business&nbsp;Key<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;Persistent&nbsp;object&nbsp;data&nbsp;is&nbsp;checked&nbsp;and&nbsp;object<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attributes&nbsp;are&nbsp;set.&nbsp;CURRENT&nbsp;is&nbsp;set.<br />
+*<br />
+*&nbsp;OO&nbsp;Exception&nbsp;&nbsp;&nbsp;:&nbsp;CX_OS_OBJECT_STATE(INTERNAL_CHANGED,INTERNAL_DELETED,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTERNAL_TRANSIENT,&nbsp;INTERNAL_NEW)<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propagates&nbsp;MAP_SET_ATTRIBUTES<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;1.&nbsp;If&nbsp;CURRENT&nbsp;is&nbsp;clear:<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1a.&nbsp;I_ID_PROVIDED&nbsp;=&nbsp;ID_STATUS_NONE?:<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Check&nbsp;if&nbsp;another&nbsp;object&nbsp;exists&nbsp;with&nbsp;this<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Business&nbsp;Key<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1b.&nbsp;I_ID_PROVIDED&nbsp;&lt;&gt;&nbsp;ID_STATUS_NONE&nbsp;or&nbsp;no&nbsp;entry<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;found:<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create&nbsp;a&nbsp;new&nbsp;Representative&nbsp;object<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1c.&nbsp;If&nbsp;an&nbsp;object&nbsp;has&nbsp;been&nbsp;found:<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Check&nbsp;if&nbsp;it&nbsp;is&nbsp;allowed&nbsp;to&nbsp;set&nbsp;it<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;set&nbsp;PM_DBSTATUS&nbsp;EXISTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;Temporarily&nbsp;save&nbsp;CURRENT_*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.&nbsp;set&nbsp;object&nbsp;attributes&nbsp;(resolving&nbsp;references)<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.&nbsp;restore&nbsp;CURRENT_*<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;2000-05-17&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Initial&nbsp;Version&nbsp;2.0<br />
+*&nbsp;-&nbsp;2000-08-03&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;OO&nbsp;Exceptions<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;LOADED_BUSINESS_KEY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;data:&nbsp;TEMP_CURRENT_OBJECT_INFO&nbsp;&nbsp;type&nbsp;TYP_OBJECT_INFO,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_CURRENT_OBJECT_INDEX&nbsp;type&nbsp;TYP_INDEX,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_CURRENT_SPECIAL_OI&nbsp;&nbsp;&nbsp;type&nbsp;TYP_SPECIAL_OBJECT_INFO,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;&nbsp;type&nbsp;TYP_OBJECT_IREF,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTERNAL_UNDO_INFO_ITEM&nbsp;&nbsp;&nbsp;type&nbsp;TYP_INTERNAL_UNDO_INFO,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_OBJECT_REF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_OBJECT_REF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;Get&nbsp;both&nbsp;Business&nbsp;Key&nbsp;from&nbsp;DB&nbsp;data<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_EXTRACT_IDENTIFIER<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_DB_DATA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;I_OBJECT_DATA<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;importing&nbsp;E_BUSINESS_KEY&nbsp;=&nbsp;LOADED_BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;if&nbsp;(&nbsp;CURRENT_OBJECT_IREF&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;1.&nbsp;If&nbsp;CURRENT&nbsp;is&nbsp;clear:<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;I_ID_PROVIDED&nbsp;=&nbsp;ID_STATUS_NONE&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;1a.&nbsp;Check&nbsp;if&nbsp;another&nbsp;object&nbsp;exists&nbsp;with&nbsp;this&nbsp;Business&nbsp;Key<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_BKEY_TAB&nbsp;into&nbsp;TEMP_CURRENT_SPECIAL_OI<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;table&nbsp;key&nbsp;BUSINESS_KEY&nbsp;=&nbsp;LOADED_BUSINESS_KEY.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;sy-subrc&nbsp;=&nbsp;0&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_OBJECT_INFO&nbsp;into<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CURRENT_SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;table&nbsp;key<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_ID&nbsp;=&nbsp;TEMP_CURRENT_SPECIAL_OI-OBJECT_ID.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_LOAD_AND_VALIDATE_CURRENT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_INDEX&nbsp;=&nbsp;sy-tabix.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.&nbsp;"&nbsp;(&nbsp;Entry&nbsp;found&nbsp;for&nbsp;BKEY?&nbsp;)<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.&nbsp;"(&nbsp;no&nbsp;ID&nbsp;Provided&nbsp;)<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;CURRENT_OBJECT_IREF&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;1b.&nbsp;Create&nbsp;a&nbsp;new&nbsp;Representative&nbsp;object&nbsp;and&nbsp;a&nbsp;new&nbsp;entry<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;PM_CREATE_REPRESENTANT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_BUSINESS_KEY&nbsp;=&nbsp;LOADED_BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else.&nbsp;"(&nbsp;Found&nbsp;an&nbsp;entry&nbsp;for&nbsp;the&nbsp;business&nbsp;key&nbsp;)<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Now&nbsp;we&nbsp;know&nbsp;an&nbsp;entry&nbsp;exists&nbsp;on&nbsp;DB<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CURRENT_OBJECT_INFO-PM_DBSTATUS&nbsp;=&nbsp;OSCON_DBSTATUS_EXISTING.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;OBJECT_INFO&nbsp;from&nbsp;CURRENT_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;CURRENT_OBJECT_INDEX.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;1c.&nbsp;Check&nbsp;if&nbsp;it&nbsp;is&nbsp;allowed&nbsp;to&nbsp;use&nbsp;the&nbsp;found&nbsp;object.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;CURRENT_OBJECT_INFO-PM_STATUS.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;PM_STATUS&nbsp;=&nbsp;NOT_LOADED:&nbsp;re-use&nbsp;entry&nbsp;and&nbsp;object<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_NOT_LOADED.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;PM_STATUS&nbsp;=&nbsp;LOADED:&nbsp;re-use&nbsp;entry&nbsp;and&nbsp;object<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_LOADED.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;other&nbsp;PM_STATUS:&nbsp;Error!<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_NEW.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*!!!!!!!!!!&nbsp;Error!&nbsp;Object&nbsp;already&nbsp;exists&nbsp;on&nbsp;DB<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;This&nbsp;NEW&nbsp;object&nbsp;should&nbsp;be&nbsp;created&nbsp;on&nbsp;DB&nbsp;by&nbsp;the&nbsp;next<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;COMMIT.&nbsp;Now&nbsp;an&nbsp;entry&nbsp;was&nbsp;found&nbsp;with&nbsp;the&nbsp;same&nbsp;key!<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_STATE&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_STATE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;OBJECT&nbsp;=&nbsp;CURRENT_OBJECT_IREF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_STATE=&gt;INTERNAL_NEW.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_CHANGED.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*!!!!!!!!!!!&nbsp;Error:&nbsp;Object&nbsp;has&nbsp;a&nbsp;DB&nbsp;relevant&nbsp;status<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_STATE&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_STATE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;OBJECT&nbsp;=&nbsp;CURRENT_OBJECT_IREF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_STATE=&gt;INTERNAL_CHANGED.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_DELETED.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*!!!!!!!!!!!&nbsp;Error:&nbsp;Object&nbsp;marked&nbsp;for&nbsp;deletion<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_STATE&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_STATE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;OBJECT&nbsp;=&nbsp;CURRENT_OBJECT_IREF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_STATE=&gt;INTERNAL_DELETED.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_TRANSIENT.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*!!!!!!!!!!!&nbsp;Error:&nbsp;Object&nbsp;is&nbsp;transient<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_STATE&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_STATE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;OBJECT&nbsp;=&nbsp;CURRENT_OBJECT_IREF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_STATE=&gt;INTERNAL_TRANSIENT.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endcase.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.&nbsp;"(&nbsp;CURRENT&nbsp;initial?&nbsp;)<br />
+&nbsp;&nbsp;endif.&nbsp;"(&nbsp;CURRENT&nbsp;initial?&nbsp;)<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;2.&nbsp;set&nbsp;PM_DBSTATUS&nbsp;EXISTING<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CURRENT_OBJECT_INFO-PM_DBSTATUS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;OSCON_DBSTATUS_EXISTING.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;internal&nbsp;Undo&nbsp;entry:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;INTERNAL_UNDO_INFO_ITEM-OBJECT_INDEX&nbsp;=&nbsp;CURRENT_OBJECT_INDEX.<br />
+&nbsp;&nbsp;INTERNAL_UNDO_INFO_ITEM-OBJECT_INFO&nbsp;&nbsp;=&nbsp;CURRENT_OBJECT_INFO.<br />
+&nbsp;&nbsp;append&nbsp;INTERNAL_UNDO_INFO_ITEM&nbsp;to&nbsp;INTERNAL_UNDO_INFO.<br />
+&nbsp;&nbsp;INTERNAL_NEXT_UNDO_INFO&nbsp;=&nbsp;sy-tabix&nbsp;+&nbsp;1.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;To&nbsp;avoid&nbsp;recursive&nbsp;loading&nbsp;of&nbsp;the&nbsp;same&nbsp;object&nbsp;(INIT&nbsp;method)<br />
+*&nbsp;*&nbsp;temporarily&nbsp;set&nbsp;status&nbsp;'LOADING'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CURRENT_OBJECT_INFO-PM_STATUS&nbsp;=&nbsp;OSCON_OSTATUS_LOADING.<br />
+&nbsp;&nbsp;modify&nbsp;OBJECT_INFO&nbsp;from&nbsp;CURRENT_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;CURRENT_OBJECT_INDEX.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;3.&nbsp;Temporarily&nbsp;save&nbsp;CURRENT_*<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;&nbsp;=&nbsp;CURRENT_OBJECT_IREF.<br />
+&nbsp;&nbsp;TEMP_CURRENT_OBJECT_INFO&nbsp;&nbsp;=&nbsp;CURRENT_OBJECT_INFO.<br />
+&nbsp;&nbsp;TEMP_CURRENT_OBJECT_INDEX&nbsp;=&nbsp;CURRENT_OBJECT_INDEX.<br />
+&nbsp;&nbsp;TEMP_CURRENT_SPECIAL_OI&nbsp;&nbsp;&nbsp;=&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;4.&nbsp;set&nbsp;object&nbsp;attributes&nbsp;(resolving&nbsp;references)<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;TEMP_OBJECT_REF&nbsp;?=&nbsp;CURRENT_OBJECT_IREF&nbsp;.<br />
+<br />
+&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_SET_ATTRIBUTES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_OBJECT_DATA&nbsp;=&nbsp;I_OBJECT_DATA<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_OBJECT_REF&nbsp;&nbsp;=&nbsp;TEMP_OBJECT_REF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;5.&nbsp;restore&nbsp;CURRENT_*<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CURRENT_OBJECT_INFO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;TEMP_CURRENT_OBJECT_INFO.<br />
+&nbsp;&nbsp;CURRENT_OBJECT_INDEX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;TEMP_CURRENT_OBJECT_INDEX.<br />
+&nbsp;&nbsp;CURRENT_SPECIAL_OBJECT_INFO&nbsp;&nbsp;=&nbsp;TEMP_CURRENT_SPECIAL_OI.<br />
+&nbsp;&nbsp;CURRENT_OBJECT_IREF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;TEMP_CURRENT_OBJECT_IREF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;the&nbsp;method&nbsp;call&nbsp;get_ref_by_oid&nbsp;in&nbsp;map_set_attributes<br />
+*&nbsp;*&nbsp;eventually&nbsp;creates&nbsp;new&nbsp;entries&nbsp;in&nbsp;the<br />
+*&nbsp;*&nbsp;administrative&nbsp;data&nbsp;tables,&nbsp;it&nbsp;is&nbsp;necessary&nbsp;to<br />
+*&nbsp;*&nbsp;to&nbsp;recalculate&nbsp;the&nbsp;index<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;read&nbsp;table&nbsp;OBJECT_INFO&nbsp;transporting&nbsp;no&nbsp;fields<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;table&nbsp;key&nbsp;OBJECT_ID&nbsp;=&nbsp;CURRENT_OBJECT_INFO-OBJECT_ID.<br />
+&nbsp;&nbsp;CURRENT_OBJECT_INDEX&nbsp;=&nbsp;sy-tabix.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"PM_CHECK_AND_SET_ATTRIBUTES<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>GET_PERSISTENT</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: GET_PERSISTENT</h2>
+<h3> Description: Get Persistent Object with Key</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Public<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;GET_PERSISTENT.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;093901<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;importing&nbsp;I_STUD_ID&nbsp;TYPE&nbsp;ZSTUD_DE_ID.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returning&nbsp;RESULT&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;ZCL_S4ABAP68_PRESISTANCE<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raising&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Get&nbsp;reference&nbsp;of&nbsp;an&nbsp;persistent&nbsp;object.<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;--<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;Persistent&nbsp;object&nbsp;is&nbsp;active<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(IS_TRANSIENT_BY_BKEY,DELETED_BY_BKEY)<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propagates&nbsp;PM_LOAD_AND_SET_ATTRIBUTES<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propagates&nbsp;OS_PM_LOADED_PERISISTENT<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;1.&nbsp;Look&nbsp;for&nbsp;object&nbsp;in&nbsp;SPECIAL_OBJECT_INFO.&nbsp;If&nbsp;found,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;check&nbsp;if&nbsp;it&nbsp;is&nbsp;still&nbsp;valid<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;Object&nbsp;found:&nbsp;Check&nbsp;PM_STATUS<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2a.&nbsp;If&nbsp;Status&nbsp;is&nbsp;TRANSIENT&nbsp;or&nbsp;DELETED,&nbsp;error!<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2b.&nbsp;If&nbsp;Status&nbsp;is&nbsp;NOT_LOADED,&nbsp;continue&nbsp;with&nbsp;3.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2c.&nbsp;If&nbsp;Status&nbsp;is&nbsp;NEW,&nbsp;LOADED&nbsp;or&nbsp;CHANGED,&nbsp;success!<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;Load&nbsp;object&nbsp;data&nbsp;from&nbsp;database&nbsp;and&nbsp;set&nbsp;object<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.a.&nbsp;Completion&nbsp;in&nbsp;super&nbsp;class<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.&nbsp;clean&nbsp;up<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;1999-09-21&nbsp;&nbsp;&nbsp;:&nbsp;(OS)&nbsp;&nbsp;Initial&nbsp;Version<br />
+*&nbsp;-&nbsp;2000-03-07&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Version&nbsp;2.0&nbsp;-&nbsp;Common&nbsp;Superclass<br />
+*&nbsp;-&nbsp;2000-08-02&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;OO&nbsp;Exceptions<br />
+*&nbsp;-&nbsp;2000-10-30&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Type&nbsp;Mapping<br />
+*&nbsp;-&nbsp;2004-01-21&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Type&nbsp;Mapping&nbsp;Refactoring<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;BUSINESS_KEY&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FLAG_NOT_LOADED&nbsp;type&nbsp;OS_BOOLEAN,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY_STRING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;STRING.<br />
+<br />
+&nbsp;&nbsp;data:&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;type&nbsp;ref&nbsp;to&nbsp;OBJECT.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;1.&nbsp;Look&nbsp;for&nbsp;object&nbsp;in&nbsp;SPECIAL_OBJECT_INFO.&nbsp;If&nbsp;found,&nbsp;check&nbsp;if&nbsp;it<br />
+*&nbsp;*&nbsp;is&nbsp;still&nbsp;valid<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;clear:&nbsp;&nbsp;CURRENT_OBJECT_IREF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;BUSINESS_KEY-STUD_ID&nbsp;=&nbsp;I_STUD_ID.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_BKEY_TAB&nbsp;into&nbsp;CURRENT_SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;table&nbsp;key&nbsp;BUSINESS_KEY&nbsp;=&nbsp;BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;if&nbsp;(&nbsp;SY-SUBRC&nbsp;=&nbsp;0&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_OBJECT_INFO&nbsp;into&nbsp;CURRENT_SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;table&nbsp;key<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_ID&nbsp;=&nbsp;CURRENT_SPECIAL_OBJECT_INFO-OBJECT_ID.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_LOAD_AND_VALIDATE_CURRENT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_INDEX&nbsp;=&nbsp;SY-TABIX.<br />
+<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;if&nbsp;(&nbsp;not&nbsp;CURRENT_OBJECT_IREF&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;2.&nbsp;Object&nbsp;found:&nbsp;Check&nbsp;PM_STATUS<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;CURRENT_OBJECT_INFO-PM_STATUS.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;2a.&nbsp;If&nbsp;Status&nbsp;is&nbsp;TRANSIENT&nbsp;or&nbsp;DELETED,&nbsp;error!<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_DELETED.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*!!!!!&nbsp;Error:&nbsp;Object&nbsp;activation&nbsp;failed&nbsp;-&nbsp;Object&nbsp;marked&nbsp;for&nbsp;deletion<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;=&nbsp;CURRENT_OBJECT_IREF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY_STRING&nbsp;&nbsp;=&nbsp;MAP_SERIALIZE_BKEY(&nbsp;BUSINESS_KEY&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;=&nbsp;TEMP_CURRENT_OBJECT_IREF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY&nbsp;&nbsp;&nbsp;=&nbsp;BKEY_STRING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_NOT_FOUND=&gt;DELETED_BY_BKEY.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_TRANSIENT.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*!!!!!&nbsp;Error:&nbsp;Object&nbsp;activation&nbsp;failed&nbsp;-&nbsp;Object&nbsp;is&nbsp;transient<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;=&nbsp;CURRENT_OBJECT_IREF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY_STRING&nbsp;&nbsp;=&nbsp;MAP_SERIALIZE_BKEY(&nbsp;BUSINESS_KEY&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;=&nbsp;TEMP_CURRENT_OBJECT_IREF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY&nbsp;&nbsp;&nbsp;=&nbsp;BKEY_STRING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_NOT_FOUND=&gt;IS_TRANSIENT_BY_BKEY.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;2b.&nbsp;If&nbsp;Status&nbsp;is&nbsp;NOT_LOADED,&nbsp;continue&nbsp;with&nbsp;3.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_NOT_LOADED.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FLAG_NOT_LOADED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;OSCON_TRUE.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;2c.&nbsp;If&nbsp;Status&nbsp;is&nbsp;NEW,&nbsp;LOADED&nbsp;or&nbsp;CHANGED,&nbsp;success!<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;others.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FLAG_NOT_LOADED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;OSCON_FALSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endcase.&nbsp;"PM_STATUS<br />
+<br />
+&nbsp;&nbsp;else."&nbsp;(&nbsp;CURRENT_OBJECT_IREF&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;FLAG_NOT_LOADED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;OSCON_TRUE.<br />
+<br />
+&nbsp;&nbsp;endif."&nbsp;(&nbsp;Entry&nbsp;in&nbsp;administrative&nbsp;data?&nbsp;)<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;3.&nbsp;Load&nbsp;object&nbsp;data&nbsp;from&nbsp;database&nbsp;and&nbsp;set&nbsp;object<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;if&nbsp;(&nbsp;&nbsp;FLAG_NOT_LOADED&nbsp;=&nbsp;OSCON_TRUE&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;internal&nbsp;Undo<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;INTERNAL_NEXT_UNDO_INFO&nbsp;to&nbsp;INTERNAL_TRANSACTION_STACK.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;INTERNAL_CURRENT_TRANSACTION&nbsp;=&nbsp;SY-TABIX.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;try.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;PM_LOAD_AND_SET_ATTRIBUTES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_BUSINESS_KEY&nbsp;=&nbsp;BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;?=&nbsp;CURRENT_OBJECT_IREF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;3.a.&nbsp;Completion&nbsp;in&nbsp;super&nbsp;class<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_PM_LOADED_PERSISTENT.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cleanup.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_INTERNAL_UNDO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endtry.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;Clean-up&nbsp;internal&nbsp;Undo<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;INTERNAL_TRANSACTION_STACK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;INTERNAL_CURRENT_TRANSACTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;add&nbsp;-1&nbsp;to&nbsp;INTERNAL_CURRENT_TRANSACTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;INTERNAL_TRANSACTION_STACK&nbsp;is&nbsp;initial&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;INTERNAL_UNDO_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTERNAL_NEXT_UNDO_INFO&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.&nbsp;"(&nbsp;INTERNAL_TRANSACTION_STACK&nbsp;is&nbsp;initial?&nbsp;)<br />
+<br />
+&nbsp;&nbsp;else.&nbsp;"(&nbsp;Object&nbsp;already&nbsp;loaded&nbsp;)<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;RESULT&nbsp;?=&nbsp;CURRENT_OBJECT_IREF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+<br />
+&nbsp;&nbsp;endif.&nbsp;"(&nbsp;Loading&nbsp;necessesary?&nbsp;)<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;4.&nbsp;clean&nbsp;up<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;clear&nbsp;&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"GET_PERSISTENT<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

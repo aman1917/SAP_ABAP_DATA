@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>MAP_LOAD_FROM_DATABASE_KEY</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: MAP_LOAD_FROM_DATABASE_KEY</h2>
+<h3> Description: Reads Object Data Identified Using Bus. Key from Database</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+method MAP_LOAD_FROM_DATABASE_KEY.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;093901<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;importing&nbsp;I_BUSINESS_KEY_TAB&nbsp;type&nbsp;TYP_BUSINESS_KEY_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;returning&nbsp;value(RESULT)&nbsp;type&nbsp;TYP_DB_DATA_TAB<br />
+   </div>
+   <div class="codeComment">
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Load&nbsp;object&nbsp;data&nbsp;identified&nbsp;by&nbsp;I_BUSINESS_KEY_TAB<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;DB&nbsp;to&nbsp;DB_DATA&nbsp;Table<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;I_BUSINESS_KEY_TAB&nbsp;is&nbsp;a&nbsp;table&nbsp;of&nbsp;valid&nbsp;business&nbsp;keys<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;RESULT&nbsp;is&nbsp;the&nbsp;corresponding&nbsp;table&nbsp;of&nbsp;object<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attributes&nbsp;read&nbsp;from&nbsp;DB<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;CX_OS_DB_SELECT<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;-<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;1999-09-21&nbsp;&nbsp;&nbsp;:&nbsp;(OS)&nbsp;&nbsp;Initial&nbsp;Version<br />
+*&nbsp;-&nbsp;2000-03-06&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Version&nbsp;2.0&nbsp;-&nbsp;difference&nbsp;between&nbsp;loading&nbsp;1&nbsp;and<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;many&nbsp;entries<br />
+*&nbsp;-&nbsp;2000-06-15&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Support&nbsp;for&nbsp;multi-table&nbsp;loading<br />
+*&nbsp;-&nbsp;2000-08-03&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;OO&nbsp;Exceptions<br />
+*&nbsp;-&nbsp;2001-03-27&nbsp;&nbsp;&nbsp;:&nbsp;(MWI)&nbsp;Loading&nbsp;several&nbsp;objects&nbsp;(type&nbsp;mapping)<br />
+*&nbsp;-&nbsp;2001-11-26&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Refactoring&nbsp;Generation<br />
+*&nbsp;-&nbsp;2002-01-17&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Bugfix&nbsp;for&nbsp;tables&nbsp;with&nbsp;namespace<br />
+*&nbsp;-&nbsp;2002-01-17&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;private&nbsp;attributes&nbsp;in&nbsp;super&nbsp;classes<br />
+*&nbsp;-&nbsp;2004-01-07&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Multi&nbsp;Access<br />
+*&nbsp;-&nbsp;2005-02-22&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Inner&nbsp;Joins<br />
+*&nbsp;-&nbsp;2005-04-06&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Single&nbsp;Table<br />
+************************************************************************<br />
+<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;DB_DATA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_DB_DATA.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;types:&nbsp;TYP_DB_DATA_LOCAL&nbsp;type&nbsp;ZSTD_COURSE.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TYP_DB_DATA_LOCAL_TAB&nbsp;type&nbsp;standard&nbsp;table&nbsp;of<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYP_DB_DATA_LOCAL&nbsp;with&nbsp;non-unique&nbsp;default&nbsp;key&nbsp;.<br />
+<br />
+&nbsp;&nbsp;data:&nbsp;DB_DATA_LOCAL_TAB&nbsp;type&nbsp;TYP_DB_DATA_LOCAL_TAB.<br />
+<br />
+&nbsp;&nbsp;field-symbols:&nbsp;&lt;FS_DB_DATA_LOCAL&gt;&nbsp;type&nbsp;TYP_DB_DATA_LOCAL.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;field-symbols:&nbsp;&lt;FS_DB_ZSTD_COURSE&gt;&nbsp;type&nbsp;ZSTD_COURSE.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;select&nbsp;*&nbsp;from&nbsp;ZSTD_COURSE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;table&nbsp;DB_DATA_LOCAL_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;all&nbsp;entries&nbsp;in&nbsp;I_BUSINESS_KEY_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;ZSTD_COURSE~STUD_ID&nbsp;=&nbsp;I_BUSINESS_KEY_TAB-STUD_ID.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+*&nbsp;*&nbsp;error&nbsp;handling<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;if&nbsp;(&nbsp;SY-SUBRC&nbsp;&lt;&gt;&nbsp;0&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_DB_SELECT&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_DB_SELECT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;TABLE&nbsp;&nbsp;=&nbsp;'ZSTD_COURSE'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_DB_SELECT=&gt;BY_BKEYTAB.<br />
+&nbsp;&nbsp;endif.&nbsp;"(&nbsp;Error&nbsp;)<br />
+<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;DB_DATA_LOCAL_TAB&nbsp;assigning&nbsp;&lt;FS_DB_DATA_LOCAL&gt;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;assign&nbsp;&lt;FS_DB_DATA_LOCAL&gt;&nbsp;to&nbsp;&lt;FS_DB_ZSTD_COURSE&gt;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;DB_DATA-STUD_ID&nbsp;=&nbsp;&lt;FS_DB_ZSTD_COURSE&gt;-STUD_ID.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DB_DATA-STUD_NAME&nbsp;=&nbsp;&lt;FS_DB_ZSTD_COURSE&gt;-STUD_NAME.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DB_DATA-STUD_BATCH&nbsp;=&nbsp;&lt;FS_DB_ZSTD_COURSE&gt;-STUD_BATCH.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DB_DATA-STUD_COURSE&nbsp;=&nbsp;&lt;FS_DB_ZSTD_COURSE&gt;-STUD_COURSE.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;DB_DATA&nbsp;to&nbsp;RESULT.<br />
+<br />
+&nbsp;&nbsp;endloop."&nbsp;at&nbsp;DB_DATA_LOCAL_TAB<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"MAP_LOAD_FROM_DATABASE_KEY<br />
+endmethod.<br />
+"#EC CI_VALPAR<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY</h2>
+<h3> Description: Reads an Object Using its BWL Key</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Public<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;093901<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;importing&nbsp;I_KEY&nbsp;type&nbsp;any<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returning&nbsp;result&nbsp;type&nbsp;ref&nbsp;to&nbsp;object<br />
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Get&nbsp;a&nbsp;persistent&nbsp;object&nbsp;identified&nbsp;by&nbsp;the<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;given&nbsp;business&nbsp;key<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;The&nbsp;object&nbsp;exists&nbsp;with&nbsp;the&nbsp;given&nbsp;business&nbsp;key,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;either&nbsp;in&nbsp;memory&nbsp;or&nbsp;on&nbsp;database.<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;The&nbsp;object&nbsp;exists&nbsp;in&nbsp;memory,&nbsp;RESULT&nbsp;is&nbsp;the&nbsp;reference<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;propagates&nbsp;GET_PERSISTENT<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;call&nbsp;GET_PERSISTENT<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;2000-03-06&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Initial&nbsp;Version&nbsp;2.0<br />
+*&nbsp;-&nbsp;2000-08-02&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;OO&nbsp;Exceptions<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;BUSINESS_KEY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;BUSINESS_KEY&nbsp;=&nbsp;I_KEY.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;call&nbsp;method&nbsp;GET_PERSISTENT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_STUD_ID&nbsp;=&nbsp;BUSINESS_KEY-STUD_ID<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receiving&nbsp;RESULT&nbsp;=&nbsp;RESULT.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>MAP_SAVE_TO_DATABASE</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: MAP_SAVE_TO_DATABASE</h2>
+<h3> Description: Saves Object Data in Database</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;MAP_SAVE_TO_DATABASE.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;093901<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;importing&nbsp;I_DELETES&nbsp;type&nbsp;TYP_DB_DELETE_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_INSERTS&nbsp;type&nbsp;TYP_DB_DATA_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_UPDATES&nbsp;type&nbsp;TYP_DB_DATA_TAB<br />
+   </div>
+   <div class="codeComment">
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Do&nbsp;database&nbsp;operations:<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Insert&nbsp;new&nbsp;object&nbsp;data&nbsp;from&nbsp;I_INSERTS,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;changed&nbsp;object&nbsp;data&nbsp;from&nbsp;I_UPDATES&nbsp;and<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete&nbsp;entries&nbsp;for&nbsp;deleted&nbsp;objects&nbsp;from&nbsp;I_DELETES<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;I_DELETES,I_INSERTS&nbsp;and&nbsp;I_UPDATES&nbsp;contain&nbsp;ALL<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;necessary&nbsp;information&nbsp;(Keys,&nbsp;Data)<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;this&nbsp;method&nbsp;is&nbsp;called&nbsp;in&nbsp;update&nbsp;task,&nbsp;there<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;NO&nbsp;MORE&nbsp;information,&nbsp;no&nbsp;objects&nbsp;exist&nbsp;anymore.<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;All&nbsp;database&nbsp;operations&nbsp;have&nbsp;been&nbsp;performed.<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;CX_OS_DB_INSERT,&nbsp;CX_OS_DB_UPDATE,&nbsp;CX_OS_DB_DELETE<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;-<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;1999-09-21&nbsp;&nbsp;&nbsp;:&nbsp;(OS)&nbsp;&nbsp;Initial&nbsp;Version<br />
+*&nbsp;-&nbsp;2000-03-06&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Version&nbsp;2.0<br />
+*&nbsp;-&nbsp;2001-11-26&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Refactoring&nbsp;Generation<br />
+*&nbsp;-&nbsp;2002-01-17&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;private&nbsp;attributes&nbsp;in&nbsp;super&nbsp;classes<br />
+************************************************************************<br />
+<br />
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+<br />
+*&nbsp;*&nbsp;ZSTD_COURSE:&nbsp;internal&nbsp;tables&nbsp;for&nbsp;mass&nbsp;operation<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data&nbsp;DB_ITB_ZSTD_COURSE&nbsp;type&nbsp;STANDARD&nbsp;TABLE&nbsp;OF&nbsp;ZSTD_COURSE.<br />
+&nbsp;&nbsp;data&nbsp;DB_UTB_ZSTD_COURSE&nbsp;type&nbsp;STANDARD&nbsp;TABLE&nbsp;OF&nbsp;ZSTD_COURSE.<br />
+&nbsp;&nbsp;data&nbsp;DB_DTB_ZSTD_COURSE&nbsp;type&nbsp;STANDARD&nbsp;TABLE&nbsp;OF&nbsp;ZSTD_COURSE.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;ZSTD_COURSE:&nbsp;headlines&nbsp;for&nbsp;tables<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data&nbsp;DB_ILN_ZSTD_COURSE&nbsp;type&nbsp;ZSTD_COURSE.<br />
+&nbsp;&nbsp;data&nbsp;DB_ULN_ZSTD_COURSE&nbsp;type&nbsp;ZSTD_COURSE.<br />
+&nbsp;&nbsp;data&nbsp;DB_DLN_ZSTD_COURSE&nbsp;type&nbsp;ZSTD_COURSE.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;field-symbols&nbsp;&lt;FS_INSERT&gt;&nbsp;type&nbsp;TYP_DB_DATA.<br />
+&nbsp;&nbsp;field-symbols&nbsp;&lt;FS_UPDATE&gt;&nbsp;type&nbsp;TYP_DB_DATA.<br />
+&nbsp;&nbsp;field-symbols&nbsp;&lt;FS_DELETE&gt;&nbsp;type&nbsp;TYP_SPECIAL_OBJECT_INFO.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;Collect&nbsp;Inserts<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;loop&nbsp;at&nbsp;I_INSERTS&nbsp;assigning&nbsp;&lt;FS_INSERT&gt;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;DB_ILN_ZSTD_COURSE-STUD_NAME&nbsp;=&nbsp;&lt;FS_INSERT&gt;-STUD_NAME.<br />
+&nbsp;&nbsp;&nbsp;DB_ILN_ZSTD_COURSE-STUD_BATCH&nbsp;=&nbsp;&lt;FS_INSERT&gt;-STUD_BATCH.<br />
+&nbsp;&nbsp;&nbsp;DB_ILN_ZSTD_COURSE-STUD_COURSE&nbsp;=&nbsp;&lt;FS_INSERT&gt;-STUD_COURSE.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;DB_ILN_ZSTD_COURSE-STUD_ID&nbsp;=&nbsp;&lt;FS_INSERT&gt;-STUD_ID.<br />
+&nbsp;&nbsp;&nbsp;append&nbsp;DB_ILN_ZSTD_COURSE&nbsp;to&nbsp;DB_ITB_ZSTD_COURSE.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;endloop.&nbsp;"at&nbsp;I_INSERTS<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;Collect&nbsp;Updates<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;loop&nbsp;at&nbsp;I_UPDATES&nbsp;assigning&nbsp;&lt;FS_UPDATE&gt;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;DB_ULN_ZSTD_COURSE-STUD_NAME&nbsp;=&nbsp;&lt;FS_UPDATE&gt;-STUD_NAME.<br />
+&nbsp;&nbsp;&nbsp;DB_ULN_ZSTD_COURSE-STUD_BATCH&nbsp;=&nbsp;&lt;FS_UPDATE&gt;-STUD_BATCH.<br />
+&nbsp;&nbsp;&nbsp;DB_ULN_ZSTD_COURSE-STUD_COURSE&nbsp;=&nbsp;&lt;FS_UPDATE&gt;-STUD_COURSE.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;DB_ULN_ZSTD_COURSE-STUD_ID&nbsp;=&nbsp;&lt;FS_UPDATE&gt;-STUD_ID.<br />
+&nbsp;&nbsp;&nbsp;append&nbsp;DB_ULN_ZSTD_COURSE&nbsp;TO&nbsp;DB_UTB_ZSTD_COURSE.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;endloop.&nbsp;"at&nbsp;I_UPDATES<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;Collect&nbsp;Deletes<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;loop&nbsp;at&nbsp;I_DELETES&nbsp;assigning&nbsp;&lt;FS_DELETE&gt;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DB_DLN_ZSTD_COURSE-STUD_ID&nbsp;=&nbsp;&lt;FS_DELETE&gt;-BUSINESS_KEY-STUD_ID.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;DB_DLN_ZSTD_COURSE&nbsp;TO&nbsp;DB_DTB_ZSTD_COURSE.<br />
+<br />
+&nbsp;&nbsp;endloop.&nbsp;"at&nbsp;I_DELETES<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;Perform&nbsp;DB&nbsp;Operations:<br />
+<br />
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+<br />
+*&nbsp;*&nbsp;DB&nbsp;Deletes<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;delete&nbsp;ZSTD_COURSE&nbsp;FROM&nbsp;TABLE&nbsp;DB_DTB_ZSTD_COURSE.<br />
+&nbsp;&nbsp;if&nbsp;SY-SUBRC&nbsp;&lt;&gt;&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_DB_DELETE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TABLE&nbsp;=&nbsp;'ZSTD_COURSE'.<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;DB&nbsp;Inserts<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;insert&nbsp;ZSTD_COURSE&nbsp;FROM&nbsp;TABLE&nbsp;DB_ITB_ZSTD_COURSE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;accepting&nbsp;duplicate&nbsp;keys.<br />
+&nbsp;&nbsp;if&nbsp;SY-SUBRC&nbsp;&lt;&gt;&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_DB_INSERT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TABLE&nbsp;=&nbsp;'ZSTD_COURSE'.<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;DB&nbsp;Updates<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;update&nbsp;ZSTD_COURSE&nbsp;FROM&nbsp;TABLE&nbsp;DB_UTB_ZSTD_COURSE.<br />
+&nbsp;&nbsp;if&nbsp;SY-SUBRC&nbsp;&lt;&gt;&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_DB_UPDATE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TABLE&nbsp;=&nbsp;'ZSTD_COURSE'.<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"MAP_SAVE_TO_DATABASE<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>PM_LOAD_AND_SET_ATTRIBUTES</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: PM_LOAD_AND_SET_ATTRIBUTES</h2>
+<h3> Description: Loads and Sets Persistent Attributes</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;PM_LOAD_AND_SET_ATTRIBUTES.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;090501<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;importing&nbsp;I_BUSINESS_KEY&nbsp;type&nbsp;TYP_BUSINESS_KEY&nbsp;optional<br />
+<br />
+   </div>
+   <div class="codeComment">
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Load&nbsp;object&nbsp;data&nbsp;of&nbsp;a&nbsp;persistent&nbsp;object&nbsp;and&nbsp;set<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object's&nbsp;attributes<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;CURRENT&nbsp;is&nbsp;clear,&nbsp;load&nbsp;data&nbsp;using&nbsp;I_BUSINESS_KEY.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;CURRENT&nbsp;is&nbsp;set,&nbsp;use&nbsp;the&nbsp;BKEY&nbsp;stored&nbsp;there.<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;An&nbsp;entry&nbsp;for&nbsp;the&nbsp;given&nbsp;Business&nbsp;Key&nbsp;exists&nbsp;on<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database.&nbsp;CURRENT&nbsp;can&nbsp;be&nbsp;set&nbsp;(use&nbsp;this<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object&nbsp;to&nbsp;set&nbsp;attributes&nbsp;to)&nbsp;or&nbsp;clear.<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;Persistent&nbsp;object&nbsp;data&nbsp;is&nbsp;loaded&nbsp;and&nbsp;object<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attributes&nbsp;are&nbsp;set.&nbsp;CURRENT&nbsp;is&nbsp;set.<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;propagates&nbsp;PM_CHECK_AND_SET_ATTRIBUTES<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propagates&nbsp;MAP_LOAD_FROM_DATABASE_KEY/GUID<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;1.&nbsp;Check&nbsp;Source&nbsp;of&nbsp;DB&nbsp;Keys:&nbsp;Business&nbsp;Key&nbsp;from<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CURRENT_SPECIAL_OBJECT_INFO&nbsp;or&nbsp;from&nbsp;I_BUSINESS_KEY<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;Load&nbsp;from&nbsp;Database<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.a.&nbsp;Type&nbsp;Mapping:&nbsp;Set&nbsp;E_TYPE&nbsp;and&nbsp;return&nbsp;if&nbsp;case&nbsp;of<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;mismatch<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;Check&nbsp;loaded&nbsp;data&nbsp;and&nbsp;set&nbsp;object's&nbsp;attributes<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;2000-03-07&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Initial&nbsp;Version&nbsp;2.0<br />
+*&nbsp;-&nbsp;2000-05-17&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;use&nbsp;PM_CHECK_AND_SET_ATTRIBUTES<br />
+*&nbsp;-&nbsp;2000-08-03&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;OO&nbsp;Exceptions<br />
+*&nbsp;-&nbsp;2004-01-21&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;Type&nbsp;Mapping&nbsp;Refactoring<br />
+*&nbsp;-&nbsp;2005-02-22&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;Set&nbsp;Exception&nbsp;parameters<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;OBJECT_DATA_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_DB_DATA_TAB,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_DATA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_DB_DATA,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY_TAB&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY_TAB.<br />
+<br />
+&nbsp;&nbsp;data:&nbsp;SERIALIZED_BUSINESS_KEY&nbsp;&nbsp;type&nbsp;STRING&nbsp;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;1.&nbsp;Check&nbsp;Source&nbsp;of&nbsp;DB&nbsp;Keys:&nbsp;Business&nbsp;Key&nbsp;from<br />
+*&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;CURRENT_SPECIAL_OBJECT_INFO&nbsp;or&nbsp;from&nbsp;I_BUSINESS_KEY?<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;if&nbsp;(&nbsp;CURRENT_OBJECT_IREF&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY&nbsp;=&nbsp;I_BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;else.&nbsp;"(&nbsp;CURRENT&nbsp;is&nbsp;set&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;Get&nbsp;BKey&nbsp;from&nbsp;CURRENT_SPECIAL_OBJECT_INFO<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY&nbsp;=&nbsp;CURRENT_SPECIAL_OBJECT_INFO-BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;endif.&nbsp;"(&nbsp;CURRENT&nbsp;set?&nbsp;).<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;2.&nbsp;Load&nbsp;from&nbsp;Database<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;try.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;BUSINESS_KEY&nbsp;to&nbsp;BUSINESS_KEY_TAB.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_LOAD_FROM_DATABASE_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_BUSINESS_KEY_TAB&nbsp;=&nbsp;BUSINESS_KEY_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receiving&nbsp;result&nbsp;=&nbsp;OBJECT_DATA_TAB.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;catch&nbsp;CX_OS_DB_SELECT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_SERIALIZE_BKEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_BUSINESS_KEY&nbsp;=&nbsp;BUSINESS_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receiving&nbsp;RESULT&nbsp;=&nbsp;SERIALIZED_BUSINESS_KEY.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY&nbsp;&nbsp;&nbsp;=&nbsp;SERIALIZED_BUSINESS_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_NOT_FOUND=&gt;BY_BKEY.<br />
+&nbsp;&nbsp;endtry.<br />
+<br />
+&nbsp;&nbsp;read&nbsp;table&nbsp;OBJECT_DATA_TAB&nbsp;into&nbsp;OBJECT_DATA&nbsp;index&nbsp;1.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;3.&nbsp;Now&nbsp;Check&nbsp;the&nbsp;loaded&nbsp;data&nbsp;and&nbsp;set&nbsp;the&nbsp;Object.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;call&nbsp;method&nbsp;PM_CHECK_AND_SET_ATTRIBUTES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_OBJECT_DATA&nbsp;&nbsp;=&nbsp;OBJECT_DATA<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_BUSINESS_KEY&nbsp;=&nbsp;BUSINESS_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_ID_PROVIDED&nbsp;&nbsp;=&nbsp;ID_STATUS_COMPLETE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"PM_LOAD_AND_SET_ATTRIBUTES<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

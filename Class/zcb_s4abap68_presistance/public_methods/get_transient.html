@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>GET_TRANSIENT</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: GET_TRANSIENT</h2>
+<h3> Description: Get Transient Object with Key</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Public<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;GET_TRANSIENT.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;093901<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING&nbsp;I_STUD_ID&nbsp;TYPE&nbsp;ZSTUD_DE_ID.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURNING&nbsp;RESULT&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;ZCL_S4ABAP68_PRESISTANCE<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raising&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Get&nbsp;reference&nbsp;of&nbsp;an&nbsp;transient&nbsp;object.<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;object&nbsp;has&nbsp;been&nbsp;created&nbsp;transient<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;--<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(TRANSIENT_BY_BKEY,&nbsp;IS_PERSISTENT_BY_BKEY)<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;1.&nbsp;look&nbsp;for&nbsp;entry&nbsp;in&nbsp;SPECIAL_OBJECT_INFO&nbsp;and&nbsp;check<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;it&nbsp;is&nbsp;still&nbsp;valid<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;If&nbsp;it&nbsp;not&nbsp;valid&nbsp;or&nbsp;no&nbsp;object&nbsp;found:&nbsp;Error<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;If&nbsp;it&nbsp;is&nbsp;valid:&nbsp;Check&nbsp;state<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3a.&nbsp;Not&nbsp;Transient:&nbsp;Error!<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3b.&nbsp;Transient:&nbsp;Success!<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;2000-03-07&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Initial&nbsp;Version<br />
+*&nbsp;-&nbsp;2000-08-03&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;OO&nbsp;Exceptions<br />
+*&nbsp;-&nbsp;2000-10-30&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Type&nbsp;Mapping<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;BUSINESS_KEY&nbsp;type&nbsp;TYP_BUSINESS_KEY,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY_STRING&nbsp;&nbsp;type&nbsp;STRING&nbsp;.<br />
+<br />
+&nbsp;&nbsp;data:&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;type&nbsp;ref&nbsp;to&nbsp;OBJECT.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;1.&nbsp;look&nbsp;for&nbsp;entry&nbsp;in&nbsp;SPECIAL_OBJECT_INFO&nbsp;and&nbsp;check&nbsp;if&nbsp;it&nbsp;is<br />
+*&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;still&nbsp;valid<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;clear&nbsp;CURRENT_OBJECT_IREF.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;BUSINESS_KEY-STUD_ID&nbsp;=&nbsp;I_STUD_ID.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_BKEY_TAB&nbsp;into&nbsp;CURRENT_SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;table&nbsp;KEY&nbsp;BUSINESS_KEY&nbsp;=&nbsp;BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;if&nbsp;(&nbsp;SY-SUBRC&nbsp;=&nbsp;0&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_OBJECT_INFO&nbsp;into&nbsp;CURRENT_SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;table&nbsp;key<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_ID&nbsp;=&nbsp;CURRENT_SPECIAL_OBJECT_INFO-OBJECT_ID.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_LOAD_AND_VALIDATE_CURRENT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_INDEX&nbsp;=&nbsp;SY-TABIX.<br />
+<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;2.&nbsp;If&nbsp;it&nbsp;not&nbsp;valid&nbsp;or&nbsp;no&nbsp;object&nbsp;found:&nbsp;Error<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;if&nbsp;(&nbsp;CURRENT_OBJECT_IREF&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*!!!&nbsp;Error:&nbsp;Object&nbsp;activation&nbsp;failed&nbsp;-&nbsp;no&nbsp;entry&nbsp;in&nbsp;administrative&nbsp;data<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;BKEY_STRING&nbsp;&nbsp;=&nbsp;MAP_SERIALIZE_BKEY(&nbsp;BUSINESS_KEY&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY&nbsp;&nbsp;&nbsp;=&nbsp;BKEY_STRING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_NOT_FOUND=&gt;TRANSIENT_BY_BKEY.<br />
+<br />
+&nbsp;&nbsp;else.&nbsp;"(&nbsp;Entry&nbsp;exists&nbsp;)<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;3.&nbsp;If&nbsp;it&nbsp;is&nbsp;valid:&nbsp;Check&nbsp;state<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;CURRENT_OBJECT_INFO-PM_STATUS&nbsp;&lt;&gt;&nbsp;OSCON_OSTATUS_TRANSIENT&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;3a.&nbsp;Not&nbsp;Transient:&nbsp;Error!<br />
+*!!!!!&nbsp;Error:&nbsp;Object&nbsp;is&nbsp;not&nbsp;transient<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;=&nbsp;CURRENT_OBJECT_IREF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY_STRING&nbsp;&nbsp;=&nbsp;MAP_SERIALIZE_BKEY(&nbsp;BUSINESS_KEY&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;=&nbsp;TEMP_CURRENT_OBJECT_IREF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY&nbsp;&nbsp;&nbsp;=&nbsp;BKEY_STRING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_NOT_FOUND=&gt;IS_PERSISTENT_BY_BKEY.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.&nbsp;"(&nbsp;PM_STATUS&nbsp;&lt;&gt;&nbsp;transient&nbsp;)<br />
+<br />
+&nbsp;&nbsp;endif."&nbsp;(&nbsp;Entry&nbsp;in&nbsp;administrative&nbsp;data?&nbsp;)<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;3b.&nbsp;Transient:&nbsp;Success!<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;RESULT&nbsp;?=&nbsp;CURRENT_OBJECT_IREF.<br />
+&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"GET_TRANSIENT<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

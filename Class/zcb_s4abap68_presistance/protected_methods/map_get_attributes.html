@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>MAP_GET_ATTRIBUTES</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: MAP_GET_ATTRIBUTES</h2>
+<h3> Description: Reads Persistent Attributes from Object</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+method MAP_GET_ATTRIBUTES.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;093901<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;importing&nbsp;I_OBJECT_REF_TAB&nbsp;&nbsp;type&nbsp;TYP_OBJECT_REF_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&nbsp;exporting&nbsp;value(E_OBJECT_DATA_TAB)&nbsp;type&nbsp;TYP_DB_DATA_TAB<br />
+   </div>
+   <div class="codeComment">
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Get&nbsp;object&nbsp;data&nbsp;from&nbsp;objects<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;I_OBJECT_REF_TAB&nbsp;is&nbsp;a&nbsp;list&nbsp;of&nbsp;objects&nbsp;that&nbsp;have&nbsp;a<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;valid&nbsp;state&nbsp;(new,&nbsp;changed)<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;E_OBJECT_DATA_TAB&nbsp;contains&nbsp;all&nbsp;object&nbsp;data&nbsp;of&nbsp;the<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;given&nbsp;objects.&nbsp;It&nbsp;is&nbsp;a&nbsp;table&nbsp;of&nbsp;the&nbsp;same&nbsp;size&nbsp;like<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_OBJECT_REF_TAB&nbsp;with&nbsp;corresponding&nbsp;entries.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GUID&nbsp;(and&nbsp;Business&nbsp;Key)&nbsp;will&nbsp;be&nbsp;added&nbsp;later.<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;CX_OS_OBJECT_REFERENCE&nbsp;collects&nbsp;GET_OID_BY_REF<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;-<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;2000-03-06&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Initial&nbsp;Version<br />
+*&nbsp;-&nbsp;2000-08-03&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;OO&nbsp;Exceptions<br />
+*&nbsp;-&nbsp;2002-01-17&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;private&nbsp;attributes&nbsp;in&nbsp;super&nbsp;classes<br />
+************************************************************************<br />
+*&nbsp;Generated!&nbsp;Do&nbsp;not&nbsp;modify!<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;THE_OBJECT&nbsp;type&nbsp;ref&nbsp;to&nbsp;ZCL_S4ABAP68_PRESISTANCE,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_DATA_ITEM&nbsp;type&nbsp;TYP_DB_DATA,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PM_SERVICE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;ref&nbsp;to&nbsp;IF_OS_PM_SERVICE.&nbsp;"#EC&nbsp;NEEDED<br />
+<br />
+&nbsp;&nbsp;data:&nbsp;EX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;ref&nbsp;to&nbsp;CX_OS_ERROR,&nbsp;"#EC&nbsp;NEEDED<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EX_SYS&nbsp;type&nbsp;ref&nbsp;to&nbsp;CX_OS_SYSTEM_ERROR,&nbsp;"#EC&nbsp;NEEDED<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EX_TAB&nbsp;type&nbsp;OSTABLEREF.<br />
+<br />
+&nbsp;&nbsp;PM_SERVICE&nbsp;?=&nbsp;PERSISTENCY_MANAGER.<br />
+<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;I_OBJECT_REF_TAB&nbsp;into&nbsp;THE_OBJECT.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;OBJECT_DATA_ITEM.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&lt;&nbsp;&nbsp;Generated&nbsp;from&nbsp;mapping:<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_DATA_ITEM-STUD_ID&nbsp;=&nbsp;THE_OBJECT-&gt;STUD_ID.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_DATA_ITEM-STUD_NAME&nbsp;=&nbsp;THE_OBJECT-&gt;STUD_NAME.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_DATA_ITEM-STUD_BATCH&nbsp;=&nbsp;THE_OBJECT-&gt;STUD_BATCH.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_DATA_ITEM-STUD_COURSE&nbsp;=&nbsp;THE_OBJECT-&gt;STUD_COURSE.<br />
+   </div>
+   <div class="codeComment">
+*&gt;<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;OBJECT_DATA_ITEM&nbsp;TO&nbsp;E_OBJECT_DATA_TAB.<br />
+<br />
+&nbsp;&nbsp;endloop."at&nbsp;I_OBJECT_REF_TAB<br />
+<br />
+&nbsp;&nbsp;if&nbsp;(&nbsp;not&nbsp;EX_TAB&nbsp;is&nbsp;initial&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_REFERENCE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;EXCEPTION_TAB&nbsp;=&nbsp;EX_TAB.<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"MAP_GET_ATTRIBUTES<br />
+endmethod.<br />
+"#EC CI_VALPAR<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

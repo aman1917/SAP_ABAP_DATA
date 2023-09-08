@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZCB_S4ABAP68_PRESISTANCE</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for class: ZCB_S4ABAP68_PRESISTANCE</h2>
+<h3> Description: Base agent Presistance Class</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Class attributes.                                                    *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Public<br />
+Message class: <br />
+State: Implemented<br />
+Final Indicator: <br />
+R/3 Release: 754<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Public section of class.                                             *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+class ZCB_S4ABAP68_PRESISTANCE definition<br />
+&nbsp;&nbsp;public<br />
+&nbsp;&nbsp;inheriting&nbsp;from&nbsp;CL_OS_CA_COMMON<br />
+&nbsp;&nbsp;abstract<br />
+&nbsp;&nbsp;create&nbsp;public&nbsp;.<br />
+<br />
+public section.<br />
+<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/create_persistent.html">CREATE_PERSISTENT</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_STUD_ID&nbsp;type&nbsp;ZSTUD_DE_ID<br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;ref&nbsp;to&nbsp;ZCL_S4ABAP68_PRESISTANCE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_EXISTING&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/create_transient.html">CREATE_TRANSIENT</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_STUD_ID&nbsp;type&nbsp;ZSTUD_DE_ID<br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;ref&nbsp;to&nbsp;ZCL_S4ABAP68_PRESISTANCE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_EXISTING&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/delete_persistent.html">DELETE_PERSISTENT</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_STUD_ID&nbsp;type&nbsp;ZSTUD_DE_ID<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_EXISTING&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/get_persistent.html">GET_PERSISTENT</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_STUD_ID&nbsp;type&nbsp;ZSTUD_DE_ID<br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;ref&nbsp;to&nbsp;ZCL_S4ABAP68_PRESISTANCE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/get_transient.html">GET_TRANSIENT</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_STUD_ID&nbsp;type&nbsp;ZSTUD_DE_ID<br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;ref&nbsp;to&nbsp;ZCL_S4ABAP68_PRESISTANCE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/if_os_ca_persistency~get_persistent_by_key.html">IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/if_os_ca_persistency~get_persistent_by_key_tab.html">IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY_TAB</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/if_os_ca_service~save.html">IF_OS_CA_SERVICE~SAVE</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/if_os_ca_service~save_in_update_task.html">IF_OS_CA_SERVICE~SAVE_IN_UPDATE_TASK</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/if_os_factory~create_persistent_by_key.html">IF_OS_FACTORY~CREATE_PERSISTENT_BY_KEY</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="public_methods/if_os_factory~create_transient_by_key.html">IF_OS_FACTORY~CREATE_TRANSIENT_BY_KEY</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Private section of class.                                            *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+private section.<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Protected section of class.                                          *<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+protected section.<br />
+<br />
+&nbsp;&nbsp;types&nbsp;TYP_OID&nbsp;type&nbsp;OS_GUID&nbsp;.<br />
+&nbsp;&nbsp;types&nbsp;TYP_TYPE&nbsp;type&nbsp;OS_GUID&nbsp;.<br />
+&nbsp;&nbsp;types&nbsp;TYP_OBJECT_REF&nbsp;type&nbsp;ref&nbsp;to&nbsp;ZCL_S4ABAP68_PRESISTANCE&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;begin&nbsp;of&nbsp;TYP_BUSINESS_KEY&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STUD_ID&nbsp;type&nbsp;ZSTUD_DE_ID&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;TYP_BUSINESS_KEY&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TYP_BUSINESS_KEY_TAB&nbsp;type&nbsp;standard&nbsp;table&nbsp;of<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYP_BUSINESS_KEY&nbsp;with&nbsp;non-unique&nbsp;default&nbsp;key&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;begin&nbsp;of&nbsp;TYP_DB_DATA&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STUD_ID&nbsp;type&nbsp;ZSTUD_DE_ID&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STUD_NAME&nbsp;type&nbsp;ZSTUD_DE_NAME&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STUD_BATCH&nbsp;type&nbsp;ZSTUD_DE_BATCH&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STUD_COURSE&nbsp;type&nbsp;ZSTUD_DE_COURSE&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;TYP_DB_DATA&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TYP_DB_DATA_TAB&nbsp;type&nbsp;standard&nbsp;table&nbsp;of<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYP_DB_DATA&nbsp;with&nbsp;non-unique&nbsp;default&nbsp;key&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TYP_OID_TAB&nbsp;type&nbsp;standard&nbsp;table&nbsp;of<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYP_OID&nbsp;with&nbsp;non-unique&nbsp;default&nbsp;key&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TYP_OBJECT_REF_TAB&nbsp;type&nbsp;standard&nbsp;table&nbsp;of<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYP_OBJECT_REF&nbsp;with&nbsp;non-unique&nbsp;default&nbsp;key&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;begin&nbsp;of&nbsp;TYP_SPECIAL_OBJECT_INFO&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_ID&nbsp;type&nbsp;TYP_INTERNAL_OID&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID_STATUS&nbsp;type&nbsp;TYP_ID_STATUS&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY&nbsp;type&nbsp;TYP_BUSINESS_KEY&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;TYP_SPECIAL_OBJECT_INFO&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TYP_SPECIAL_OBJECT_INFO_TAB&nbsp;type&nbsp;sorted&nbsp;table&nbsp;of<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYP_SPECIAL_OBJECT_INFO&nbsp;with&nbsp;unique&nbsp;key<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_ID&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TYP_SPECIAL_BKEY_TAB&nbsp;type&nbsp;sorted&nbsp;table&nbsp;of<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYP_SPECIAL_OBJECT_INFO&nbsp;with&nbsp;unique&nbsp;key<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY&nbsp;.<br />
+&nbsp;&nbsp;types:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TYP_DB_DELETE_TAB&nbsp;type&nbsp;standard&nbsp;table&nbsp;of<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYP_SPECIAL_OBJECT_INFO&nbsp;with&nbsp;non-unique&nbsp;default&nbsp;key&nbsp;.<br />
+<br />
+&nbsp;&nbsp;data&nbsp;CURRENT_SPECIAL_OBJECT_INFO&nbsp;type&nbsp;TYP_SPECIAL_OBJECT_INFO&nbsp;.<br />
+&nbsp;&nbsp;data&nbsp;SPECIAL_BKEY_TAB&nbsp;type&nbsp;TYP_SPECIAL_BKEY_TAB&nbsp;.<br />
+&nbsp;&nbsp;data&nbsp;SPECIAL_OBJECT_INFO&nbsp;type&nbsp;TYP_SPECIAL_OBJECT_INFO_TAB&nbsp;.<br />
+<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/map_extract_identifier.html">MAP_EXTRACT_IDENTIFIER</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_DB_DATA&nbsp;type&nbsp;TYP_DB_DATA<br />
+&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(E_BUSINESS_KEY)&nbsp;type&nbsp;TYP_BUSINESS_KEY&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/map_get_attributes.html">MAP_GET_ATTRIBUTES</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_OBJECT_REF_TAB&nbsp;type&nbsp;TYP_OBJECT_REF_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(E_OBJECT_DATA_TAB)&nbsp;type&nbsp;TYP_DB_DATA_TAB&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/map_load_from_database_key.html">MAP_LOAD_FROM_DATABASE_KEY</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_BUSINESS_KEY_TAB&nbsp;type&nbsp;TYP_BUSINESS_KEY_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;TYP_DB_DATA_TAB&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/map_merge_identifier.html">MAP_MERGE_IDENTIFIER</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_BUSINESS_KEY_TAB&nbsp;type&nbsp;TYP_BUSINESS_KEY_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;changing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C_DB_DATA_TAB&nbsp;type&nbsp;TYP_DB_DATA_TAB&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/map_save_to_database.html">MAP_SAVE_TO_DATABASE</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_DELETES&nbsp;type&nbsp;TYP_DB_DELETE_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_INSERTS&nbsp;type&nbsp;TYP_DB_DATA_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_UPDATES&nbsp;type&nbsp;TYP_DB_DATA_TAB&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/map_serialize_bkey.html">MAP_SERIALIZE_BKEY</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_BUSINESS_KEY&nbsp;type&nbsp;TYP_BUSINESS_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;STRING&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/map_set_attributes.html">MAP_SET_ATTRIBUTES</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_OBJECT_DATA&nbsp;type&nbsp;TYP_DB_DATA<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_OBJECT_REF&nbsp;type&nbsp;TYP_OBJECT_REF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/pm_check_and_set_attributes.html">PM_CHECK_AND_SET_ATTRIBUTES</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_BUSINESS_KEY&nbsp;type&nbsp;TYP_BUSINESS_KEY&nbsp;optional<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_ID_PROVIDED&nbsp;type&nbsp;TYP_ID_STATUS&nbsp;default&nbsp;0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_OBJECT_DATA&nbsp;type&nbsp;TYP_DB_DATA<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/pm_create_representant.html">PM_CREATE_REPRESENTANT</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_BUSINESS_KEY&nbsp;type&nbsp;TYP_BUSINESS_KEY&nbsp;optional<br />
+&nbsp;&nbsp;&nbsp;&nbsp;returning<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value(RESULT)&nbsp;type&nbsp;TYP_OBJECT_REF&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/pm_delete_persistent&nbsp;..html">PM_DELETE_PERSISTENT&nbsp;.</a><br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/pm_load_and_set_attributes.html">PM_LOAD_AND_SET_ATTRIBUTES</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;importing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_BUSINESS_KEY&nbsp;type&nbsp;TYP_BUSINESS_KEY&nbsp;optional<br />
+&nbsp;&nbsp;&nbsp;&nbsp;raising<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;.<br />
+<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/delete_special_object_info.html">DELETE_SPECIAL_OBJECT_INFO</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/load_special_object_info.html">LOAD_SPECIAL_OBJECT_INFO</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/map_invalidate.html">MAP_INVALIDATE</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/os_pm_delete_persistent.html">OS_PM_DELETE_PERSISTENT</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/pm_load.html">PM_LOAD</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+&nbsp;&nbsp;methods&nbsp;<a&nbsp;href="protected_methods/save_special_object_info.html">SAVE_SPECIAL_OBJECT_INFO</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;redefinition&nbsp;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+*   Types section of class.                                              *<br />
+**************************************************************************<br />
+*"* dummy include to reduce generation dependencies between<br />
+*"* class ZCB_S4ABAP68_PRESISTANCE and it's users.<br />
+*"* touched if any type reference has been changed<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

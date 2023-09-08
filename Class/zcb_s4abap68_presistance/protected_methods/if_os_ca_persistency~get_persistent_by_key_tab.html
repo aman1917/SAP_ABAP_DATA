@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY_TAB</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY_TAB</h2>
+<h3> Description: Redefined: Redefined: Redefined: Redefined: Redefined: Subcl</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY_TAB.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;093901<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"importing&nbsp;I_KEY_TAB&nbsp;type&nbsp;INDEX&nbsp;TABLE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"returning&nbsp;value(RESULT)&nbsp;type&nbsp;OSREFTAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"raising&nbsp;&nbsp;&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+   </div>
+   <div class="codeComment">
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Get&nbsp;persistent&nbsp;objects&nbsp;by&nbsp;Business&nbsp;Key&nbsp;table<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;-<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;For&nbsp;each&nbsp;entry&nbsp;in&nbsp;the&nbsp;KEY&nbsp;table,&nbsp;there&nbsp;is&nbsp;a&nbsp;corres-<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ponding&nbsp;entry&nbsp;in&nbsp;the&nbsp;RESULT&nbsp;table.&nbsp;If&nbsp;the&nbsp;object&nbsp;was<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;found&nbsp;in&nbsp;the&nbsp;cache&nbsp;or&nbsp;the&nbsp;database,&nbsp;then&nbsp;a&nbsp;reference<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;this&nbsp;object&nbsp;can&nbsp;be&nbsp;found&nbsp;in&nbsp;the&nbsp;RESULT&nbsp;table,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;not,&nbsp;the&nbsp;reference&nbsp;is&nbsp;initial.&nbsp;The&nbsp;persistent<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects&nbsp;are&nbsp;active.<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(IS_TRANSIENT_BY_BKEY,DELETED_BY_BKEY)<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propagates&nbsp;PM_LOAD_AND_SET_ATTRIBUTES<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propagates&nbsp;OS_PM_LOADED_PERISISTENT<br />
+*<br />
+*&nbsp;Implementation&nbsp;:&nbsp;1.&nbsp;Look&nbsp;for&nbsp;object&nbsp;in&nbsp;SPECIAL_OBJECT_INFO.&nbsp;If&nbsp;found,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;check&nbsp;if&nbsp;it&nbsp;is&nbsp;still&nbsp;valid<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;Object&nbsp;found:&nbsp;Check&nbsp;PM_STATUS<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2a.&nbsp;If&nbsp;Status&nbsp;is&nbsp;TRANSIENT&nbsp;or&nbsp;DELETED,&nbsp;error!<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2b.&nbsp;If&nbsp;Status&nbsp;is&nbsp;NOT_LOADED,&nbsp;continue&nbsp;with&nbsp;3.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2c.&nbsp;If&nbsp;Status&nbsp;is&nbsp;NEW,&nbsp;LOADED&nbsp;or&nbsp;CHANGED,&nbsp;success!<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;Load&nbsp;object&nbsp;data&nbsp;from&nbsp;database&nbsp;and&nbsp;set&nbsp;object<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.a&nbsp;Completion&nbsp;in&nbsp;super&nbsp;class<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.&nbsp;clean&nbsp;up<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;2004-01-07&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;&nbsp;Initial&nbsp;version<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;types:&nbsp;begin&nbsp;of&nbsp;TYP_BUSINESS_KEY_INDEX,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INDEX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;SY-TABIX,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;TYP_BUSINESS_KEY_INDEX,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYP_BUSINESS_KEY_INDEX_TAB&nbsp;type&nbsp;sorted&nbsp;table<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;TYP_BUSINESS_KEY_INDEX&nbsp;with&nbsp;non-unique&nbsp;key&nbsp;BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;data:&nbsp;FLAG_NOT_LOADED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;OS_BOOLEAN,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY_STRING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;STRING,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_OBJECT_REF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_OBJECT_REF,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY_TAB,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_DATA_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_DB_DATA_TAB,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY_INDEX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY_INDEX,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY_INDEX_TAB&nbsp;type&nbsp;TYP_BUSINESS_KEY_INDEX_TAB,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NEXT_INDEX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;SY-TABIX.<br />
+<br />
+&nbsp;&nbsp;data:&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;type&nbsp;ref&nbsp;to&nbsp;OBJECT.<br />
+<br />
+&nbsp;&nbsp;field-symbols:&nbsp;&lt;FS_OBJECT_DATA&gt;&nbsp;&nbsp;type&nbsp;TYP_DB_DATA,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;FS_BUSINESS_KEY&gt;&nbsp;type&nbsp;TYP_BUSINESS_KEY,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;FS_BUSINESS_KEY_INDEX&gt;&nbsp;type&nbsp;TYP_BUSINESS_KEY_INDEX.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;1.&nbsp;Look&nbsp;for&nbsp;objects&nbsp;in&nbsp;SPECIAL_OBJECT_INFO.&nbsp;If&nbsp;found,&nbsp;check&nbsp;if&nbsp;they<br />
+*&nbsp;*&nbsp;are&nbsp;still&nbsp;valid<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;loop&nbsp;at&nbsp;I_KEY_TAB&nbsp;assigning&nbsp;&lt;FS_BUSINESS_KEY&gt;.&nbsp;"#EC&nbsp;GEN_OK<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_OBJECT_IREF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_BKEY_TAB&nbsp;into&nbsp;CURRENT_SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;table&nbsp;key&nbsp;BUSINESS_KEY&nbsp;=&nbsp;&lt;FS_BUSINESS_KEY&gt;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;SY-SUBRC&nbsp;=&nbsp;0&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_OBJECT_INFO&nbsp;into&nbsp;CURRENT_SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;table&nbsp;key<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_ID&nbsp;=&nbsp;CURRENT_SPECIAL_OBJECT_INFO-OBJECT_ID.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_LOAD_AND_VALIDATE_CURRENT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_INDEX&nbsp;=&nbsp;SY-TABIX.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;not&nbsp;CURRENT_OBJECT_IREF&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;2.&nbsp;Object&nbsp;found:&nbsp;Check&nbsp;PM_STATUS<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;CURRENT_OBJECT_INFO-PM_STATUS.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;2a.&nbsp;If&nbsp;Status&nbsp;is&nbsp;TRANSIENT&nbsp;or&nbsp;DELETED,&nbsp;error!<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_DELETED.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*!!!!!!!&nbsp;Error:&nbsp;Object&nbsp;activation&nbsp;failed&nbsp;-&nbsp;Object&nbsp;marked&nbsp;for&nbsp;deletion<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;=&nbsp;CURRENT_OBJECT_IREF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY_STRING&nbsp;&nbsp;=&nbsp;MAP_SERIALIZE_BKEY(&nbsp;&lt;FS_BUSINESS_KEY&gt;&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;=&nbsp;TEMP_CURRENT_OBJECT_IREF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY&nbsp;&nbsp;&nbsp;=&nbsp;BKEY_STRING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_NOT_FOUND=&gt;DELETED_BY_BKEY.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_TRANSIENT.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*!!!!!!!&nbsp;Error:&nbsp;Object&nbsp;activation&nbsp;failed&nbsp;-&nbsp;Object&nbsp;is&nbsp;transient<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_CURRENT_OBJECT_IREF&nbsp;=&nbsp;CURRENT_OBJECT_IREF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY_STRING&nbsp;&nbsp;=&nbsp;MAP_SERIALIZE_BKEY(&nbsp;&lt;FS_BUSINESS_KEY&gt;&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;CX_OS_OBJECT_NOT_FOUND&nbsp;definition&nbsp;load.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;raise&nbsp;exception&nbsp;type&nbsp;CX_OS_OBJECT_NOT_FOUND<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;=&nbsp;TEMP_CURRENT_OBJECT_IREF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BKEY&nbsp;&nbsp;&nbsp;=&nbsp;BKEY_STRING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEXTID&nbsp;=&nbsp;CX_OS_OBJECT_NOT_FOUND=&gt;IS_TRANSIENT_BY_BKEY.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;2b.&nbsp;If&nbsp;Status&nbsp;is&nbsp;NOT_LOADED,&nbsp;continue&nbsp;with&nbsp;3.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_NOT_LOADED.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FLAG_NOT_LOADED&nbsp;=&nbsp;OSCON_TRUE.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;2c.&nbsp;If&nbsp;Status&nbsp;is&nbsp;NEW,&nbsp;LOADED&nbsp;or&nbsp;CHANGED,&nbsp;success!<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;others.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FLAG_NOT_LOADED&nbsp;=&nbsp;OSCON_FALSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endcase.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else."&nbsp;(&nbsp;CURRENT_OBJECT_IREF&nbsp;is&nbsp;initial&nbsp;)<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FLAG_NOT_LOADED&nbsp;=&nbsp;OSCON_TRUE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;FLAG_NOT_LOADED&nbsp;=&nbsp;OSCON_TRUE&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;&lt;FS_BUSINESS_KEY&gt;&nbsp;to&nbsp;BUSINESS_KEY_TAB.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;TEMP_OBJECT_REF&nbsp;?=&nbsp;CURRENT_OBJECT_IREF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;TEMP_OBJECT_REF&nbsp;to&nbsp;RESULT.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+<br />
+&nbsp;&nbsp;endloop.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;3.&nbsp;Load&nbsp;object&nbsp;data&nbsp;from&nbsp;database&nbsp;and&nbsp;set&nbsp;objects<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;if&nbsp;(&nbsp;BUSINESS_KEY_TAB&nbsp;is&nbsp;not&nbsp;initial&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;internal&nbsp;Undo<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;INTERNAL_NEXT_UNDO_INFO&nbsp;to&nbsp;INTERNAL_TRANSACTION_STACK.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;INTERNAL_CURRENT_TRANSACTION&nbsp;=&nbsp;SY-TABIX.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;try.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_LOAD_FROM_DATABASE_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_BUSINESS_KEY_TAB&nbsp;=&nbsp;BUSINESS_KEY_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receiving&nbsp;result&nbsp;=&nbsp;OBJECT_DATA_TAB.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;catch&nbsp;CX_OS_DB_SELECT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;OBJECT_DATA_TAB.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endtry.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;at&nbsp;I_KEY_TAB&nbsp;assigning&nbsp;&lt;FS_BUSINESS_KEY&gt;.&nbsp;"EC&nbsp;GEN_OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY_INDEX-BUSINESS_KEY&nbsp;=&nbsp;&lt;FS_BUSINESS_KEY&gt;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY_INDEX-INDEX&nbsp;=&nbsp;SY-TABIX.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert&nbsp;BUSINESS_KEY_INDEX&nbsp;into&nbsp;table&nbsp;BUSINESS_KEY_INDEX_TAB.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;try.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;at&nbsp;OBJECT_DATA_TAB&nbsp;assigning&nbsp;&lt;FS_OBJECT_DATA&gt;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_EXTRACT_IDENTIFIER<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_DB_DATA&nbsp;&nbsp;=&nbsp;&lt;FS_OBJECT_DATA&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;importing&nbsp;E_BUSINESS_KEY&nbsp;=&nbsp;BUSINESS_KEY.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_OBJECT_IREF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;PM_CHECK_AND_SET_ATTRIBUTES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_OBJECT_DATA&nbsp;&nbsp;=&nbsp;&lt;FS_OBJECT_DATA&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_ID_PROVIDED&nbsp;&nbsp;=&nbsp;ID_STATUS_NONE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEMP_OBJECT_REF&nbsp;?=&nbsp;CURRENT_OBJECT_IREF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;BUSINESS_KEY_INDEX_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;key&nbsp;BUSINESS_KEY&nbsp;=&nbsp;BUSINESS_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assigning&nbsp;&lt;FS_BUSINESS_KEY_INDEX&gt;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(&nbsp;(&nbsp;SY-SUBRC&nbsp;=&nbsp;0&nbsp;)&nbsp;and<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&lt;FS_BUSINESS_KEY_INDEX&gt;-BUSINESS_KEY&nbsp;=<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BUSINESS_KEY&nbsp;)&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NEXT_INDEX&nbsp;=&nbsp;SY-TABIX&nbsp;+&nbsp;1.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;RESULT&nbsp;from&nbsp;TEMP_OBJECT_REF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;&lt;FS_BUSINESS_KEY_INDEX&gt;-INDEX.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;BUSINESS_KEY_INDEX_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;NEXT_INDEX<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assigning&nbsp;&lt;FS_BUSINESS_KEY_INDEX&gt;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endwhile.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;3.a.&nbsp;Completion&nbsp;in&nbsp;super&nbsp;class<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_PM_LOADED_PERSISTENT.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cleanup.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_INTERNAL_UNDO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;OS_CLEAR_CURRENT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endtry.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;*&nbsp;Clean-up&nbsp;internal&nbsp;Undo<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;INTERNAL_TRANSACTION_STACK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;INTERNAL_CURRENT_TRANSACTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;add&nbsp;-1&nbsp;to&nbsp;INTERNAL_CURRENT_TRANSACTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;INTERNAL_TRANSACTION_STACK&nbsp;is&nbsp;initial&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;INTERNAL_UNDO_INFO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTERNAL_NEXT_UNDO_INFO&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif.&nbsp;"(&nbsp;INTERNAL_TRANSACTION_STACK&nbsp;is&nbsp;initial?&nbsp;)<br />
+<br />
+&nbsp;&nbsp;endif.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;4.&nbsp;clean&nbsp;up<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;clear&nbsp;CURRENT_SPECIAL_OBJECT_INFO.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"IF_OS_CA_PERSISTENCY~GET_PERSISTENT_BY_KEY_TAB<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

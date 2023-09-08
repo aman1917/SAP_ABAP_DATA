@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>IF_OS_CA_SERVICE~SAVE</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: IF_OS_CA_SERVICE~SAVE</h2>
+<h3> Description: Redefined: Redefined: Redefined: Redefined: Redefined: Redef</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+**************************************************************************<br />
+*&nbsp;&nbsp;&nbsp;Method&nbsp;attributes.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<br />
+**************************************************************************<br />
+   </div>
+   <div class="code">
+Instantiation: Protected<br />
+   </div>
+   <div class="codeComment">
+**************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;method&nbsp;IF_OS_CA_SERVICE~SAVE.<br />
+   </div>
+   <div class="codeComment">
+***BUILD&nbsp;090501<br />
+************************************************************************<br />
+*&nbsp;Purpose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;Prepare&nbsp;data&nbsp;for&nbsp;database&nbsp;(buffer)&nbsp;transfer<br />
+*<br />
+*&nbsp;Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;2.0<br />
+*<br />
+*&nbsp;Precondition&nbsp;&nbsp;&nbsp;:&nbsp;--<br />
+*<br />
+*&nbsp;Postcondition&nbsp;&nbsp;:&nbsp;data&nbsp;is&nbsp;prepared&nbsp;for&nbsp;saving<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;UPDATE_MODE&nbsp;is&nbsp;direct,&nbsp;it&nbsp;is&nbsp;saved&nbsp;to&nbsp;DB<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;UPDATE_MODE&nbsp;is&nbsp;LOCAL&nbsp;or&nbsp;UPDATE_TASK,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;corresponding&nbsp;function&nbsp;call&nbsp;is&nbsp;registered<br />
+*<br />
+*&nbsp;OO&nbsp;Exceptions&nbsp;&nbsp;:&nbsp;propagates&nbsp;MAP_SAVE_TO_DATABASE<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propagates&nbsp;MAP_GET_ATTRIBUTES.<br />
+*<br />
+*&nbsp;Implementation&nbsp;:<br />
+*<br />
+************************************************************************<br />
+*&nbsp;Changelog:<br />
+*&nbsp;-&nbsp;2000-03-02&nbsp;&nbsp;&nbsp;:&nbsp;(BGR)&nbsp;Initial&nbsp;Version<br />
+*&nbsp;-&nbsp;2000-08-02&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;OO&nbsp;Exceptions<br />
+*&nbsp;-&nbsp;2001-01-06&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;Update&nbsp;with&nbsp;EXPORT&nbsp;TO&nbsp;DATA&nbsp;BUFFER<br />
+*&nbsp;-&nbsp;2003-03-20&nbsp;&nbsp;&nbsp;:&nbsp;(SB)&nbsp;post&nbsp;only&nbsp;if&nbsp;there&nbsp;dirty&nbsp;instances<br />
+************************************************************************<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;data:&nbsp;NEW_OBJECT_REF_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_OBJECT_REF_TAB,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHANGED_OBJECT_REF_TAB&nbsp;&nbsp;&nbsp;type&nbsp;TYP_OBJECT_REF_TAB,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT_DATA_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_DB_DATA_TAB&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT_KEY_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY_TAB,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPDATE_DATA_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_DB_DATA_TAB&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPDATE_KEY_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_BUSINESS_KEY_TAB,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_DB_DELETE_TAB&nbsp;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPDATE_MODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;OS_DMODE,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_REF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_OBJECT_REF,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_INDEX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_INDEX,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XCONTAINER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;XSTRING.<br />
+<br />
+&nbsp;&nbsp;field-symbols:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;FS_OBJECT_INFO_ITEM&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;TYP_OBJECT_INFO,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;FS_SPECIAL_OBJECT_INFO_ITEM&gt;&nbsp;type&nbsp;TYP_SPECIAL_OBJECT_INFO.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;1.&nbsp;get&nbsp;strong&nbsp;reference,&nbsp;BKey&nbsp;for&nbsp;all&nbsp;objects&nbsp;with&nbsp;status<br />
+*&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;NEW,&nbsp;CHANGED&nbsp;or&nbsp;DELETED<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;loop&nbsp;at&nbsp;OBJECT_INFO&nbsp;assigning&nbsp;&lt;FS_OBJECT_INFO_ITEM&gt;&nbsp;"#EC&nbsp;CI_SORTSEQ<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;(&nbsp;PM_STATUS&nbsp;=&nbsp;OSCON_OSTATUS_NEW&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"#EC&nbsp;CI_SORTSEQ<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PM_STATUS&nbsp;=&nbsp;OSCON_OSTATUS_CHANGED&nbsp;or&nbsp;&nbsp;&nbsp;"#EC&nbsp;CI_SORTSEQ<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PM_STATUS&nbsp;=&nbsp;OSCON_OSTATUS_DELETED&nbsp;)&nbsp;and&nbsp;"#EC&nbsp;CI_SORTSEQ<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OM_IGNORE&nbsp;=&nbsp;OSCON_FALSE.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"#EC&nbsp;CI_SORTSEQ<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_INDEX&nbsp;=&nbsp;sy-tabix.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;&lt;FS_OBJECT_INFO_ITEM&gt;-PM_STATUS.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_NEW.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assigning&nbsp;&lt;FS_SPECIAL_OBJECT_INFO_ITEM&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;OBJECT_INDEX.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_REF&nbsp;?=&nbsp;&lt;FS_OBJECT_INFO_ITEM&gt;-OBJECT_IREF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;OBJECT_REF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;NEW_OBJECT_REF_TAB.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;&lt;FS_SPECIAL_OBJECT_INFO_ITEM&gt;-BUSINESS_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;INSERT_KEY_TAB.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_CHANGED.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assigning&nbsp;&lt;FS_SPECIAL_OBJECT_INFO_ITEM&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;OBJECT_INDEX.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJECT_REF&nbsp;?=&nbsp;&lt;FS_OBJECT_INFO_ITEM&gt;-OBJECT_IREF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;OBJECT_REF<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;CHANGED_OBJECT_REF_TAB.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;&lt;FS_SPECIAL_OBJECT_INFO_ITEM&gt;-BUSINESS_KEY<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;UPDATE_KEY_TAB.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;OSCON_OSTATUS_DELETED.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;SPECIAL_OBJECT_INFO<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assigning&nbsp;&lt;FS_SPECIAL_OBJECT_INFO_ITEM&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;OBJECT_INDEX.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;&lt;FS_SPECIAL_OBJECT_INFO_ITEM&gt;&nbsp;to&nbsp;DELETE_TAB.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endcase."&nbsp;Status<br />
+<br />
+&nbsp;&nbsp;endloop.&nbsp;"at&nbsp;OBJECT_INFO<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;2.&nbsp;get&nbsp;attributes&nbsp;for&nbsp;new&nbsp;and&nbsp;changed&nbsp;objects<br />
+<br />
+*&nbsp;*&nbsp;New&nbsp;Objects<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;if&nbsp;(&nbsp;not&nbsp;NEW_OBJECT_REF_TAB&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_GET_ATTRIBUTES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_OBJECT_REF_TAB&nbsp;&nbsp;=&nbsp;NEW_OBJECT_REF_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;importing&nbsp;E_OBJECT_DATA_TAB&nbsp;=&nbsp;INSERT_DATA_TAB.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_MERGE_IDENTIFIER<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_BUSINESS_KEY_TAB&nbsp;=&nbsp;INSERT_KEY_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;changing&nbsp;&nbsp;C_DB_DATA_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;INSERT_DATA_TAB.<br />
+<br />
+&nbsp;&nbsp;endif.&nbsp;"(&nbsp;not&nbsp;NEW_OBJECT_REF_TAB&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;Changed&nbsp;Objects<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;if&nbsp;(&nbsp;not&nbsp;CHANGED_OBJECT_REF_TAB&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_GET_ATTRIBUTES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_OBJECT_REF_TAB&nbsp;&nbsp;=&nbsp;CHANGED_OBJECT_REF_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;importing&nbsp;E_OBJECT_DATA_TAB&nbsp;=&nbsp;UPDATE_DATA_TAB.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_MERGE_IDENTIFIER<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_BUSINESS_KEY_TAB&nbsp;=&nbsp;UPDATE_KEY_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;changing&nbsp;&nbsp;C_DB_DATA_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;UPDATE_DATA_TAB.<br />
+<br />
+&nbsp;&nbsp;endif.&nbsp;"(&nbsp;not&nbsp;CHANGED_OBJECT_REF_TAB&nbsp;is&nbsp;initial&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;*&nbsp;3.&nbsp;perform&nbsp;or&nbsp;subscribe&nbsp;DB&nbsp;operations<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;if&nbsp;(&nbsp;(&nbsp;INSERT_DATA_TAB&nbsp;is&nbsp;not&nbsp;initial&nbsp;)&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;UPDATE_DATA_TAB&nbsp;is&nbsp;not&nbsp;initial&nbsp;)&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;DELETE_TAB&nbsp;is&nbsp;not&nbsp;initial&nbsp;)&nbsp;).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;UPDATE_MODE&nbsp;=&nbsp;PERSISTENCY_MANAGER-&gt;GET_UPDATE_MODE(&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;UPDATE_MODE&nbsp;=&nbsp;DMODE_DIRECT&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Direct&nbsp;DB&nbsp;operations<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;method&nbsp;MAP_SAVE_TO_DATABASE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting&nbsp;I_INSERTS&nbsp;=&nbsp;INSERT_DATA_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_UPDATES&nbsp;=&nbsp;UPDATE_DATA_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I_DELETES&nbsp;=&nbsp;DELETE_TAB.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else."&nbsp;(&nbsp;Update&nbsp;task&nbsp;)<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;export&nbsp;data&nbsp;to&nbsp;be&nbsp;saved&nbsp;to&nbsp;DB&nbsp;to&nbsp;data&nbsp;buffer<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSERT_DATA_TAB&nbsp;=&nbsp;INSERT_DATA_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UPDATE_DATA_TAB&nbsp;=&nbsp;UPDATE_DATA_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE_TAB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;DELETE_TAB<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;data&nbsp;buffer&nbsp;XCONTAINER.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;call&nbsp;update&nbsp;function&nbsp;in&nbsp;update&nbsp;task.&nbsp;this&nbsp;function<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;calls&nbsp;the&nbsp;method&nbsp;if_os_ca_service~save_in_update_task<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;of&nbsp;this&nbsp;class&nbsp;agent.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;function&nbsp;'OS_UPDATE_CLASS'&nbsp;in&nbsp;update&nbsp;task<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exporting<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLASSNAME&nbsp;=&nbsp;CLASS_INFO-CLASS_AGENT_NAME<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XCONTAINER&nbsp;=&nbsp;XCONTAINER.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endif."&nbsp;(Update&nbsp;mode?)<br />
+<br />
+&nbsp;&nbsp;endif."&nbsp;(something&nbsp;to&nbsp;post?)<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"IF_OS_CA_SERVICE~SAVE<br />
+&nbsp;&nbsp;endmethod.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>
