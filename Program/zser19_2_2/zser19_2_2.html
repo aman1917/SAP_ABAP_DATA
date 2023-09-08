@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZSER19_2_2</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZSER19_2_2</h2>
+<h3> Description: Excercise 2.2</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZSER19_2_2.<br />
+<br />
+types:begin of ty_sflight,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;carrid&nbsp;type&nbsp;sflight-carrid,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connid&nbsp;type&nbsp;sflight-connid,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fldate&nbsp;type&nbsp;sflight-fldate,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;paymentsum&nbsp;type&nbsp;sflight-paymentsum,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ty_sflight.<br />
+<br />
+data: lt_sflight type sorted table of ty_sflight with non-unique key paymentsum,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_sflight&nbsp;type&nbsp;ty_sflight.<br />
+<br />
+select carrid connid fldate paymentsum into table lt_sflight from sflight where carrid = 'AA'.<br />
+<br />
+if lt_sflight is not initial.<br />
+&nbsp;&nbsp;write:'Record&nbsp;Found,&nbsp;Data&nbsp;of&nbsp;Internal&nbsp;Table'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;at&nbsp;lt_sflight&nbsp;into&nbsp;wa_sflight.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:at&nbsp;/&nbsp;wa_sflight-carrid,&nbsp;wa_sflight-connid,&nbsp;wa_sflight-fldate,&nbsp;wa_sflight-paymentsum.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;write:'No&nbsp;Record&nbsp;Found'.<br />
+&nbsp;endif.<br />
+<br />
+uline.<br />
+clear wa_sflight.<br />
+<br />
+<br />
+&nbsp;delete&nbsp;lt_sflight&nbsp;where&nbsp;paymentsum&nbsp;&lt;=&nbsp;40000.<br />
+&nbsp;if&nbsp;lt_sflight&nbsp;is&nbsp;not&nbsp;initial.<br />
+&nbsp;&nbsp;write:'Record&nbsp;Found,&nbsp;Data&nbsp;of&nbsp;Internal&nbsp;Table'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;at&nbsp;lt_sflight&nbsp;into&nbsp;wa_sflight.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:at&nbsp;/&nbsp;wa_sflight-carrid,&nbsp;wa_sflight-connid,&nbsp;wa_sflight-fldate,&nbsp;wa_sflight-paymentsum.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+&nbsp;else.<br />
+&nbsp;&nbsp;&nbsp;write:'No&nbsp;Record&nbsp;Found'.<br />
+&nbsp;endif.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZSTD_PROG12_ALV</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZSTD_PROG12_ALV</h2>
+<h3> Description: WORKING WITH COLOUR</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZSTD_PROG12_ALV.<br />
+<br />
+DATA v_vbeln TYPE vbak-vbeln.<br />
+SELECT-OPTIONS S_VBELN FOR v_vbeln.<br />
+<br />
+TYPES:BEGIN OF TY_VBAK,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VBELN&nbsp;TYPE&nbsp;VBAK-VBELN,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AUDAT&nbsp;TYPE&nbsp;VBAK-AUDAT,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KUNNR&nbsp;TYPE&nbsp;VBAK-KUNNR,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;TY_VBAK.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA:WA_VBAK&nbsp;TYPE&nbsp;TY_VBAK,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IT_VBAK&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;TY_VBAK.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DECLARE&nbsp;THE&nbsp;FIELDCAT&nbsp;INTRNAL&nbsp;TABLE<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;DATA:IT_FCAT&nbsp;TYPE&nbsp;SLIS_T_FIELDCAT_ALV,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WA_FCAT&nbsp;LIKE&nbsp;LINE&nbsp;OF&nbsp;IT_FCAT.<br />
+   </div>
+   <div class="codeComment">
+*DECLARE&nbsp;THE&nbsp;EVENT&nbsp;INTERNAL&nbsp;TABLE<br />
+<br />
+   </div>
+   <div class="code">
+DATA:IT_EVENT TYPE SLIS_T_EVENT,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WA_EVENT&nbsp;LIKE&nbsp;LINE&nbsp;OF&nbsp;IT_EVENT.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILLING&nbsp;THE&nbsp;DATA&nbsp;INTRRNAL&nbsp;TABLE<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;VBELN&nbsp;AUDAT&nbsp;KUNNR&nbsp;FROM&nbsp;VBAK&nbsp;INTO&nbsp;TABLE&nbsp;IT_VBAK&nbsp;WHERE&nbsp;VBELN&nbsp;IN&nbsp;S_VBELN.<br />
+<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*FILLING&nbsp;THE&nbsp;EVENT&nbsp;INTERNAL&nbsp;TABLE<br />
+   </div>
+   <div class="code">
+WA_EVENT-NAME = 'PF_STATUS_SET'.<br />
+WA_EVENT-FORM = 'UC'.<br />
+   </div>
+   <div class="codeComment">
+*PERFORM&nbsp;UC&nbsp;USING&nbsp;SLIS_T_EXTAB<br />
+   </div>
+   <div class="code">
+APPEND WA_EVENT TO IT_EVENT.<br />
+<br />
+WA_EVENT-NAME = 'USER_COMMAND'.<br />
+WA_EVENT-FORM = 'ABC'.<br />
+APPEND WA_EVENT TO IT_EVENT.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;FILLING&nbsp;THE&nbsp;FIELDCAT&nbsp;INTERNAL&nbsp;TABLE<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;WA_FCAT-FIELDNAME&nbsp;=&nbsp;'VBELN'.<br />
+&nbsp;&nbsp;WA_FCAT-COL_POS&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;WA_FCAT-SELTEXT_M&nbsp;=&nbsp;'DOC.NUM'.<br />
+&nbsp;&nbsp;WA_FCAT-EMPHASIZE&nbsp;=&nbsp;'C410'.<br />
+&nbsp;&nbsp;APPEND&nbsp;WA_FCAT&nbsp;TO&nbsp;IT_FCAT.<br />
+&nbsp;&nbsp;CLEAR&nbsp;WA_FCAT.<br />
+<br />
+&nbsp;&nbsp;WA_FCAT-FIELDNAME&nbsp;=&nbsp;'AUDAT'.<br />
+&nbsp;&nbsp;WA_FCAT-COL_POS&nbsp;=&nbsp;'2'.<br />
+&nbsp;&nbsp;WA_FCAT-SELTEXT_M&nbsp;=&nbsp;'DOC.DAT'.<br />
+APPEND WA_FCAT TO IT_FCAT.<br />
+&nbsp;&nbsp;&nbsp;CLEAR&nbsp;WA_FCAT.<br />
+<br />
+&nbsp;&nbsp;WA_FCAT-FIELDNAME&nbsp;=&nbsp;'KUNNR'.<br />
+&nbsp;&nbsp;WA_FCAT-COL_POS&nbsp;=&nbsp;'3'.<br />
+&nbsp;&nbsp;WA_FCAT-SELTEXT_M&nbsp;=&nbsp;'CUS.NUM'.<br />
+&nbsp;&nbsp;WA_FCAT-EMPHASIZE&nbsp;=&nbsp;'C510'.<br />
+&nbsp;&nbsp;APPEND&nbsp;WA_FCAT&nbsp;TO&nbsp;IT_FCAT.<br />
+&nbsp;&nbsp;CLEAR&nbsp;WA_FCAT.<br />
+<br />
+<br />
+&nbsp;CALL&nbsp;FUNCTION&nbsp;'REUSE_ALV_GRID_DISPLAY'<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;I_CALLBACK_PROGRAM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;sy-repid<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IT_FIELDCAT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;IT_FCAT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IT_EVENTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;IT_EVENT<br />
+&nbsp;&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t_outtab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;IT_VBAK.<br />
+<br />
+FORM UC USING A TYPE SLIS_T_EXTAB.<br />
+SET PF-STATUS'STAT'.<br />
+ENDFORM.<br />
+FORM ABC USING C LIKE SY-UCOMM B TYPE SLIS_SELFIELD.<br />
+IF C = 'DOWN'.<br />
+CALL FUNCTION 'DOWNLOAD'<br />
+&nbsp;EXPORTING<br />
+   </div>
+   <div class="codeComment">
+*<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;FILETYPE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'DAT'<br />
+<br />
+&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;data_tab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;IT_VBAK.<br />
+ENDIF.<br />
+ENDFORM.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

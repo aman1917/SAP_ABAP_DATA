@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZS4_68_PRO10_OIA_SIMPLE</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZS4_68_PRO10_OIA_SIMPLE</h2>
+<h3> Description: oia_simple</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Report&nbsp;zs4_68_pro10_oia_simple<br />
+*&---------------------------------------------------------------------*<br />
+*&<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+REPORT zs4_68_pro10_oia_simple.<br />
+   </div>
+   <div class="codeComment">
+*types:&nbsp;begin&nbsp;of&nbsp;ty_avg_days,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bp_id&nbsp;type&nbsp;snwd_bpa-bp_id,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;open_days&nbsp;type&nbsp;int4,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inv_count&nbsp;type&nbsp;int4,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ty_avg_days,<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;begin&nbsp;of&nbsp;ty_amount,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bp_id&nbsp;type&nbsp;snwd_bpa-bp_id,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;company_name&nbsp;type&nbsp;snwD_bpa-company_name,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gross_amount&nbsp;type&nbsp;snwd_so_inv_head-gross_amount,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currency_code&nbsp;type&nbsp;snwd_so_inv_head-currency_code,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ty_amount,<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;begin&nbsp;of&nbsp;ty_oia,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bp_id&nbsp;type&nbsp;snwd_bpa-bp_id,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;company_name&nbsp;type&nbsp;snwD_bpa-company_name,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gross_amount&nbsp;type&nbsp;snwd_so_inv_head-gross_amount,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currency_code&nbsp;type&nbsp;snwd_so_inv_head-currency_code,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;avg_open_days&nbsp;type&nbsp;int4,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tagging&nbsp;type&nbsp;c,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ty_oia.<br />
+*<br />
+*data:&nbsp;lt_days&nbsp;type&nbsp;table&nbsp;of&nbsp;ty_avg_days,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_Days&nbsp;type&nbsp;ty_avg_days,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lt_gross&nbsp;type&nbsp;table&nbsp;of&nbsp;ty_amount,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_gross&nbsp;type&nbsp;ty_amount,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lt_oia&nbsp;type&nbsp;table&nbsp;of&nbsp;ty_oia,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_oia&nbsp;type&nbsp;ty_oia.<br />
+*<br />
+*data(lo_timer)&nbsp;=&nbsp;cl_abap_runtime=&gt;create_hr_timer(&nbsp;).<br />
+*data(t1)&nbsp;=&nbsp;lo_timer-&gt;get_runtime(&nbsp;&nbsp;).<br />
+*<br />
+*select&nbsp;bp_id,&nbsp;head~changed_at&nbsp;from&nbsp;snwd_so_inv_head&nbsp;as&nbsp;head<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;snwd_bpa&nbsp;as&nbsp;bpa<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;head~buyer_guid&nbsp;=&nbsp;bpa~node_key<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;head~payment_status&nbsp;=&nbsp;''<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;@data(ls_head).<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;convert&nbsp;time&nbsp;stamp&nbsp;ls_head-changed_at&nbsp;time&nbsp;zone&nbsp;sy-zonlo&nbsp;into&nbsp;date&nbsp;data(lv_date).<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ls_Days-open_days&nbsp;=&nbsp;sy-datum&nbsp;-&nbsp;lv_date.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ls_Days-inv_count&nbsp;=&nbsp;1.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ls_days-bp_id&nbsp;=&nbsp;ls_head-bp_id.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;collect&nbsp;ls_days&nbsp;into&nbsp;lt_days.<br />
+*<br />
+*ENDSELECT.<br />
+*<br />
+*select&nbsp;single&nbsp;*&nbsp;into&nbsp;@data(ls_threshold)&nbsp;from&nbsp;zdp_cust&nbsp;where&nbsp;id&nbsp;=&nbsp;@sy-uname.<br />
+*<br />
+**Takt&nbsp;2&nbsp;developements<br />
+*select&nbsp;bp_id,&nbsp;company_name,&nbsp;item~gross_amount&nbsp;as&nbsp;gross_amount,&nbsp;item~currency_code&nbsp;as&nbsp;currency_code<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;snwd_so_inv_item&nbsp;as&nbsp;item&nbsp;inner&nbsp;join<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;snwd_so_inv_head&nbsp;as&nbsp;head&nbsp;on&nbsp;item~parent_key&nbsp;=&nbsp;head~node_key<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;snwd_bpa&nbsp;as&nbsp;bpa<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;bpa~node_key&nbsp;=&nbsp;head~buyer_guid&nbsp;where&nbsp;head~payment_status&nbsp;=&nbsp;''<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;@data(ls_amt).<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ls_gross&nbsp;=&nbsp;CORRESPONDING&nbsp;#(&nbsp;ls_amt&nbsp;).<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;call&nbsp;function&nbsp;'CONVERT_TO_LOCAL_CURRENCY'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;sy-datum<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreign_amount&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;ls_amt-gross_amount<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreign_currency&nbsp;&nbsp;=&nbsp;ls_amt-currency_code<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;local_amount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;ls_gross-gross_amount<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_gross-currency_code&nbsp;&nbsp;&nbsp;=&nbsp;ls_threshold-currency_code.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collect&nbsp;ls_gross&nbsp;into&nbsp;lt_gross.<br />
+*<br />
+*ENDSELECT.<br />
+*loop&nbsp;at&nbsp;lt_days&nbsp;into&nbsp;ls_days.<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;MOVE-CORRESPONDING&nbsp;ls_days&nbsp;to&nbsp;ls_oia.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;table&nbsp;lt_gross&nbsp;into&nbsp;ls_gross&nbsp;with&nbsp;key&nbsp;bp_id&nbsp;=&nbsp;ls_days-bp_id.<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ls_oia-avg_open_days&nbsp;=&nbsp;&nbsp;ls_days-open_days&nbsp;/&nbsp;ls_days-inv_count.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ls_oia-gross_amount&nbsp;=&nbsp;ls_gross-gross_amount.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ls_oia-currency_code&nbsp;=&nbsp;ls_gross-currency_code.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ls_oia-company_name&nbsp;=&nbsp;ls_gross-company_name.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;ls_oia-avg_open_days&nbsp;&gt;&nbsp;ls_threshold-max_open_days&nbsp;and&nbsp;ls_oia-gross_amount&nbsp;&gt;&nbsp;ls_threshold-max_gross_amount.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_oia-tagging&nbsp;=&nbsp;'X'.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;else.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear&nbsp;ls_oia-tagging.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;append&nbsp;ls_oia&nbsp;to&nbsp;lt_oia.<br />
+*<br />
+*ENDLOOP.<br />
+*<br />
+*data(t2)&nbsp;=&nbsp;lo_timer-&gt;get_runtime(&nbsp;&nbsp;).<br />
+*data(times)&nbsp;=&nbsp;(&nbsp;t2&nbsp;-&nbsp;t1&nbsp;)&nbsp;/&nbsp;1000.<br />
+*<br />
+*cl_demo_output=&gt;write_text(&nbsp;text&nbsp;=&nbsp;|the&nbsp;total&nbsp;time&nbsp;taken&nbsp;was&nbsp;{&nbsp;times&nbsp;}&nbsp;ms|&nbsp;).<br />
+*cl_demo_output=&gt;display_data(<br />
+*&nbsp;&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;=&nbsp;lt_oia<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;&nbsp;=<br />
+*).<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

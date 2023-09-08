@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZMAKE_REF_PROGRAM6</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZMAKE_REF_PROGRAM6</h2>
+<h3> Description: Using Parameter wiith pure sql</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Report&nbsp;ZMAKE_REF_PROGRAM6<br />
+*&---------------------------------------------------------------------*<br />
+*&<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+REPORT ZMAKE_REF_PROGRAM6.<br />
+<br />
+types:<br />
+&nbsp;begin&nbsp;of&nbsp;cust_flight,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c_id&nbsp;type&nbsp;zmake_de_c_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c_name&nbsp;type&nbsp;zmake_de_c_name,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c_mobile&nbsp;type&nbsp;zmake_de_c_mobile,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c_dob&nbsp;type&nbsp;zmake_de_c_dob,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ca_add&nbsp;type&nbsp;zmake_de_ca_add,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ca_vil&nbsp;type&nbsp;zmake_de_ca_vil,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ca_tal&nbsp;type&nbsp;zmake_de_ca_tal,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ca_stat&nbsp;type&nbsp;zmake_de_ca_stat,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bk_id&nbsp;type&nbsp;zmake_de_bk_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bk_title&nbsp;type&nbsp;zmake_de_bk_title,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bk_date&nbsp;type&nbsp;zmake_de_bk_date,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bk_journey&nbsp;type&nbsp;zmake_de_bk_journey,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pack_title&nbsp;type&nbsp;zmake_de_pack_title,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pack_desc&nbsp;type&nbsp;zmake_de_pack_desc,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pack_dur&nbsp;type&nbsp;zmake_de_pack_dur,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pack_final&nbsp;type&nbsp;zmake_de_pack_final,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hotel_name&nbsp;type&nbsp;zmake_de_hotel_name,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hotel_add&nbsp;type&nbsp;zmake_de_hotel_add,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hotel_tel&nbsp;type&nbsp;zmake_de_hotel_tel,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pay_id&nbsp;type&nbsp;zmake_de_pay_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pay_date&nbsp;type&nbsp;zmake_de_pay_date,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pay_time&nbsp;type&nbsp;zmake_de_pay_time,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pay_amt&nbsp;type&nbsp;zmake_de_pay_amt,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f_id&nbsp;type&nbsp;zmake_de_f_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f_source&nbsp;type&nbsp;zmake_de_f_source,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f_destiny&nbsp;type&nbsp;zmake_de_f_destiny,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;board&nbsp;type&nbsp;zmake_de_f_board,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;launch&nbsp;type&nbsp;zmake_de_f_time,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fc_class&nbsp;type&nbsp;zmake_de_fc_class,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fc_price&nbsp;type&nbsp;zmake_de_fc_price,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f_seat&nbsp;type&nbsp;zmake_de_f_seat,<br />
+<br />
+&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;cust_flight.<br />
+<br />
+&nbsp;data:<br />
+&nbsp;&nbsp;&nbsp;lt_customer&nbsp;type&nbsp;table&nbsp;of&nbsp;cust_flight,<br />
+&nbsp;&nbsp;&nbsp;ls_customer&nbsp;type&nbsp;cust_flight.<br />
+<br />
+&nbsp;parameters:<br />
+&nbsp;&nbsp;&nbsp;p_id&nbsp;type&nbsp;i.<br />
+<br />
+&nbsp;select&nbsp;c~c_id,&nbsp;c~c_name,&nbsp;c~c_mobile,&nbsp;c~c_dob,&nbsp;ca~ca_add,&nbsp;ca~ca_vil,&nbsp;ca~ca_tal,&nbsp;ca~ca_stat,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;b~bk_id,&nbsp;b~bk_title,&nbsp;b~bk_date,&nbsp;b~bk_journey,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;pc~pack_title,&nbsp;pc~pack_desc,&nbsp;pc~pack_dur,&nbsp;pc~pack_final,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;h~hotel_name,&nbsp;h~hotel_add,&nbsp;h~hotel_tel,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;py~pay_id,&nbsp;py~pay_date,&nbsp;py~pay_time,&nbsp;py~pay_amt,<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;f~f_id,&nbsp;f~f_source,&nbsp;f~f_destiny,&nbsp;f~board,&nbsp;f~launch,&nbsp;fc~fc_class,&nbsp;fc~fc_price,&nbsp;cf~f_seat<br />
+<br />
+&nbsp;&nbsp;&nbsp;from&nbsp;(&nbsp;(&nbsp;(&nbsp;(&nbsp;(&nbsp;(&nbsp;(&nbsp;(&nbsp;zmake_t_booking&nbsp;as&nbsp;b<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;zmake_t_cust_det&nbsp;as&nbsp;c&nbsp;on&nbsp;b~c_id&nbsp;=&nbsp;c~c_id<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;zmake_t_cust_add&nbsp;as&nbsp;ca&nbsp;on&nbsp;c~c_id&nbsp;=&nbsp;ca~c_id<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;zmake_t_hotel&nbsp;as&nbsp;h&nbsp;on&nbsp;b~hotel_id&nbsp;=&nbsp;h~hotel_id<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;zmake_t_package&nbsp;as&nbsp;pc&nbsp;on&nbsp;b~pack_id&nbsp;=&nbsp;pc~pack_id<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;zmake_t_payment&nbsp;as&nbsp;py&nbsp;on&nbsp;b~pay_id&nbsp;=&nbsp;py~pay_id<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;zmake_t_cust_fli&nbsp;as&nbsp;cf&nbsp;on&nbsp;b~c_id&nbsp;=&nbsp;cf~c_id<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;zmake_t_flight&nbsp;as&nbsp;f&nbsp;on&nbsp;cf~f_id&nbsp;=&nbsp;f~f_id<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;zmake_t_fli_clas&nbsp;as&nbsp;fc&nbsp;on&nbsp;cf~fc_id&nbsp;=&nbsp;fc~fc_id<br />
+&nbsp;&nbsp;&nbsp;&nbsp;)&nbsp;)&nbsp;)&nbsp;)&nbsp;)&nbsp;)&nbsp;)&nbsp;)<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;c~c_id&nbsp;=&nbsp;@p_id<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;corresponding&nbsp;fields&nbsp;of&nbsp;table&nbsp;@lt_customer.<br />
+<br />
+<br />
+write: 'Customer Booking Details'.<br />
+skip.<br />
+<br />
+loop at lt_customer into ls_customer.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'C_ID:-',&nbsp;ls_customer-c_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Name:-',&nbsp;ls_customer-c_name,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Mobile&nbsp;No:-',&nbsp;ls_customer-c_mobile,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'DOB:-',&nbsp;ls_customer-c_dob,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Address:-',&nbsp;ls_customer-ca_add,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Village:-',&nbsp;ls_customer-ca_vil,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Taluka:-',&nbsp;ls_customer-ca_tal,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'State:-',&nbsp;ls_customer-ca_stat,&nbsp;'|'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;skip.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'C_ID:-',&nbsp;ls_customer-c_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Booking&nbsp;ID:-',&nbsp;ls_customer-bk_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Booking&nbsp;Title:-',&nbsp;ls_customer-bk_title,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Booking&nbsp;Date:-',&nbsp;ls_customer-bk_date,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Journey:-',&nbsp;ls_customer-bk_journey,&nbsp;'|'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;skip.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'C_ID:-',&nbsp;ls_customer-c_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Pack&nbsp;Title:-',&nbsp;ls_customer-pack_title,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Description:-',&nbsp;ls_customer-pack_desc,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Duration&nbsp;in&nbsp;Days:-',&nbsp;ls_customer-pack_dur,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Final&nbsp;Price:-',&nbsp;ls_customer-pack_final,&nbsp;'|'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;skip.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'C_ID:-',&nbsp;ls_customer-c_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Hotel&nbsp;Name:-',&nbsp;ls_customer-hotel_name,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Address:-',&nbsp;ls_customer-hotel_add,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Telphone:-',&nbsp;ls_customer-hotel_tel,&nbsp;'|'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;skip.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'C_ID:-',&nbsp;ls_customer-c_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Booking&nbsp;ID:-',&nbsp;ls_customer-bk_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Pay&nbsp;ID:-',&nbsp;ls_customer-pay_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Pay&nbsp;Date:-',&nbsp;ls_customer-pay_date,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Pay&nbsp;Time:-',&nbsp;ls_customer-pay_time,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Amount&nbsp;Paid:-',&nbsp;ls_customer-pay_amt,&nbsp;'|'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;skip.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'C_ID:-',&nbsp;ls_customer-c_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'F_ID:-',&nbsp;ls_customer-f_id,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'source:-',&nbsp;ls_customer-f_source,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Destiny:-',&nbsp;ls_customer-f_destiny,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Board:-',&nbsp;ls_customer-board,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Launch:-',&nbsp;ls_customer-launch,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Class:-',&nbsp;ls_customer-fc_class,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Price:-',&nbsp;ls_customer-fc_price,&nbsp;'|'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Seat&nbsp;No.:-',&nbsp;ls_customer-f_seat,&nbsp;'|'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;skip.<br />
+endloop.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

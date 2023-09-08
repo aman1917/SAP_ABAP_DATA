@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZOOPS_PRO3_S4ABAP68</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZOOPS_PRO3_S4ABAP68</h2>
+<h3> Description: Methods returning multiple values</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZOOPS_PRO3_S4ABAP68.<br />
+   </div>
+   <div class="codeComment">
+*requirement&nbsp;import-&gt;cust&nbsp;no.<br />
+*&nbsp;Exporting&nbsp;customer&nbsp;master&nbsp;data&nbsp;kna1&nbsp;-name1&nbsp;ort01<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sales&nbsp;order&nbsp;of&nbsp;that&nbsp;customer&nbsp;vbak&nbsp;vbeln&nbsp;erdat&nbsp;ernam&nbsp;erzet<br />
+<br />
+   </div>
+   <div class="code">
+CLASS lcl_customer DEFINITION.<br />
+&nbsp;&nbsp;PUBLIC&nbsp;SECTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;METHODS&nbsp;getdata&nbsp;IMPORTING&nbsp;i_kunnr&nbsp;TYPE&nbsp;kna1-kunnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING&nbsp;i_name1&nbsp;TYPE&nbsp;kna1-name1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_ort01&nbsp;TYPE&nbsp;kna1-ort01<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e_sales&nbsp;TYPE&nbsp;ztvbak.<br />
+ENDCLASS.<br />
+<br />
+CLASS lcl_customer IMPLEMENTATION.<br />
+&nbsp;&nbsp;METHOD&nbsp;getdata.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;name1&nbsp;ort01<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;kna1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;(i_name1,i_ort01)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;kunnr&nbsp;=&nbsp;i_kunnr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;vbeln&nbsp;erdat&nbsp;erzet&nbsp;ernam<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;vbak<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;e_sales<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;kunnr&nbsp;=&nbsp;i_kunnr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;ne&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'No&nbsp;Sales&nbsp;order'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Customer&nbsp;Not&nbsp;Found'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+ENDCLASS.<br />
+<br />
+START-OF-SELECTION.<br />
+DATA ob1 TYPE REF TO lcl_customer.<br />
+CREATE OBJECT ob1.<br />
+&nbsp;&nbsp;PARAMETERS&nbsp;p_kunnr&nbsp;TYPE&nbsp;kna1-kunnr.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;ob1-&gt;getdata<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;i_kunnr&nbsp;&nbsp;&nbsp;=&nbsp;p_kunnr.<br />
+<br />
+uline.<br />
+DATA ob2 TYPE REF TO lcl_customer.<br />
+CREATE OBJECT ob2.<br />
+&nbsp;&nbsp;DATA:&nbsp;v_name1&nbsp;TYPE&nbsp;kna1-name1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_ort01&nbsp;TYPE&nbsp;kna1-ort01.<br />
+<br />
+&nbsp;&nbsp;WRITE:/'Second&nbsp;Object'.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;ob2-&gt;getdata<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;i_kunnr&nbsp;&nbsp;&nbsp;=&nbsp;p_kunnr<br />
+&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;i_name1&nbsp;&nbsp;&nbsp;=&nbsp;v_name1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;i_ort01&nbsp;&nbsp;&nbsp;=&nbsp;v_ort01.<br />
+<br />
+&nbsp;&nbsp;WRITE:/'Customer&nbsp;Name:&nbsp;',v_name1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/'Customer&nbsp;City:&nbsp;',v_ort01.<br />
+<br />
+uline.<br />
+DATA ob3 TYPE REF TO lcl_customer.<br />
+CREATE OBJECT ob3.<br />
+&nbsp;&nbsp;CLEAR:&nbsp;v_name1,v_ort01.<br />
+<br />
+&nbsp;&nbsp;DATA:&nbsp;lt_sales&nbsp;TYPE&nbsp;ztvbak,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_sales&nbsp;TYPE&nbsp;zcvbak.<br />
+<br />
+&nbsp;&nbsp;WRITE:/'Second&nbsp;Object'.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;ob3-&gt;getdata<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;i_kunnr&nbsp;&nbsp;&nbsp;=&nbsp;p_kunnr<br />
+&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;i_name1&nbsp;&nbsp;&nbsp;=&nbsp;v_name1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;i_ort01&nbsp;&nbsp;&nbsp;=&nbsp;v_ort01<br />
+&nbsp;&nbsp;&nbsp;&nbsp;e_sales&nbsp;&nbsp;&nbsp;=&nbsp;lt_sales.<br />
+<br />
+&nbsp;&nbsp;WRITE:/'Customer&nbsp;Name:&nbsp;',v_name1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/'Customer&nbsp;City:&nbsp;',v_ort01.<br />
+<br />
+&nbsp;&nbsp;IF&nbsp;lt_sales&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE&nbsp;TABLE&nbsp;lt_Sales.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'No&nbsp;of&nbsp;Sales&nbsp;Found',sy-tfill.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_sales&nbsp;INTO&nbsp;wa_sales.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:&nbsp;wa_sales-vbeln,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_sales-erdat,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_sales-erzet,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_sales-ernam,'/n'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;No&nbsp;Sales&nbsp;order<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

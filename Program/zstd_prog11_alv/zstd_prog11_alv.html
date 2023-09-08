@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZSTD_PROG11_ALV</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZSTD_PROG11_ALV</h2>
+<h3> Description: WORKING WITH ALV</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT zstd_prog11_alv.<br />
+<br />
+PARAMETERS: s_date TYPE zstd_attend-stud_date.<br />
+<br />
+TYPES:BEGIN OF ty_std,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_id&nbsp;TYPE&nbsp;zstd_course-stud_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_name&nbsp;TYPE&nbsp;zstd_course-stud_name,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_batch&nbsp;TYPE&nbsp;zstd_course-stud_batch,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_course&nbsp;TYPE&nbsp;zstd_course-stud_course,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_date&nbsp;TYPE&nbsp;zstd_attend-stud_date,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attendance&nbsp;TYPE&nbsp;zstd_attend-attendance,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_std.<br />
+<br />
+DATA:wa_final TYPE ty_std,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_final&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;ty_std.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*DECLARE&nbsp;THE&nbsp;FIELDCAT&nbsp;INTERNAL&nbsp;TABLE<br />
+   </div>
+   <div class="code">
+DATA:it_fcat TYPE slis_t_fieldcat_alv,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat&nbsp;LIKE&nbsp;LINE&nbsp;OF&nbsp;it_fcat.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;DECLARE&nbsp;THE&nbsp;EVENT&nbsp;INTERNAL&nbsp;TABLE<br />
+   </div>
+   <div class="code">
+&nbsp;DATA:it_event&nbsp;TYPE&nbsp;slis_t_event,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_event&nbsp;LIKE&nbsp;LINE&nbsp;OF&nbsp;it_event.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*FILLING&nbsp;THE&nbsp;DATA&nbsp;INTERNAL&nbsp;TABLE<br />
+   </div>
+   <div class="code">
+PERFORM get_field.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;FILLING&nbsp;THE&nbsp;EVENT&nbsp;INTERNAL&nbsp;TABLE<br />
+   </div>
+   <div class="code">
+PERFORM event.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;Get&nbsp;data&nbsp;form&nbsp;database&nbsp;table.<br />
+   </div>
+   <div class="code">
+SELECT stud_id stud_name stud_batch stud_course stud_date attendance<br />
+&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;it_final<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;zstd_course&nbsp;AS&nbsp;c&nbsp;INNER&nbsp;JOIN&nbsp;zstd_attend&nbsp;AS&nbsp;a<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;stud_id&nbsp;=&nbsp;a~std_id<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;stud_date&nbsp;EQ&nbsp;s_date.<br />
+<br />
+&nbsp;IF&nbsp;sy-subrc&nbsp;EQ&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'REUSE_ALV_GRID_DISPLAY'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_callback_program&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;sy-repid<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_fieldcat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;it_fcat<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_events&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;it_event<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t_outtab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;it_final.<br />
+&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'No&nbsp;Record&nbsp;Found!!!'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;ENDIF.<br />
+<br />
+FORM uc USING a LIKE sy-ucomm b TYPE slis_selfield.<br />
+&nbsp;&nbsp;IF&nbsp;b-fieldname&nbsp;=&nbsp;'STUD_ID'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;PARAMETER&nbsp;ID&nbsp;'STID'&nbsp;FIELD&nbsp;b-value.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'VA03'.<br />
+&nbsp;&nbsp;ELSEIF&nbsp;b-fieldname&nbsp;=&nbsp;'STUD_DATE'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;PARAMETER&nbsp;ID&nbsp;'DAT'&nbsp;FIELD&nbsp;&nbsp;b-value.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'XD03'.<br />
+&nbsp;&nbsp;ENDIF.<br />
+&nbsp;ENDFORM.<br />
+<br />
+FORM get_field .<br />
+   </div>
+   <div class="codeComment">
+*FILLING&nbsp;FIELDCAT&nbsp;INTERNAL&nbsp;TABLE<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'STUD_ID'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;=&nbsp;'ROLL&nbsp;NO.'.<br />
+&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'STUD_NAME'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;=&nbsp;'2'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;=&nbsp;'NAME'.<br />
+&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'STUD_BATCH'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;=&nbsp;'3'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;=&nbsp;'BATCH'.<br />
+&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'STUD_COURSE'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;=&nbsp;'4'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;=&nbsp;'COURSE'.<br />
+&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'STUD_DATE'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;=&nbsp;'5'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;=&nbsp;'DATE'.<br />
+&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-fieldname&nbsp;=&nbsp;'ATTENDANCE'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-col_pos&nbsp;=&nbsp;'6'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_fcat-seltext_m&nbsp;=&nbsp;'ATTENDANCE'.<br />
+&nbsp;&nbsp;&nbsp;APPEND&nbsp;wa_fcat&nbsp;TO&nbsp;it_fcat.<br />
+&nbsp;CLEAR&nbsp;wa_fcat.<br />
+<br />
+ENDFORM.<br />
+<br />
+FORM event .<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_event-name&nbsp;=&nbsp;'USER_COMMAND'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;wa_event-form&nbsp;=&nbsp;'UC'.<br />
+&nbsp;&nbsp;APPEND&nbsp;wa_event&nbsp;TO&nbsp;it_event.<br />
+ENDFORM.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;No&nbsp;Record&nbsp;Found!!!<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

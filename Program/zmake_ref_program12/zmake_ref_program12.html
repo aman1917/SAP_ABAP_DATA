@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZMAKE_REF_PROGRAM12</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZMAKE_REF_PROGRAM12</h2>
+<h3> Description: Passing internal as parameter  to subroutine</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZMAKE_REF_PROGRAM12.<br />
+types: begin of ty_emp,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;empno&nbsp;type&nbsp;i,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ename(10)&nbsp;type&nbsp;c,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;empdesig(15)&nbsp;type&nbsp;c,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ty_emp.<br />
+<br />
+data ls_emp type table of ty_emp.<br />
+data wa_emp type ty_emp.<br />
+<br />
+clear wa_emp.<br />
+&nbsp;&nbsp;wa_emp-empno&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;wa_emp-ename&nbsp;=&nbsp;'Aman'.<br />
+&nbsp;&nbsp;wa_emp-empdesig&nbsp;=&nbsp;'Manager'.<br />
+&nbsp;append&nbsp;wa_emp&nbsp;to&nbsp;ls_emp.<br />
+<br />
+clear wa_emp.<br />
+&nbsp;&nbsp;wa_emp-empno&nbsp;=&nbsp;2.<br />
+&nbsp;&nbsp;wa_emp-ename&nbsp;=&nbsp;'Saloni'.<br />
+&nbsp;&nbsp;wa_emp-empdesig&nbsp;=&nbsp;'Director'.<br />
+&nbsp;append&nbsp;wa_emp&nbsp;to&nbsp;ls_emp.<br />
+<br />
+&nbsp;clear&nbsp;wa_emp.<br />
+&nbsp;&nbsp;wa_emp-empno&nbsp;=&nbsp;3.<br />
+&nbsp;&nbsp;wa_emp-ename&nbsp;=&nbsp;'Pranali'.<br />
+&nbsp;&nbsp;wa_emp-empdesig&nbsp;=&nbsp;'CEO'.<br />
+&nbsp;append&nbsp;wa_emp&nbsp;to&nbsp;ls_emp.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*uline.<br />
+*write:/&nbsp;'Data&nbsp;In&nbsp;Internal&nbsp;Table'.<br />
+*perform&nbsp;sub1&nbsp;using&nbsp;ls_emp.<br />
+<br />
+   </div>
+   <div class="code">
+uline.<br />
+write:/ 'Data In Internal Table'.<br />
+perform sub2 tables ls_emp.<br />
+<br />
+uline.<br />
+perform sub3 tables ls_emp.<br />
+write:/ 'Data In Internal Table after delete CEO'.<br />
+perform sub2 tables ls_emp.<br />
+<br />
+uline.<br />
+perform sub4 tables ls_emp.<br />
+write:/ 'Data In Internal Table after modifying Manager to CEO'.<br />
+perform sub2 tables ls_emp.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*form&nbsp;sub1&nbsp;using&nbsp;ls_emp.<br />
+**&nbsp;&nbsp;loop&nbsp;at&nbsp;ls_emp&nbsp;into&nbsp;wa_emp.<br />
+**&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+**&nbsp;endloop.<br />
+*endform.<br />
+<br />
+   </div>
+   <div class="code">
+form sub2 tables ls_emp.<br />
+&nbsp;&nbsp;loop&nbsp;at&nbsp;ls_emp&nbsp;into&nbsp;wa_emp.<br />
+&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+&nbsp;endloop.<br />
+endform.<br />
+<br />
+form sub3 tables ls_emp structure wa_emp.  "altering data using subroutine then we use struture keyword with work area"<br />
+&nbsp;&nbsp;delete&nbsp;ls_emp&nbsp;where&nbsp;empdesig&nbsp;=&nbsp;'CEO'.<br />
+endform.<br />
+<br />
+form sub4 tables lt_emp structure wa_emp.<br />
+&nbsp;&nbsp;clear&nbsp;wa_emp.<br />
+&nbsp;&nbsp;wa_emp-empdesig&nbsp;=&nbsp;'CEO'.<br />
+&nbsp;&nbsp;modify&nbsp;ls_emp&nbsp;from&nbsp;wa_emp&nbsp;transporting&nbsp;empdesig&nbsp;where&nbsp;empdesig&nbsp;=&nbsp;'Manager'.<br />
+endform.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

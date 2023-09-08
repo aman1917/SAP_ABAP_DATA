@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZMAKE_REF_PROGRAM8</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZMAKE_REF_PROGRAM8</h2>
+<h3> Description: Internal Table</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZMAKE_REF_PROGRAM8.<br />
+<br />
+types: begin of ty_emp,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;empno&nbsp;type&nbsp;i,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ename(10)&nbsp;type&nbsp;c,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;empdesig(15)&nbsp;type&nbsp;c,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ty_emp.<br />
+<br />
+data ls_emp type table of ty_emp.<br />
+<br />
+data wa_emp type ty_emp.<br />
+<br />
+clear wa_emp.<br />
+&nbsp;&nbsp;wa_emp-empno&nbsp;=&nbsp;1.<br />
+&nbsp;&nbsp;wa_emp-ename&nbsp;=&nbsp;'Aman'.<br />
+&nbsp;&nbsp;wa_emp-empdesig&nbsp;=&nbsp;'Manager'.<br />
+&nbsp;append&nbsp;wa_emp&nbsp;to&nbsp;ls_emp.<br />
+<br />
+clear wa_emp.<br />
+&nbsp;&nbsp;wa_emp-empno&nbsp;=&nbsp;2.<br />
+&nbsp;&nbsp;wa_emp-ename&nbsp;=&nbsp;'Saloni'.<br />
+&nbsp;&nbsp;wa_emp-empdesig&nbsp;=&nbsp;'Director'.<br />
+&nbsp;append&nbsp;wa_emp&nbsp;to&nbsp;ls_emp.<br />
+<br />
+&nbsp;clear&nbsp;wa_emp.<br />
+&nbsp;&nbsp;wa_emp-empno&nbsp;=&nbsp;3.<br />
+&nbsp;&nbsp;wa_emp-ename&nbsp;=&nbsp;'Pranali'.<br />
+&nbsp;&nbsp;wa_emp-empdesig&nbsp;=&nbsp;'CEO'.<br />
+&nbsp;append&nbsp;wa_emp&nbsp;to&nbsp;ls_emp.<br />
+<br />
+&nbsp;write:/&nbsp;'Data&nbsp;In&nbsp;Internal&nbsp;Table'.<br />
+&nbsp;loop&nbsp;at&nbsp;ls_emp&nbsp;into&nbsp;wa_emp.<br />
+&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+&nbsp;endloop.<br />
+<br />
+&nbsp;write:/&nbsp;'Data&nbsp;In&nbsp;Internal&nbsp;Table'.<br />
+&nbsp;loop&nbsp;at&nbsp;ls_emp&nbsp;into&nbsp;wa_emp&nbsp;where&nbsp;empdesig&nbsp;=&nbsp;'Manager'.<br />
+&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+&nbsp;endloop.<br />
+<br />
+clear wa_emp.<br />
+&nbsp;&nbsp;wa_emp-empno&nbsp;=&nbsp;4.<br />
+&nbsp;&nbsp;wa_emp-ename&nbsp;=&nbsp;'Amruta'.<br />
+&nbsp;&nbsp;wa_emp-empdesig&nbsp;=&nbsp;'Cp-founder'.<br />
+&nbsp;insert&nbsp;wa_emp&nbsp;into&nbsp;ls_emp&nbsp;index&nbsp;2.<br />
+<br />
+&nbsp;format&nbsp;color&nbsp;3.<br />
+&nbsp;&nbsp;write:/&nbsp;'Data&nbsp;In&nbsp;Internal&nbsp;Table'.<br />
+&nbsp;loop&nbsp;at&nbsp;ls_emp&nbsp;into&nbsp;wa_emp.<br />
+&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+&nbsp;endloop.<br />
+&nbsp;format&nbsp;color&nbsp;off.<br />
+<br />
+&nbsp;uline.<br />
+&nbsp;describe&nbsp;table&nbsp;ls_emp.<br />
+&nbsp;write:/'&nbsp;Number&nbsp;Record&nbsp;in&nbsp;thae&nbsp;table&nbsp;is&nbsp;',sy-tfill.<br />
+<br />
+&nbsp;clear&nbsp;wa_emp.<br />
+<br />
+&nbsp;data&nbsp;ls_emp2&nbsp;type&nbsp;table&nbsp;of&nbsp;ty_emp&nbsp;with&nbsp;non-unique&nbsp;key&nbsp;empno.<br />
+<br />
+&nbsp;append&nbsp;lines&nbsp;of&nbsp;ls_emp&nbsp;to&nbsp;ls_emp2.<br />
+<br />
+sort ls_emp2.<br />
+&nbsp;&nbsp;format&nbsp;color&nbsp;2.<br />
+<br />
+&nbsp;write:/&nbsp;'Data&nbsp;In&nbsp;Internal&nbsp;Table&nbsp;emp2'.<br />
+&nbsp;loop&nbsp;at&nbsp;ls_emp2&nbsp;into&nbsp;wa_emp.<br />
+&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+&nbsp;endloop.<br />
+<br />
+&nbsp;format&nbsp;color&nbsp;off.<br />
+<br />
+uline.<br />
+&nbsp;sort&nbsp;ls_emp2&nbsp;by&nbsp;empdesig.<br />
+&nbsp;&nbsp;format&nbsp;color&nbsp;5.<br />
+<br />
+&nbsp;write:/&nbsp;'Data&nbsp;In&nbsp;Internal&nbsp;Table&nbsp;emp2'.<br />
+&nbsp;loop&nbsp;at&nbsp;ls_emp2&nbsp;into&nbsp;wa_emp.<br />
+&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+&nbsp;endloop.<br />
+<br />
+&nbsp;uline.<br />
+&nbsp;sort&nbsp;ls_emp2&nbsp;by&nbsp;empdesig&nbsp;descending.<br />
+&nbsp;&nbsp;format&nbsp;color&nbsp;5.<br />
+<br />
+&nbsp;write:/&nbsp;'Data&nbsp;In&nbsp;Internal&nbsp;Table&nbsp;emp2'.<br />
+&nbsp;loop&nbsp;at&nbsp;ls_emp2&nbsp;into&nbsp;wa_emp.<br />
+&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+&nbsp;endloop.<br />
+<br />
+&nbsp;ls_emp2&nbsp;=&nbsp;ls_emp.<br />
+<br />
+&nbsp;format&nbsp;color&nbsp;off.<br />
+<br />
+&nbsp;&nbsp;uline.<br />
+&nbsp;describe&nbsp;table&nbsp;ls_emp.<br />
+&nbsp;write:/'&nbsp;Number&nbsp;Record&nbsp;in&nbsp;thae&nbsp;table&nbsp;is&nbsp;',sy-tfill.<br />
+<br />
+&nbsp;uline.<br />
+&nbsp;clear&nbsp;ls_emp.<br />
+&nbsp;read&nbsp;table&nbsp;ls_emp&nbsp;into&nbsp;wa_emp&nbsp;index&nbsp;2.<br />
+&nbsp;if&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;write:/&nbsp;'Record&nbsp;Found&nbsp;in&nbsp;emp2'.<br />
+&nbsp;&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+&nbsp;else.<br />
+&nbsp;&nbsp;write:/&nbsp;'Record&nbsp;Not&nbsp;Found&nbsp;in&nbsp;emp2'.<br />
+&nbsp;endif.<br />
+<br />
+&nbsp;uline.<br />
+&nbsp;&nbsp;clear&nbsp;ls_emp2.<br />
+&nbsp;read&nbsp;table&nbsp;ls_emp2&nbsp;into&nbsp;wa_emp&nbsp;index&nbsp;2&nbsp;transporting&nbsp;empno&nbsp;ename.<br />
+&nbsp;if&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;write:/&nbsp;'Record&nbsp;Found&nbsp;in&nbsp;emp2'.<br />
+&nbsp;&nbsp;write:/&nbsp;wa_emp-empno,wa_emp-ename,wa_emp-empdesig.<br />
+&nbsp;else.<br />
+&nbsp;&nbsp;write:/&nbsp;'Record&nbsp;Not&nbsp;Found&nbsp;in&nbsp;emp2'.<br />
+&nbsp;endif.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

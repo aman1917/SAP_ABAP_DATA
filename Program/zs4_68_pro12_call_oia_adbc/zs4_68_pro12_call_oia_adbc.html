@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZS4_68_PRO12_CALL_OIA_ADBC</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZS4_68_PRO12_CALL_OIA_ADBC</h2>
+<h3> Description: call_oia_adbc</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Report&nbsp;zs4_68_pro12_call_oia_adbc<br />
+*&---------------------------------------------------------------------*<br />
+*&<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+REPORT zs4_68_pro12_call_oia_adbc.<br />
+types: BEGIN OF ty_oia,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;company_name&nbsp;TYPE&nbsp;snwd_bpa-company_name,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gross_amount&nbsp;type&nbsp;snwd_so_inv_head-gross_amount,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;open_days&nbsp;type&nbsp;int4,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ty_oia,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tt_oia&nbsp;type&nbsp;standard&nbsp;table&nbsp;of&nbsp;ty_oia.<br />
+<br />
+data: lr_data type ref to data,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itab&nbsp;type&nbsp;tt_oia.<br />
+<br />
+PARAMETERS : p_curr type snwd_so_inv_head-currency_code.<br />
+<br />
+<br />
+get REFERENCE OF itab into lr_data.<br />
+"your native SQL query on the view which you already tested<br />
+data(lv_query_string) = | SELECT COMPANY_NAME, SUM(CONV_GROSS_AMOUNT) AS GROSS_AMOUNT, | &&<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ROUND(AVG(DATS_OPEN),0)&nbsp;AS&nbsp;AVG_OPEN_DAYS&nbsp;FROM&nbsp;&nbsp;|&nbsp;&&<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;"_SYS_BIC"."MOB5_DEC/AN_OIA"&nbsp;(&nbsp;'PLACEHOLDER'&nbsp;=&nbsp;(&nbsp;'$$IM_CURR$$'&nbsp;,&nbsp;'{&nbsp;p_curr&nbsp;}'&nbsp;))&nbsp;|&nbsp;&&<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;GROUP&nbsp;BY&nbsp;COMPANY_NAME&nbsp;&nbsp;&nbsp;|.<br />
+<br />
+try.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"create&nbsp;an&nbsp;instance&nbsp;of&nbsp;adbc&nbsp;api<br />
+&nbsp;&nbsp;&nbsp;&nbsp;data(lo_adbc)&nbsp;=&nbsp;cl_sql_connection=&gt;get_connection(&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"create&nbsp;the&nbsp;statement&nbsp;object&nbsp;which&nbsp;need&nbsp;to&nbsp;pass&nbsp;to&nbsp;the&nbsp;DB&nbsp;layer<br />
+&nbsp;&nbsp;&nbsp;&nbsp;data(lo_statement)&nbsp;=&nbsp;lo_adbc-&gt;create_statement(&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"load&nbsp;a&nbsp;query&nbsp;string&nbsp;to&nbsp;the&nbsp;statement&nbsp;object<br />
+&nbsp;&nbsp;&nbsp;&nbsp;data(lo_query)&nbsp;=&nbsp;lo_statement-&gt;execute_query(&nbsp;lv_query_string&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"set&nbsp;the&nbsp;container&nbsp;of&nbsp;ABAP&nbsp;layer&nbsp;which&nbsp;will&nbsp;receive&nbsp;this&nbsp;data<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"container&nbsp;has&nbsp;to&nbsp;be&nbsp;a&nbsp;dynamic&nbsp;internal&nbsp;table<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lo_query-&gt;set_param_table(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itab_ref&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lr_data<br />
+&nbsp;&nbsp;&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"get&nbsp;result<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lo_query-&gt;next_package(&nbsp;&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lo_query-&gt;close(&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lo_adbc-&gt;close(&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cl_demo_output=&gt;display_data(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;=&nbsp;itab<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;&nbsp;=<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;).<br />
+&nbsp;&nbsp;catch&nbsp;CX_SQL_EXCEPTION&nbsp;into&nbsp;data(lo_ex).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;/&nbsp;lo_ex-&gt;get_text(&nbsp;&nbsp;).<br />
+endtry.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZOOPS_PRO1_PRES_S4_68</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZOOPS_PRO1_PRES_S4_68</h2>
+<h3> Description: Presistance services using business key identity</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZOOPS_PRO1_PRES_S4_68.<br />
+<br />
+DATA: o_actor TYPE REF TO ZCA_S4ABAP68_PRESISTANCE,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o_pers&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;ZCL_S4ABAP68_PRESISTANCE,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o_ex1&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cx_os_object_existing,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o_ex2&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cx_os_object_not_found,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o_ex3&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cx_root,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o_ex4&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cx_sy_conversion_no_number,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o_ex5&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cx_os_object_not_existing,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_str&nbsp;TYPE&nbsp;string.<br />
+<br />
+SELECTION-SCREEN BEGIN OF BLOCK bk1 WITH FRAME TITLE t1.<br />
+<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;6(15)&nbsp;lb1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;p_id&nbsp;TYPE&nbsp;zstd_course-stud_id&nbsp;OBLIGATORY.<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;6(15)&nbsp;lb2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;p_name&nbsp;TYPE&nbsp;zstd_course-stud_name.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;To&nbsp;find&nbsp;extra&nbsp;Error&nbsp;while&nbsp;coding<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;p_name(10)&nbsp;TYPE&nbsp;c&nbsp;.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;6(15)&nbsp;lb3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;p_batch&nbsp;TYPE&nbsp;zstd_course-stud_batch&nbsp;.<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;6(15)&nbsp;lb4.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;p_course&nbsp;TYPE&nbsp;zstd_course-stud_course&nbsp;.<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+SELECTION-SCREEN END OF BLOCK bk1.<br />
+<br />
+SELECTION-SCREEN BEGIN OF BLOCK bk2 WITH FRAME TITLE t2.<br />
+&nbsp;&nbsp;PARAMETERS:&nbsp;p_r1&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;grp1&nbsp;USER-COMMAND&nbsp;fc1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_r2&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;grp1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_r3&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;grp1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_r4&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;grp1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_r5&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;grp1&nbsp;DEFAULT&nbsp;'X'.<br />
+SELECTION-SCREEN END OF BLOCK bk2.<br />
+<br />
+INITIALIZATION.<br />
+&nbsp;&nbsp;t1&nbsp;=&nbsp;'Student&nbsp;Details'.<br />
+&nbsp;&nbsp;t2&nbsp;=&nbsp;'DB&nbsp;Opreation'.<br />
+&nbsp;&nbsp;lb1&nbsp;=&nbsp;'Student_ID'.<br />
+&nbsp;&nbsp;lb2&nbsp;=&nbsp;'Name'.<br />
+&nbsp;&nbsp;lb3&nbsp;=&nbsp;'Batch'.<br />
+&nbsp;&nbsp;lb4&nbsp;=&nbsp;'Course'.<br />
+<br />
+&nbsp;&nbsp;PERFORM&nbsp;getactorobject.<br />
+<br />
+AT SELECTION-SCREEN ON RADIOBUTTON GROUP grp1.<br />
+&nbsp;&nbsp;CASE&nbsp;sy-ucomm.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'FC1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;p_r1&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;create_persistance_object.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;p_r2&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;get_persistance_object.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;p_r3&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;modify_persistance_object.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;p_r4&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;delete_persistance_object.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;ENDCASE.<br />
+<br />
+FORM getactorobject .<br />
+&nbsp;&nbsp;o_actor&nbsp;=&nbsp;ZCA_S4ABAP68_PRESISTANCE=&gt;agent.<br />
+ENDFORM.<br />
+<br />
+FORM create_persistance_object .<br />
+IF  p_name && p_batch && p_course ne 'X'.<br />
+&nbsp;&nbsp;MESSAGE&nbsp;'All&nbsp;Field&nbsp;Must&nbsp;be&nbsp;neccesory'&nbsp;TYPE&nbsp;'I'.<br />
+ELSE.<br />
+TRY.<br />
+CALL METHOD o_actor-&gt;create_persistent<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;i_stud_id&nbsp;=&nbsp;p_id<br />
+&nbsp;&nbsp;receiving<br />
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;o_pers.<br />
+&nbsp;&nbsp;IF&nbsp;o_pers&nbsp;IS&nbsp;BOUND."not&nbsp;initial<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;Non&nbsp;key&nbsp;attribute&nbsp;values<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;Student&nbsp;Name<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;set_name.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;Batch&nbsp;of&nbsp;Student<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;set_batch.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;Set&nbsp;Student&nbsp;Course<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;set_course.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;COMMIT&nbsp;WORK."Save&nbsp;changes&nbsp;Data&nbsp;to&nbsp;database<br />
+&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Record&nbsp;Insert&nbsp;Succesfully'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Error'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;CATCH&nbsp;cx_os_object_existing&nbsp;INTO&nbsp;o_ex1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex1-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;WRITE:/'Exception&nbsp;in&nbsp;creating&nbsp;Persistance&nbsp;Object',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_root&nbsp;INTO&nbsp;o_ex3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex3-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception:&nbsp;',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+ENDTRY.<br />
+ENDIF.<br />
+ENDFORM.<br />
+<br />
+FORM get_persistance_object .<br />
+&nbsp;&nbsp;CLEAR&nbsp;o_pers.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;LEAVE&nbsp;TO&nbsp;LIST-PROCESSING.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_actor-&gt;get_persistent<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_stud_id&nbsp;=&nbsp;p_id<br />
+&nbsp;&nbsp;&nbsp;&nbsp;receiving<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;o_pers.<br />
+&nbsp;&nbsp;IF&nbsp;o_pers&nbsp;IS&nbsp;BOUND.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;p_name,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_batch,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_course,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;"get&nbsp;the&nbsp;name&nbsp;from&nbsp;DB<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;get_name.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;"get&nbsp;the&nbsp;batch&nbsp;from&nbsp;DB<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;get_batch.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;"get&nbsp;the&nbsp;course&nbsp;from&nbsp;DB<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;get_course.<br />
+&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_os_object_not_found&nbsp;INTO&nbsp;o_ex2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex2-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'No&nbsp;Record&nbsp;Found&nbsp;',v_str.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+ENDFORM.<br />
+<br />
+FORM modify_persistance_object .<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;In&nbsp;Order&nbsp;to&nbsp;modify&nbsp;persistance&nbsp;first&nbsp;we&nbsp;need&nbsp;to&nbsp;check&nbsp;existance<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CLEAR&nbsp;o_pers.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;LEAVE&nbsp;TO&nbsp;LIST-PROCESSING.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_actor-&gt;get_persistent<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_stud_id&nbsp;=&nbsp;p_id<br />
+&nbsp;&nbsp;&nbsp;&nbsp;receiving<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;o_pers.<br />
+&nbsp;&nbsp;IF&nbsp;o_pers&nbsp;IS&nbsp;BOUND.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;Modify&nbsp;Non&nbsp;key&nbsp;attribute&nbsp;values<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;Modify&nbsp;Student&nbsp;Name<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;set_name.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;Modify&nbsp;Batch&nbsp;of&nbsp;Student<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;set_batch.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;Modify&nbsp;Student&nbsp;Course<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;set_course.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;COMMIT&nbsp;WORK."Save&nbsp;changes&nbsp;Data&nbsp;to&nbsp;database<br />
+&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Record&nbsp;Update&nbsp;Succesfully'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_os_object_not_found&nbsp;INTO&nbsp;o_ex2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex2-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'No&nbsp;Record&nbsp;Found&nbsp;',v_str.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+<br />
+ENDFORM.<br />
+<br />
+FORM delete_persistance_object .<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;LEAVE&nbsp;TO&nbsp;LIST-PROCESSING.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_actor-&gt;delete_persistent<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_stud_id&nbsp;=&nbsp;p_id.<br />
+&nbsp;&nbsp;COMMIT&nbsp;WORK."Save&nbsp;change&nbsp;in&nbsp;data&nbsp;base<br />
+&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Record&nbsp;Delete&nbsp;Succesfully'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;CATCH&nbsp;cx_os_object_not_existing&nbsp;INTO&nbsp;o_ex5.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex5-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;WRITE:/'Exception&nbsp;in&nbsp;creating&nbsp;Persistance&nbsp;Object',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+ENDFORM.<br />
+<br />
+FORM set_name .<br />
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_pers-&gt;set_stud_name<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_stud_name&nbsp;=&nbsp;p_name.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_os_object_not_found&nbsp;INTO&nbsp;o_ex2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex2-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception&nbsp;in&nbsp;Setting&nbsp;value&nbsp;of&nbsp;Set_name',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_sy_conversion_no_number&nbsp;INTO&nbsp;o_ex4.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex4-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception:&nbsp;',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_root&nbsp;INTO&nbsp;o_ex3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex3-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception:&nbsp;',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+ENDFORM.<br />
+<br />
+FORM set_batch .<br />
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_pers-&gt;set_stud_batch<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_stud_batch&nbsp;=&nbsp;p_batch.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_os_object_not_found&nbsp;INTO&nbsp;o_ex2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex2-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception&nbsp;in&nbsp;Setting&nbsp;value&nbsp;of&nbsp;Set_batch',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_root&nbsp;INTO&nbsp;o_ex3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex3-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception:&nbsp;',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+ENDFORM.<br />
+<br />
+FORM set_course .<br />
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_pers-&gt;set_stud_course<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_stud_course&nbsp;=&nbsp;p_course.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_os_object_not_found&nbsp;INTO&nbsp;o_ex2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex2-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception&nbsp;in&nbsp;Setting&nbsp;value&nbsp;of&nbsp;Set_name',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_root&nbsp;INTO&nbsp;o_ex3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex3-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception:&nbsp;',v_str.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;v_str&nbsp;TYPE&nbsp;'E'.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+ENDFORM.<br />
+<br />
+FORM get_name .<br />
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_pers-&gt;get_stud_name<br />
+&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;p_name.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_os_object_not_found&nbsp;INTO&nbsp;o_ex2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex2-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception&nbsp;in&nbsp;Setting&nbsp;value&nbsp;of&nbsp;Set_name',v_str.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+ENDFORM.<br />
+FORM get_batch .<br />
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_pers-&gt;get_stud_batch<br />
+&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;p_batch.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_os_object_not_found&nbsp;INTO&nbsp;o_ex2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex2-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception&nbsp;in&nbsp;Setting&nbsp;value&nbsp;of&nbsp;Set_name',v_str.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+<br />
+ENDFORM.<br />
+<br />
+FORM get_course .<br />
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_pers-&gt;get_stud_course<br />
+&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;p_course.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_os_object_not_found&nbsp;INTO&nbsp;o_ex2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;o_ex2-&gt;if_message~get_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;v_str.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Exception&nbsp;in&nbsp;Setting&nbsp;value&nbsp;of&nbsp;Set_name',v_str.<br />
+&nbsp;&nbsp;ENDTRY.<br />
+<br />
+ENDFORM.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Selection&nbsp;texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;P_R1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create&nbsp;Persistance&nbsp;Object<br />
+*&nbsp;P_R2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get&nbsp;Persistance&nbsp;Object<br />
+*&nbsp;P_R3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Update&nbsp;Persistance&nbsp;Object<br />
+*&nbsp;P_R4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete&nbsp;Persistance&nbsp;Object<br />
+*&nbsp;P_R5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br />
+<br />
+<br />
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;All&nbsp;Field&nbsp;Must&nbsp;be&nbsp;neccesory<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

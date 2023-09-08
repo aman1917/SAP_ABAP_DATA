@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZMAKE_SQLOPERATION_SUBDEF</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZMAKE_SQLOPERATION_SUBDEF</h2>
+<h3> Description: Include ZMAKE_SQLOPERATION_SUBDEF</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+FORM fetdata .<br />
+&nbsp;&nbsp;SELECT&nbsp;SINGLE&nbsp;emp_no&nbsp;emp_name&nbsp;emp_des&nbsp;join_date&nbsp;join_time<br />
+&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;zmake_check<br />
+&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;wa_check<br />
+&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;emp_no&nbsp;=&nbsp;p_empno.<br />
+ENDFORM.<br />
+<br />
+FORM setvalues .<br />
+&nbsp;&nbsp;p_empnam&nbsp;=&nbsp;wa_check-emp_name.<br />
+&nbsp;&nbsp;p_empdes&nbsp;=&nbsp;wa_check-emp_des.<br />
+&nbsp;&nbsp;p_empdat&nbsp;=&nbsp;wa_check-join_date.<br />
+&nbsp;&nbsp;p_empjoi&nbsp;=&nbsp;wa_check-join_time.<br />
+ENDFORM.<br />
+<br />
+FORM invisible .<br />
+&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;SCREEN.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-group1&nbsp;=&nbsp;'ID1'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BUT4'&nbsp;or<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-name&nbsp;=&nbsp;'BUT5'&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-input&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-output&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen-invisible&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modify&nbsp;screen.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endif.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+ENDFORM.<br />
+<br />
+<br />
+FORM cleardata .<br />
+&nbsp;&nbsp;clear&nbsp;p_empno.<br />
+ENDFORM.<br />
+<br />
+FORM getf4value .<br />
+&nbsp;&nbsp;select&nbsp;emp_no&nbsp;FROM&nbsp;zmake_check<br />
+&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;table&nbsp;lt_getf4value.<br />
+ENDFORM.<br />
+<br />
+FORM delete_op .<br />
+delete FROM zmake_check where emp_no = p_empno.<br />
+ENDFORM.<br />
+<br />
+<br />
+<br />
+FORM update_data .<br />
+UPDATE zmake_check set emp_name = @p_empnam , emp_des = @p_empdes,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;join_date&nbsp;=&nbsp;@p_empdat,&nbsp;join_time&nbsp;=&nbsp;@p_empjoi<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;emp_no&nbsp;=&nbsp;@p_empno.<br />
+ENDFORM.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

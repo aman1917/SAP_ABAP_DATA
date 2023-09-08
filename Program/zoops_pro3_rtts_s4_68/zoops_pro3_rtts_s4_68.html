@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZOOPS_PRO3_RTTS_S4_68</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZOOPS_PRO3_RTTS_S4_68</h2>
+<h3> Description: RunTime Type Service(creating IT & WA Dynamically)</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZOOPS_PRO3_RTTS_S4_68.<br />
+<br />
+PARAMETERS p_tname TYPE dd02l-tabname.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*declare&nbsp;refernces&nbsp;for&nbsp;corresponding&nbsp;description&nbsp;class<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;DATA:&nbsp;o_typedescr&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_abap_typedescr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o_structdescr&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_abap_structdescr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o_tabledescr&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_abap_tabledescr.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;Dynamically&nbsp;Instantiation<br />
+   </div>
+   <div class="code">
+&nbsp;CALL&nbsp;METHOD&nbsp;cl_abap_typedescr=&gt;describe_by_name&nbsp;&nbsp;"RTTI(identify&nbsp;find&nbsp;types)<br />
+&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;p_tname<br />
+&nbsp;&nbsp;&nbsp;receiving<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_descr_ref&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;o_typedescr<br />
+&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type_not_found&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;others&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.<br />
+&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Type&nbsp;Not&nbsp;Found'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;ELSEIF&nbsp;sy-subrc&nbsp;eq&nbsp;2.<br />
+&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Uunknow&nbsp;Error'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;ENDIF.<br />
+<br />
+&nbsp;IF&nbsp;o_typedescr&nbsp;IS&nbsp;BOUND.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;type&nbsp;cast&nbsp;the&nbsp;object&nbsp;to&nbsp;appropriate&nbsp;description&nbsp;class<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;o_structdescr&nbsp;?=&nbsp;o_typedescr.&nbsp;"winding<br />
+&nbsp;ENDIF.<br />
+<br />
+&nbsp;IF&nbsp;o_structdescr&nbsp;IS&nbsp;BOUND.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;create&nbsp;table&nbsp;type<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;cl_abap_tabledescr=&gt;create&nbsp;"RTTC<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_line_type&nbsp;&nbsp;=&nbsp;o_structdescr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receiving<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_result&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;o_tabledescr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_sy_table_creation.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;'Exception&nbsp;for&nbsp;Creating&nbsp;table'&nbsp;TYPE&nbsp;'I'.<br />
+&nbsp;&nbsp;&nbsp;ENDTRY.<br />
+&nbsp;ENDIF.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;creating&nbsp;object<br />
+   </div>
+   <div class="code">
+&nbsp;DATA:&nbsp;ref_wa&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;DATA,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ref_lt&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;DATA.<br />
+<br />
+&nbsp;CREATE&nbsp;DATA:&nbsp;ref_wa&nbsp;TYPE&nbsp;HANDLE&nbsp;o_structdescr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ref_lt&nbsp;TYPE&nbsp;HANDLE&nbsp;o_tabledescr.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;Value&nbsp;Assignment<br />
+   </div>
+   <div class="code">
+FIELD-SYMBOLS &lt;fs&gt;."Single Field<br />
+FIELD-SYMBOLS &lt;fwa&gt; TYPE ANY."Work Area<br />
+FIELD-SYMBOLS &lt;fitab&gt; TYPE ANY TABLE. "Any Internal table by dynamically<br />
+<br />
+   </div>
+   <div class="codeComment">
+*ASSIGN&nbsp;x&nbsp;to&nbsp;&lt;fs&gt;&nbsp;"For&nbsp;single&nbsp;field<br />
+   </div>
+   <div class="code">
+ASSIGN ref_wa-&gt;* to &lt;fwa&gt;.<br />
+ASSIGN ref_lt-&gt;* to &lt;fitab&gt;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;Data&nbsp;retrieval<br />
+   </div>
+   <div class="code">
+&nbsp;SELECT&nbsp;*&nbsp;FROM&nbsp;(p_tname)&nbsp;INTO&nbsp;TABLE&nbsp;&lt;fitab&gt;.<br />
+&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;&lt;fitab&gt;&nbsp;INTO&nbsp;&lt;fwa&gt;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ASSIGN&nbsp;COMPONENT&nbsp;sy-index&nbsp;OF&nbsp;STRUCTURE&nbsp;&lt;fwa&gt;&nbsp;TO&nbsp;&lt;fs&gt;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE&nbsp;&lt;fs&gt;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXIT.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDDO.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NEW-LINE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Selection&nbsp;texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;PTNAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter&nbsp;DB&nbsp;Table&nbsp;Name<br />
+<br />
+<br />
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;Hard&nbsp;coded<br />
+*&nbsp;&nbsp;&nbsp;Type&nbsp;Not&nbsp;Found<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

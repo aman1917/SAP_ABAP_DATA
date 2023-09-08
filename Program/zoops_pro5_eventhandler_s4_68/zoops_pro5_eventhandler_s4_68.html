@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZOOPS_PRO5_EVENTHANDLER_S4_68</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZOOPS_PRO5_EVENTHANDLER_S4_68</h2>
+<h3> Description: Event Handler Senario 5</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZOOPS_PRO5_EVENTHANDLER_S4_68.<br />
+CLASS lcl_abc DEFINITION.<br />
+&nbsp;&nbsp;PUBLIC&nbsp;SECTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EVENTS&nbsp;e1&nbsp;EXPORTING&nbsp;VALUE(e_std_id)&nbsp;TYPE&nbsp;zstd_attend-std_id.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;METHODS:&nbsp;m1&nbsp;FOR&nbsp;EVENT&nbsp;e1&nbsp;OF&nbsp;lcl_abc&nbsp;IMPORTING&nbsp;e_std_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m2&nbsp;IMPORTING&nbsp;i_id&nbsp;TYPE&nbsp;zstd_attend-std_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m3&nbsp;FOR&nbsp;EVENT&nbsp;e1&nbsp;OF&nbsp;lcl_abc.<br />
+ENDCLASS.<br />
+CLASS lcl_abc IMPLEMENTATION.<br />
+&nbsp;&nbsp;METHOD&nbsp;m1.<br />
+&nbsp;&nbsp;&nbsp;FORMAT&nbsp;COLOR&nbsp;3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;DATA:&nbsp;wa_std&nbsp;TYPE&nbsp;zstd_attend,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lt_std&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;zstd_attend.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Inside&nbsp;m1-event&nbsp;handler&nbsp;method&nbsp;import&nbsp;event&nbsp;parameter'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECT&nbsp;*&nbsp;FROM&nbsp;zstd_attend<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;TABLE&nbsp;lt_std<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;std_id&nbsp;=&nbsp;e_std_id.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;eq&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Find&nbsp;Particular&nbsp;student&nbsp;attendance&nbsp;details'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_std&nbsp;INTO&nbsp;wa_std.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/&nbsp;wa_std-std_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_std-stud_date,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_std-attendance.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FORMAT&nbsp;COLOR&nbsp;OFF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'No&nbsp;Student&nbsp;',e_std_id,'&nbsp;Found'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+&nbsp;&nbsp;METHOD&nbsp;m2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;FORMAT&nbsp;COLOR&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Method&nbsp;M2&nbsp;called&nbsp;about&nbsp;to&nbsp;raise&nbsp;event&nbsp;'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAISE&nbsp;EVENT&nbsp;e1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e_std_id&nbsp;=&nbsp;i_id.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;FORMAT&nbsp;COLOR&nbsp;OFF.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+&nbsp;&nbsp;METHOD&nbsp;m3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Inside&nbsp;m2-event&nbsp;handler&nbsp;method&nbsp;no&nbsp;import&nbsp;event&nbsp;parameter'.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+ENDCLASS.<br />
+<br />
+START-OF-SELECTION.<br />
+PARAMETERS p_id TYPE zstd_attend-std_id.<br />
+&nbsp;&nbsp;DATA&nbsp;ob1&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;lcl_abc.<br />
+&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;ob1.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*set&nbsp;handler<br />
+   </div>
+   <div class="code">
+SET HANDLER ob1-&gt;m3 FOR ob1.<br />
+SET HANDLER ob1-&gt;m1 FOR ob1.<br />
+   </div>
+   <div class="codeComment">
+*call&nbsp;method<br />
+   </div>
+   <div class="code">
+CALL METHOD ob1-&gt;m2<br />
+&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;i_id&nbsp;=&nbsp;p_id.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

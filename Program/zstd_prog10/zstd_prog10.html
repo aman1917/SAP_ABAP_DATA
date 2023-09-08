@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZSTD_PROG10</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZSTD_PROG10</h2>
+<h3> Description: Program ZSTD_PROG10</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZSTD_PROG10.<br />
+CONTROLS tbctrl TYPE TABLEVIEW USING SCREEN 100.<br />
+<br />
+TABLES zstd_attend.<br />
+<br />
+DATA: cols LIKE LINE OF tbctrl-cols,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lines&nbsp;TYPE&nbsp;i.<br />
+<br />
+DATA: ok_code TYPE sy-ucomm,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;save_ok&nbsp;TYPE&nbsp;sy-ucomm.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*TYPES:&nbsp;BEGIN&nbsp;OF&nbsp;t_att,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std_id&nbsp;TYPE&nbsp;zstd_attend-std_id,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stud_date&nbsp;TYPE&nbsp;zstd_attend-stud_date,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attendance&nbsp;TYPE&nbsp;zstd_attend-attendance,<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;t_att.<br />
+<br />
+   </div>
+   <div class="code">
+DATA: lt_att TYPE TABLE OF zstd_attend,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_att&nbsp;TYPE&nbsp;zstd_attend.<br />
+<br />
+SELECT * FROM zstd_attend INTO TABLE lt_att.<br />
+<br />
+LOOP AT tbctrl-cols INTO cols WHERE index GT 2.<br />
+&nbsp;&nbsp;cols-screen-input&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;MODIFY&nbsp;tbctrl-cols&nbsp;FROM&nbsp;cols&nbsp;INDEX&nbsp;sy-tabix.<br />
+ENDLOOP.<br />
+<br />
+CALL SCREEN 100.<br />
+<br />
+MODULE status_0100 OUTPUT.<br />
+&nbsp;SET&nbsp;PF-STATUS&nbsp;'SCREEN_100'.<br />
+&nbsp;DESCRIBE&nbsp;TABLE&nbsp;lt_att&nbsp;LINES&nbsp;lines.<br />
+&nbsp;&nbsp;tbctrl-lines&nbsp;=&nbsp;lines.<br />
+ENDMODULE.<br />
+<br />
+MODULE cancel INPUT.<br />
+&nbsp;&nbsp;LEAVE&nbsp;PROGRAM.<br />
+ENDMODULE.<br />
+<br />
+MODULE read_table_control INPUT.<br />
+&nbsp;&nbsp;MODIFY&nbsp;lt_att&nbsp;FROM&nbsp;wa_att&nbsp;INDEX&nbsp;tbctrl-current_line.<br />
+ENDMODULE.<br />
+<br />
+MODULE user_command_0100 INPUT.<br />
+&nbsp;&nbsp;save_ok&nbsp;=&nbsp;ok_code.<br />
+&nbsp;&nbsp;CLEAR&nbsp;ok_code.<br />
+&nbsp;&nbsp;CASE&nbsp;save_ok.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'TOGGLE'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;tbctrl-cols&nbsp;INTO&nbsp;cols&nbsp;WHERE&nbsp;index&nbsp;GT&nbsp;2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;&nbsp;cols-screen-input&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cols-screen-input&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF&nbsp;&nbsp;cols-screen-input&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cols-screen-input&nbsp;=&nbsp;'0'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODIFY&nbsp;tbctrl-cols&nbsp;FROM&nbsp;cols&nbsp;INDEX&nbsp;sy-tabix.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'SORT_UP'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;tbctrl-cols&nbsp;INTO&nbsp;cols&nbsp;WITH&nbsp;KEY&nbsp;selected&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;lt_att&nbsp;STABLE&nbsp;BY&nbsp;(cols-screen-name+10)&nbsp;ASCENDING.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cols-selected&nbsp;=&nbsp;'&nbsp;'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODIFY&nbsp;tbctrl-cols&nbsp;FROM&nbsp;cols&nbsp;INDEX&nbsp;sy-tabix.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'SORT_DOWN'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;tbctrl-cols&nbsp;INTO&nbsp;cols&nbsp;WITH&nbsp;KEY&nbsp;selected&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SORT&nbsp;lt_att&nbsp;STABLE&nbsp;BY&nbsp;(cols-screen-name+10)&nbsp;DESCENDING.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cols-selected&nbsp;=&nbsp;'&nbsp;'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODIFY&nbsp;tbctrl-cols&nbsp;FROM&nbsp;cols&nbsp;INDEX&nbsp;sy-tabix.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'DELETE'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;tbctrl-cols&nbsp;INTO&nbsp;cols&nbsp;WITH&nbsp;KEY&nbsp;screen-input&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_att&nbsp;INTO&nbsp;wa_att&nbsp;WHERE&nbsp;std_id&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DELETE&nbsp;lt_att.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;ENDCASE.<br />
+ENDMODULE.<br />
+<br />
+MODULE transfer OUTPUT.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;SET&nbsp;PF-STATUS&nbsp;'xxxxxxxx'.<br />
+*&nbsp;SET&nbsp;TITLEBAR&nbsp;'xxx'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;clear&nbsp;zstd_attend.<br />
+&nbsp;&nbsp;ZSTD_ATTEND-STD_ID&nbsp;=&nbsp;wa_att-std_id.<br />
+&nbsp;&nbsp;ZSTD_ATTEND-STUD_DATE&nbsp;=&nbsp;wa_att-stud_date.<br />
+&nbsp;&nbsp;ZSTD_ATTEND-ATTENDANCE&nbsp;=&nbsp;wa_att-attendance.<br />
+ENDMODULE.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

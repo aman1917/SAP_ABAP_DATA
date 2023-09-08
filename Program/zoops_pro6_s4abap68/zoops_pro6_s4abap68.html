@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZOOPS_PRO6_S4ABAP68</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZOOPS_PRO6_S4ABAP68</h2>
+<h3> Description: Friends Class uses</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZOOPS_PRO6_S4ABAP68.<br />
+<br />
+CLASS lcl_pqr DEFINITION DEFERRED.<br />
+<br />
+CLASS lcl_abc DEFINITION FRIENDS lcl_pqr.<br />
+&nbsp;&nbsp;PUBLIC&nbsp;SECTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;METHODS&nbsp;m1.<br />
+&nbsp;&nbsp;PROTECTED&nbsp;SECTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;METHODS&nbsp;m2.<br />
+&nbsp;&nbsp;PRIVATE&nbsp;SECTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;METHODS&nbsp;m3.<br />
+ENDCLASS.<br />
+<br />
+CLASS lcl_abc IMPLEMENTATION.<br />
+&nbsp;&nbsp;METHOD&nbsp;m1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Instance&nbsp;m1&nbsp;public&nbsp;method&nbsp;call'.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+&nbsp;&nbsp;METHOD&nbsp;m2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Instance&nbsp;m2&nbsp;protected&nbsp;method&nbsp;call'.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+&nbsp;&nbsp;METHOD&nbsp;m3.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Instance&nbsp;m3&nbsp;private&nbsp;method&nbsp;call'.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+ENDCLASS.<br />
+<br />
+CLASS lcl_pqr DEFINITION.<br />
+&nbsp;&nbsp;PUBLIC&nbsp;SECTION.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;METHODS&nbsp;m4.<br />
+ENDCLASS.<br />
+CLASS lcl_pqr IMPLEMENTATION.<br />
+&nbsp;&nbsp;METHOD&nbsp;m4.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WRITE:/'Instance&nbsp;m4&nbsp;public&nbsp;method&nbsp;call'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA&nbsp;ob&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;lcl_abc.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;ob.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Call&nbsp;METHOD&nbsp;ob-&gt;m1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Call&nbsp;METHOD&nbsp;ob-&gt;m2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Call&nbsp;METHOD&nbsp;ob-&gt;m3.<br />
+&nbsp;&nbsp;ENDMETHOD.<br />
+ENDCLASS.<br />
+<br />
+START-OF-SELECTION.<br />
+DATA ob1 TYPE REF TO lcl_pqr.<br />
+CREATE OBJECT ob1.<br />
+<br />
+Call METHOD ob1-&gt;m4.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

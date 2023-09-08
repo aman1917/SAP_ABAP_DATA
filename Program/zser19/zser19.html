@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZSER19</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZSER19</h2>
+<h3> Description: Excercise 2.1</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZSER19.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*Create&nbsp;list&nbsp;of&nbsp;customer&nbsp;in&nbsp;different&nbsp;type&nbsp;countries<br />
+<br />
+   </div>
+   <div class="code">
+types: begin of cust_country,<br />
+&nbsp;&nbsp;s_kunnr&nbsp;type&nbsp;kna1-kunnr,<br />
+&nbsp;&nbsp;s_name1&nbsp;type&nbsp;kna1-name1,<br />
+&nbsp;&nbsp;s_land1&nbsp;type&nbsp;kna1-land1,<br />
+&nbsp;&nbsp;end&nbsp;of&nbsp;cust_country.<br />
+<br />
+&nbsp;&nbsp;data&nbsp;:&nbsp;lt_cst&nbsp;type&nbsp;table&nbsp;of&nbsp;cust_country&nbsp;with&nbsp;non-unique&nbsp;key&nbsp;s_name1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_cst&nbsp;type&nbsp;cust_country.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*select&nbsp;kunnr&nbsp;name1&nbsp;land1&nbsp;from&nbsp;kna1&nbsp;into&nbsp;table&nbsp;lt_cst.<br />
+*<br />
+*&nbsp;write:/&nbsp;'Data&nbsp;of&nbsp;Internal&nbsp;Table'.<br />
+*&nbsp;loop&nbsp;at&nbsp;lt_cst&nbsp;into&nbsp;wa_cst.<br />
+*&nbsp;&nbsp;&nbsp;write:/&nbsp;wa_cst-s_kunnr,&nbsp;wa_cst-s_name1,&nbsp;wa_cst-s_land1.<br />
+*&nbsp;endloop.<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;uline.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;Sort&nbsp;table&nbsp;using&nbsp;country<br />
+   </div>
+   <div class="code">
+&nbsp;sort&nbsp;lt_cst&nbsp;by&nbsp;s_land1.<br />
+&nbsp;&nbsp;write:/&nbsp;'Data&nbsp;of&nbsp;Internal&nbsp;Table'.<br />
+&nbsp;loop&nbsp;at&nbsp;lt_cst&nbsp;into&nbsp;wa_cst.<br />
+&nbsp;&nbsp;&nbsp;write:/&nbsp;wa_cst-s_kunnr,&nbsp;wa_cst-s_name1,&nbsp;wa_cst-s_land1.<br />
+&nbsp;endloop.<br />
+<br />
+types :begin of ls_cst,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_cst&nbsp;type&nbsp;i,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_land1&nbsp;type&nbsp;kna1-land1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;ls_cst.<br />
+<br />
+&nbsp;&nbsp;data:&nbsp;lt_cst1&nbsp;type&nbsp;table&nbsp;of&nbsp;ls_cst&nbsp;with&nbsp;non-unique&nbsp;key&nbsp;lv_cst,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wa_cst1&nbsp;type&nbsp;ls_cst.<br />
+.<br />
+select count( * ) land1 into table lt_cst1 from kna1 group by land1.<br />
+<br />
+&nbsp;&nbsp;write:/&nbsp;'Data&nbsp;of&nbsp;Internal&nbsp;Table'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;at&nbsp;lt_cst1&nbsp;into&nbsp;wa_cst1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:/&nbsp;wa_cst1-s_land1,wa_cst1-lv_cst.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+uline.<br />
+<br />
+data lv_in type i.<br />
+<br />
+select count( * ) into @lv_in from kna1.<br />
+&nbsp;write:/&nbsp;lv_in.<br />
+<br />
+uline.<br />
+clear wa_cst1.<br />
+<br />
+sort lt_cst1 by lv_cst descending.<br />
+read table lt_cst1 into wa_cst1 index 1 transporting lv_cst s_land1.<br />
+write:/'Higest customer are define for country is ',wa_cst1-s_land1, wa_cst1-lv_cst.<br />
+uline.<br />
+<br />
+clear wa_cst1.<br />
+sort lt_cst1 by lv_cst.<br />
+read table lt_cst1 into wa_cst1 index 1 transporting lv_cst s_land1.<br />
+write:/'Lowest customer are define for country is ',wa_cst1-s_land1, wa_cst1-lv_cst.<br />
+   </div>
+   <div class="codeComment">
+*<br />
+*clear&nbsp;wa_cst1.<br />
+*<br />
+*clear&nbsp;wa_cst.<br />
+<br />
+*uline.<br />
+*write:/&nbsp;'Data&nbsp;of&nbsp;Internal&nbsp;Table'.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;loop&nbsp;at&nbsp;lt_cst1&nbsp;into&nbsp;wa_cst1.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;write:/'Customer&nbsp;define&nbsp;in&nbsp;for&nbsp;country',wa_cst1-s_land1,wa_cst1-lv_cst.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endloop.<br />
+<br />
+<br />
+   </div>
+   <div class="code">
+clear wa_cst1.<br />
+uline.<br />
+sort lt_cst1 by lv_cst.<br />
+loop at lt_cst1 into wa_cst1.<br />
+&nbsp;&nbsp;at&nbsp;new&nbsp;s_land1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:/'Customer&nbsp;define&nbsp;in&nbsp;for&nbsp;country&nbsp;',wa_cst1-s_land1,&nbsp;wa_cst1-lv_cst.<br />
+&nbsp;&nbsp;endat.<br />
+endloop.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

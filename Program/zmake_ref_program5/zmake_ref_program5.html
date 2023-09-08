@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1" />
+<title>ZMAKE_REF_PROGRAM5</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZMAKE_REF_PROGRAM5</h2>
+<h3> Description: paramter using</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="code">
+REPORT ZMAKE_REF_PROGRAM5.<br />
+<br />
+types:<br />
+&nbsp;begin&nbsp;of&nbsp;cust_flight,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c_id&nbsp;type&nbsp;zmake_de_c_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c_name&nbsp;type&nbsp;zmake_de_c_name,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f_id&nbsp;type&nbsp;zmake_de_f_id,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f_source&nbsp;type&nbsp;zmake_de_f_source,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f_destiny&nbsp;type&nbsp;zmake_de_f_destiny,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;board&nbsp;type&nbsp;zmake_de_f_board,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;launch&nbsp;type&nbsp;zmake_de_f_time,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fc_class&nbsp;type&nbsp;zmake_de_fc_class,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fc_price&nbsp;type&nbsp;zmake_de_fc_price,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f_seat&nbsp;type&nbsp;zmake_de_f_seat,<br />
+&nbsp;&nbsp;&nbsp;end&nbsp;of&nbsp;cust_flight.<br />
+<br />
+&nbsp;data:<br />
+&nbsp;&nbsp;&nbsp;lt_customer&nbsp;type&nbsp;table&nbsp;of&nbsp;cust_flight,<br />
+&nbsp;&nbsp;&nbsp;ls_customer&nbsp;type&nbsp;cust_flight.<br />
+<br />
+&nbsp;parameters:<br />
+&nbsp;&nbsp;&nbsp;p_id&nbsp;type&nbsp;i,<br />
+&nbsp;&nbsp;&nbsp;p_city&nbsp;type&nbsp;string.<br />
+<br />
+<br />
+&nbsp;select&nbsp;c~c_id,c~c_name,c~f_seat,f~f_id,f~f_source,f~f_destiny,f~board,f~launch,fc~fc_class,fc~fc_price<br />
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;(&nbsp;(&nbsp;zmake_t_cust_fli&nbsp;as&nbsp;c<br />
+&nbsp;&nbsp;&nbsp;left&nbsp;join&nbsp;zmake_t_flight&nbsp;as&nbsp;f<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;c~f_id&nbsp;=&nbsp;f~f_id&nbsp;)<br />
+&nbsp;&nbsp;&nbsp;inner&nbsp;join&nbsp;zmake_t_fli_clas&nbsp;as&nbsp;fc<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;c~fc_id&nbsp;=&nbsp;fc~fc_id&nbsp;)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;c~c_id&nbsp;=&nbsp;@p_id&nbsp;or&nbsp;f~f_source&nbsp;=&nbsp;@p_city<br />
+&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;corresponding&nbsp;fields&nbsp;of&nbsp;table&nbsp;@lt_customer.<br />
+<br />
+write: 'Customer Flight Information'.<br />
+skip.<br />
+<br />
+loop at lt_customer into ls_customer.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'C_ID:-',&nbsp;ls_customer-c_id.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Name:-',&nbsp;ls_customer-c_name.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'F_ID:-',&nbsp;ls_customer-f_id.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'F_source:-',&nbsp;ls_customer-f_source.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'F_Destiny:-',&nbsp;ls_customer-f_destiny.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Board:-',&nbsp;ls_customer-board.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'Launch:-',&nbsp;ls_customer-launch.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'FC_Class:-',&nbsp;ls_customer-fc_class.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'FC_Price:-',&nbsp;ls_customer-fc_price.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;write:&nbsp;'FC_seat&nbsp;no.:-',&nbsp;ls_customer-f_seat.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;skip.<br />
+endloop.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2022. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>
